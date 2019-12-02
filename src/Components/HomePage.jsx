@@ -12,7 +12,7 @@ class HomePage extends Component {
         return (
             <>
                 {this.state.isLoading && <PageLoading />}
-                {!this.state.isLoading && <Fade in={!this.state.isLoading}><NavBar/></Fade>}
+                {!this.state.isLoading && <Fade in={!this.state.isLoading}><NavBar/>< ProfileComponent/></Fade>}
             </>);
     }
     componentDidMount = () => {
