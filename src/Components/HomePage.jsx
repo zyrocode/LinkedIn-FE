@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ProfileComponent from "./ProfileComponent"
 
 
 
@@ -8,7 +9,7 @@ class HomePage extends Component {
         return (<>
         
         <h1>Hello World</h1>
-        
+        < ProfileComponent />
         
         
         </>  );
