@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Fade } from 'reactstrap'
 import NavBar from './NavBar'
 import PageLoading from './PageLoading'
+import ProfileComponent from './ProfileComponent'
 
 
 class HomePage extends Component {
