@@ -1,5 +1,5 @@
 
-const FetchToUpdate = async (comment) => {
+const FetchToUpdate = async (profile,pass) => {
 
 
     let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/"
@@ -7,10 +7,10 @@ const FetchToUpdate = async (comment) => {
         let response = await fetch(URL, {
             method: "PUT",
             headers: {
-                "Authorization": "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
+                "Authorization": "Basic " + btoa(`user18:${pass}`),
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(comment)
+            body: JSON.stringify(profile)
         })
         if (response.ok) {
             return await response.json()

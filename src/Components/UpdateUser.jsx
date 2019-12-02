@@ -10,7 +10,8 @@ class UpdateUser extends Component {
     surname: "",
     email: "",
     bio: "",
-    area: ""
+    area: "",
+    password: ""
   }
 
 
@@ -57,6 +58,10 @@ class UpdateUser extends Component {
               <FormGroup>
                 <Label for="exampleCity">Area</Label>
                 <Input onChange={(val) => this.setState({area: val.target.value})} value={this.state.area}type="text" name="city" id="area" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="exampleCity">Passwod</Label>
+                <Input onChange={(val) => this.setState({password: val.target.value})} value={this.state.password}type="password"/>
               </FormGroup>
               <Button color="success">Update</Button>
             </Form>
@@ -110,7 +115,7 @@ class UpdateUser extends Component {
       "area": document.querySelector("#area").value,
 
     };
-    await FetchToUpdate(profileObject)
+    await FetchToUpdate(profileObject, this.state.password)
     this.props.closeModal()
   }
 

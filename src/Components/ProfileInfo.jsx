@@ -54,7 +54,6 @@ class ProfileInfo extends Component {
       }
     })
   }
-
 }
 
 export default ProfileInfo;
