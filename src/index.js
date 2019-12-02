@@ -4,6 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import "bootstrap/dist/css/bootstrap.min.css";
 import MainComponent from "./Components/MainComponent"
+import 'font-awesome/css/font-awesome.min.css';
 
 ReactDOM.render(<MainComponent/>, document.getElementById('root'));
 

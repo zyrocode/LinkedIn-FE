@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import ProfileComponent from "./ProfileComponent"
+import UpdateUser from "./UpdateUser"
 
 
 class HomePage extends Component {
@@ -8,8 +9,9 @@ class HomePage extends Component {
         return (<>
         
         <h1>Hello World</h1>
+        < ProfileComponent />
         
-        
+        {/* <UpdateUser /> */}
         
         </>  );
     }
