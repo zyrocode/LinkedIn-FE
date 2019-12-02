@@ -1,59 +1,51 @@
 import React, { Component } from 'react';
 import ProfileInfo from "./ProflieInfo";
 import { Link } from "react-router-dom";
+import { Container, Col, Row } from 'reactstrap'
 
 
 class ProfileComponent extends Component {
-    state = { 
+    state = {
         id: ""
-     }
+    }
 
 
-    updateID =(newid)=>{
-       this.setState({
-           id: newid
-       }) 
+    updateID = (newid) => {
+        this.setState({
+            id: newid
+        })
     }
 
 
     render() {
-        
-        
-        return ( 
+
+
+        return (
             <>
-        <div className="container-fluid">
-  <div className="row">
-  <div className="col-12 col-sm-6 bg-success"> Hey1</div>
+                <Container text-center className="my-auto profile">
+                    <Row className="profile-header">
+                        <img height="150px" width="100%" src="https://www.titanui.com/wp-content/uploads/2014/01/27/Grey-Checker-Pattern-Background-Vector.jpg" alt="" className="src" />
+                    </Row>
+                    {/* start of a secondRow */}
+                    <Row className="profile-body">
+                        <Col>
 
-    <div className="w-100"></div>
+                            <Link to={`/updateUser/${this.state.id}`}>
+                                <i className="fa fa-pencil" style={{ color: "#006097", background: "transparent" }}></i>
+                            </Link>
 
-
-{/* start of a secondRow */}
-    <div className="col-12 col-sm-6 bg-secondary">
-   <div className="row">
-        <div className="col-11">
-        <ProfileInfo updateID={this.updateID}/>
-        
-        </div>
-
-
-        <div className="col-1">
-       <Link to={`/updateUser/${this.state.id}`}>
-            
-            <i className="fa fa-pencil" style={{color:"#006097", background:"transparent"}}></i>
-       </Link>
-        </div>
-   </div>
-    </div>  {/* end of a secondRow */}
-   
-  </div>
-</div>
+                            <div className="m-3">
+                                <ProfileInfo updateID={this.updateID} />
+                            </div>
+                        </Col>  {/* end of a secondRow */}
+                    </Row>
+                </Container>
 
 
 
 
-</> );
+            </>);
     }
 }
- 
+
 export default ProfileComponent;

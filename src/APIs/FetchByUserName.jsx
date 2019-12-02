@@ -1,6 +1,6 @@
 
 const FetchByUserName = async(userName) => {
-   
+
 
     let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName);
     try {
@@ -12,7 +12,9 @@ const FetchByUserName = async(userName) => {
             }
         })
         if (response.ok) {
-            return await response.json()
+            let user = await response.json()
+            return user
+            
         }
     } catch (error) {
         console.log(error);
