@@ -50,7 +50,6 @@ code {
   content:"\f0f3";
 }
 
-
 .nav-icon-grid::after {
   font-family: 'Font Awesome 5 Free';
   content:"\f00a";
@@ -66,7 +65,6 @@ code {
   color: #e1e9ee;
   font-size: 120%;
 }
-
 
 .nav-item {
   margin: 0 6px;
@@ -108,6 +106,8 @@ input[type="search"] {
 
 .profile {
   background-color: white;
+  border: 1px solid #b8b8b8;
+  border-top: 0px;
 }
 
 .profile-body {
