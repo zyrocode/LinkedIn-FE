@@ -9,7 +9,8 @@ class ProfileInfo extends Component {
       surname: "",
       title: "",
       bio: "",
-      area: ""
+      area: "",
+      image: ""
     }
 
   }
@@ -17,7 +18,7 @@ class ProfileInfo extends Component {
     let userInfo = this.state.userInfo
     return (
       <>
-        <img className="profile-pic" width="150px" src="http://www.stickpng.com/assets/images/585e4beacb11b227491c3399.png" alt="profile pic" />
+        <img className="profile-pic" src={userInfo.image} alt="profile pic" />
         <Row>
           <Col sm="6" l="8">
             <h3>{`${userInfo.name} ${userInfo.surname}`}</h3>
@@ -38,7 +39,7 @@ class ProfileInfo extends Component {
   componentDidMount = async () => {
     let userName = "user18"
     let userProfile = await FetchByUserName(userName)
-    console.log(userProfile)
+    console.log(userProfile.image)
 
     await this.props.updateID(userProfile.username)
 
@@ -48,15 +49,10 @@ class ProfileInfo extends Component {
         surname: userProfile.surname,
         title: userProfile.title,
         bio: userProfile.bio,
-        area: userProfile.area
+        area: userProfile.area,
+        image: userProfile.image
       }
     })
-
-
-
-
-
-
   }
 
 }

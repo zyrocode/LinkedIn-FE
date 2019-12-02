@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import {
-    Collapse,
     Input,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavItem
 } from 'reactstrap';
 
 class NavBar extends Component {
@@ -43,9 +34,9 @@ class NavBar extends Component {
                         <NavItem>
                             <span className="nav-icon-bell"></span>
                         </NavItem>
-                        <NavItem>
+                        {/* <NavItem>
                             <img className="nav-icon-userimg" src=""></img>
-                        </NavItem>
+                        </NavItem> */}
                     </div>
                     <NavItem>
                         <span className="nav-icon-grid"></span>
