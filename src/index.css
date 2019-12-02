@@ -1,3 +1,5 @@
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,4 +12,89 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.loading {
+  background-color: #283e4a;
+  height: 100vh;
+  display: block;
+}
+
+.nav {
+  background-color: #283e4a;
+}
+
+.nav-icon-home::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f015";
+}
+
+.nav-icon-group::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f0c0";
+}
+
+.nav-icon-case::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f0b1";
+}
+
+.nav-icon-chat::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f086";
+}
+
+.nav-icon-bell::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f0f3";
+}
+
+
+.nav-icon-grid::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f00a";
+  font-weight: 900;
+  color: #e1e9ee;
+  font-size: 120%;
+}
+
+.nav-icon-book::after {
+  font-family: 'Font Awesome 5 Free';
+  content:"\f02d";
+  font-weight: 900;
+  color: #e1e9ee;
+  font-size: 120%;
+}
+
+
+.nav-item {
+  margin: 0 6px;
+  cursor: pointer;
+  margin: auto 10px auto 10px
+}
+
+.nav-item:hover {
+  color: white !important;
+}
+
+.nav-right-side {
+  display:flex;
+  margin: 0 0 0 auto;
+  font-weight: 900;
+  color: #e1e9ee;
+  font-size: 120%;
+  border-right: 1px solid #5c6f7c;
+}
+
+input[type="search"] {
+  background-color: #e1e9ee;
+  border-radius: 2px;
+  max-height: 30px !important;
+  margin-top: auto 10px
+}
+
+.logo-img {
+  width: 40px;
+  margin: 5px;
+  border-radius: 3px;
 }
