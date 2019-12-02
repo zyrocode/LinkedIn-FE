@@ -22,7 +22,7 @@ class ProfileComponent extends Component {
 
         return (
             <>
-                <Container text-center className="my-auto profile">
+                <Container text-center className="profile">
                     <Row className="profile-header">
                         <img height="150px" width="100%" src="https://www.titanui.com/wp-content/uploads/2014/01/27/Grey-Checker-Pattern-Background-Vector.jpg" alt="" className="src" />
                     </Row>
