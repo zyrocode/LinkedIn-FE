@@ -12,12 +12,8 @@ class ExperienceComponent extends Component {
   };
 
   render() {
-    return (<>
-      
-        
-      
-
-
+    return (
+      <>
         <Container className="profile">
           <Container>
               <Row>

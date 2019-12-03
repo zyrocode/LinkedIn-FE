@@ -10,12 +10,6 @@ class ProfileComponent extends Component {
         openModal: false
     }
 
-    updateID = (newid) => {
-        this.setState({
-            id: newid
-        })
-    }
-
     render() {
         return (
             <>
@@ -29,10 +23,10 @@ class ProfileComponent extends Component {
                             <Col>
                                 <i className="fa fa-pencil" style={{ color: "#006097", background: "transparent" }} onClick={() => this.setState({ openModal: true })}></i>
 
-                                {this.state.openModal && <UpdateUser closeModal={() => this.setState({ openModal: false })} id={this.state.id} />}
+                                {this.state.openModal && <UpdateUser username={this.props.username} password={this.props.password}closeModal={() => this.setState({ openModal: false })} id={this.state.id} />}
 
                                 <div className="m-3">
-                                    {!this.state.openModal && <ProfileInfo updateID={this.updateID} />
+                                    {!this.state.openModal && <ProfileInfo username={this.props.username} password={this.props.password} />
                                     }
                                 </div>
                             </Col>  {/* end of a secondRow */}

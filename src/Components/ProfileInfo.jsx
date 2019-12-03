@@ -37,12 +37,7 @@ class ProfileInfo extends Component {
 
 
   componentDidMount = async () => {
-    let userName = "user18"
-    let userProfile = await FetchByUserName(userName)
-    console.log(userProfile.image)
-
-    await this.props.updateID(userProfile.username)
-
+    let userProfile = await FetchByUserName(this.props.username, this.props.password)
     this.setState({
       userInfo: {
         name: userProfile.name,

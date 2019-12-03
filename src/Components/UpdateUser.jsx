@@ -53,27 +53,17 @@ class UpdateUser extends Component {
                 <Label for="exampleCity">Area</Label>
                 <Input onChange={(val) => this.setState({area: val.target.value})} value={this.state.area}type="text" name="city" id="area" />
               </FormGroup>
-              <FormGroup>
-                <Label for="exampleCity">Password</Label>
-                <Input onChange={(val) => this.setState({password: val.target.value})} value={this.state.password}type="password"/>
-              </FormGroup>
               <Button color="success">Update</Button>
             </Form>
           </ModalBody>
         </Modal>
       </div>
-
-
-
-
-
     );
   }
 
 
   componentDidMount = async () => {
-    let userProfile = await FetchByUserName(this.props.id)
-    console.log(userProfile)
+    let userProfile = await FetchByUserName(this.props.username, this.props.password)
 
     this.setState({
       name: userProfile.name,
@@ -82,20 +72,6 @@ class UpdateUser extends Component {
       bio: userProfile.bio,
       area: userProfile.area
     })
-
-    /* 
-    let profileObject = {
-
-      "name": document.querySelector("#name").value,
-      "surname": document.querySelector("#surname").value,
-      "email": document.querySelector("#email").value,
-      "bio": document.querySelector("#bio").value,
-      "title": document.querySelector("#title").value,
-      "area": document.querySelector("#area").value,
-
-    };
-    await FetchToUpdate(profileObject) */
-
   }
 
   postUpdatedDetails = async (e) => {
@@ -109,14 +85,9 @@ class UpdateUser extends Component {
       "area": document.querySelector("#area").value,
 
     };
-    await FetchToUpdate(profileObject, this.state.password)
+    await FetchToUpdate(profileObject, this.props.username, this.props.password)
     this.props.closeModal()
   }
-
-
-
-
-
 }
 
 export default UpdateUser;
