@@ -3,6 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import FetchByExperience from "../APIs/FetchByExperience";
 import Moment from "react-moment";
 import CreateExperience from "./CreateExperience"
+import EditExperience from "./EditExperience"
 
 class ExperienceComponent extends Component {
   state = {
@@ -11,19 +12,26 @@ class ExperienceComponent extends Component {
   };
 
   render() {
-    return (
-      <>
+    return (<>
+      
+        
+      
+
+
         <Container className="profile">
-          <Row>
-             <Col md="10">
-                  Experiences
-                  
-             </Col>
-             <Col md="1">
-             <i class="fa fa-plus" onClick={() => this.setState({ openModal: true })}></i>
-               {this.state.openModal && <CreateExperience closeModal={() => this.setState({ openModal: false })}/>}   
-             </Col>
-        </Row>
+          <Container>
+              <Row>
+                 <Col md="10">
+                      Experiences
+                      
+                 </Col>
+                 <Col md="1">
+                 <i class="fa fa-plus" onClick={() => this.setState({ openModal: true })}></i>
+                   {this.state.openModal && <CreateExperience closeModal={() => this.setState({ openModal: false })}/>}   
+                 </Col> 
+                 
+            </Row>
+          </Container>
           <Row>
             {this.state.experiences.map((experience, index) => (
               <>
@@ -46,7 +54,8 @@ class ExperienceComponent extends Component {
                 </Col>
                 <Col md="1">
                   {" "}
-                  <i class="fa fa-pencil"></i>
+                  <i class="fa fa-pencil" onClick={() => this.setState({ openModal: true })}></i>
+                  {this.state.openModal && <EditExperience closeModal={() => this.setState({ openModal: false })} id={experience._id} />} 
                 </Col>
               </>
             ))}

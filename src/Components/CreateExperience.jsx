@@ -36,7 +36,7 @@ class CreateExperience extends Component {
           <ModalHeader toggle={this.toggleClose}>Modal title</ModalHeader>
 
           <ModalBody>
-            <Form onSubmit={this.postUpdatedDetails}>
+            <Form onSubmit={this.postNewDetails}>
               <FormGroup>
                 <Label>Role</Label>
                 <Input
@@ -105,7 +105,7 @@ class CreateExperience extends Component {
 
 
 
-  postUpdatedDetails = async (e)=>{
+  postNewDetails = async (e)=>{
     e.preventDefault();
     let profileObjectForPost = {
 
