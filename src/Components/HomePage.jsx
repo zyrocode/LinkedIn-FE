@@ -3,6 +3,7 @@ import { Fade } from 'reactstrap'
 import NavBar from './NavBar'
 import PageLoading from './PageLoading'
 import ProfileComponent from './ProfileComponent'
+import ExperienceComponent from './ExperienceComponent'
 
 
 class HomePage extends Component {
@@ -13,7 +14,11 @@ class HomePage extends Component {
         return (
             <>
                 {this.state.isLoading && <PageLoading />}
-                {!this.state.isLoading && <Fade in={!this.state.isLoading}><NavBar/>< ProfileComponent/></Fade>}
+                {!this.state.isLoading && <Fade in={!this.state.isLoading}>
+                    <NavBar />
+                    <ProfileComponent />
+                    <ExperienceComponent/>
+                </Fade>}
             </>);
     }
     componentDidMount = () => {
