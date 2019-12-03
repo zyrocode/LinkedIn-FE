@@ -28,10 +28,6 @@ class ExperienceComponent extends Component {
                                      1 yr     </small>
                                     
 
-                                  
-                                    <Moment from="2015-04-19">1976-04-19T12:59-0500</Moment>
-
-                                    //
 
 
                                     
