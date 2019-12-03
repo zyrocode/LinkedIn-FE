@@ -104,7 +104,7 @@ class EditExperience extends Component {
 
               <Button color="success">Update</Button>
               <Button color="danger" onClick={async() => {
-                  await DeleteEachExperienceByID(this.props.id)
+                  await DeleteEachExperienceByID(this.props.id, this.props.username)
               this.props.closeModal()}}>  Delete</Button>
             </Form>
           </ModalBody>

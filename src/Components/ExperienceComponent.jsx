@@ -51,7 +51,7 @@ class ExperienceComponent extends Component {
                 <Col md="1">
                   {" "}
                   <i class="fa fa-pencil" onClick={() => this.setState({ openModal: true })}></i>
-                  {this.state.openModal && <EditExperience closeModal={() => this.setState({ openModal: false })} id={experience._id} />} 
+                  {this.state.openModal && <EditExperience username={this.props.username} closeModal={() => this.setState({ openModal: false })} id={experience._id} />} 
                 </Col>
               </>
             ))}
@@ -62,7 +62,7 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
-    let experiences = await FetchByExperience();
+    let experiences = await FetchByExperience(this.props.username, this.props.password);
     this.setState({
       experiences: experiences
     });
