@@ -18,9 +18,8 @@ class ExperienceComponent extends Component {
         <Container className="profile">
           <Container>
             <Row>
-              <Col md="10" className="my-4">Experiences </Col>
-              <hr />
-              <Col md="1">
+              <Col md="12" className="my-4">
+                <b style={{'font-size': '30px'}}>Experiences</b>
                 <i
                   className="fa fa-plus"
                   onClick={() => this.setState({ openModal1: true })}
@@ -35,11 +34,17 @@ class ExperienceComponent extends Component {
               </Col>
             </Row>
           </Container>
-          <Row>
-            {this.state.experiences.map((experience, index) => (
-              <>
-                <Col md="10">
-                  <div className="experience" key={index}>
+
+          {this.state.experiences.map((experience, index) => (
+            <Container>
+              <Row key={index}>
+                <Col md="12">
+                  <hr />
+                  <i
+                    className="fa fa-pencil"
+                    onClick={() => this.setState({ openModal: true })}
+                  ></i>
+                  <div className="experience">
                     <small>
                       <Moment format="MM/YYYY">
                         {experience.startDate}
@@ -56,15 +61,7 @@ class ExperienceComponent extends Component {
                     <p>{experience.company}</p>
                     <p>{experience.description}</p>
                     <p>{experience.area}</p>
-                    <hr />
                   </div>
-                </Col>
-                <Col md="1">
-                  {" "}
-                  <i
-                    className="fa fa-pencil"
-                    onClick={() => this.setState({ openModal: true })}
-                  ></i>
                   {this.state.openModal && (
                     <EditExperience
                       closeModal={() => this.setState({ openModal: false })}
@@ -74,9 +71,10 @@ class ExperienceComponent extends Component {
                     />
                   )}
                 </Col>
-              </>
-            ))}
-          </Row>
+              </Row>
+            </Container>
+          ))}
+
         </Container>
       </>
     );

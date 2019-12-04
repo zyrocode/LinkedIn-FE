@@ -25,7 +25,7 @@ code {
   background-color: #283e4a;
 }
 
-.nav-icon-home::after {
+.nav-icon-home::before {
   font-family: 'Font Awesome 5 Free';
   content:"\f015";
 }
@@ -54,7 +54,6 @@ code {
   font-family: 'Font Awesome 5 Free';
   content:"\f00a";
   font-weight: 900;
-  color: #e1e9ee;
   font-size: 120%;
 }
 
@@ -62,18 +61,16 @@ code {
   font-family: 'Font Awesome 5 Free';
   content:"\f02d";
   font-weight: 900;
-  color: #e1e9ee;
   font-size: 120%;
 }
 
 .nav-item {
-  margin: 0 6px;
   cursor: pointer;
-  margin: auto 10px auto 10px
+  margin: auto 8px auto 8px
 }
 
 .nav-item:hover {
-  color: white !important;
+  color: #0274b3 !important;
 }
 
 .nav-right-side {
@@ -113,14 +110,14 @@ i{
 }
 
 i:hover {
-  background-color: #283e4a;
+  background-color: #0274b3;
   color: white !important; 
   cursor: pointer;
 }
 
 .profile {
   background-color: white;
-  border: 1px solid #b8b8b8;
+  border: 1px solid #dadada;
   margin-top: 30px !important;
 }
 
@@ -145,8 +142,83 @@ i:hover {
 }
 
 .fa-plus {
-  position: relative ;
-  right: 0;
-  top: 5px;
+  float: right;
 }
+
+.fa-pencil {
+  float: right;
+}
+
+.newsfeed-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.login-form {
+  max-width: 800px !important;
+  padding: 30px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+  
+.login-input {
+  border: 1px solid black !important;
+  border-radius: 3px !important;
+  padding: 25px !important;
+}
+
+.form-control {
+  margin: 15px !important;
+  width: 90% !important;
+}
+
+.btn-danger {
+  float:right
+}
+
+.btn {
+  margin: 10px;
+}
+
+.news-feed{
+  background-color: white;
+  border: 1px solid #dadada;
+  padding: 30px;
+  margin-top: 20px;
+  padding-bottom: 10px !important;
+  display: block;
+}
+
+.create-news-feed{
+  background-color: white;
+  border: 1px solid #dadada;
+  padding: 30px;
+  margin-top: 20px;
+  padding-left: 30px !important; 
+}
+
+span {
+  color: white;
+}
+
+span:hover {
+  color: #0274b3
+}
+
+a {
+  color: black !important;
+}
+
+a:visited {
+  color: black !important
+}
+
+a:hover {
+  color: black !important;
+  text-decoration: none !important;
+}
+
 
