@@ -52,7 +52,7 @@ class CreateExperience extends Component {
                 //   onChange={val => this.setState({ name: val.target.value })}
                   type="text"
                   id="company"
-                  placeholder="Name placeholder"
+                  placeholder="Add Company details"
                 />
               </FormGroup>
               <FormGroup>
@@ -61,7 +61,7 @@ class CreateExperience extends Component {
                 //   onChange={val => this.setState({ surname: val.target.value })}
                   type="text"
                   id="description"
-                  placeholder="Name placeholder"
+                  placeholder="Add Description"
                 />
               </FormGroup>
               <FormGroup>
@@ -75,26 +75,26 @@ class CreateExperience extends Component {
               </FormGroup>
 
               <FormGroup>
-                <label for="time">Start Date</label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id="startDate"
-                  required
-                />
+              <Label >StartDate</Label>
+        <Input
+          type="date"
+          name="date"
+          id="startDate"
+          placeholder="Start Date"
+          />
               </FormGroup>
 
               <FormGroup>
-                <label for="time">End Date</label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id="endDate"
-                  required
-                />
+              <Label >StartDate</Label>
+        <Input
+          type="date"
+          name="date"
+          id="endDate"
+          placeholder="End Date"
+          />
               </FormGroup>
 
-              <Button color="success">Update</Button>
+              <Button color="primary">Add Data</Button>
             </Form>
           </ModalBody>
         </Modal>
@@ -119,10 +119,10 @@ class CreateExperience extends Component {
   
       };
 
-      let postData =  await FetchToPost(profileObjectForPost)
+      let postData =  await FetchToPost(profileObjectForPost,this.props.username,this.props.password)
       console.log(postData)
 
-      this.props.closeModal()
+      this.props.closeModal() 
 
 
 

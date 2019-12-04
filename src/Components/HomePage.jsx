@@ -11,13 +11,13 @@ class HomePage extends Component {
         isLoading: true
     }
     render() {
-        return (
+        return ( 
             <>
                 {this.state.isLoading && <PageLoading />}
                 {!this.state.isLoading && <Fade in={!this.state.isLoading}>
                     <NavBar/>
                     <ProfileComponent username={this.props.username} password={this.props.password}/>
-                    <ExperienceComponent username={this.props.username} password={this.props.password}/>
+                    <ExperienceComponent  username={this.props.username} password={this.props.password}/>
                 </Fade>}
             </>);
     }

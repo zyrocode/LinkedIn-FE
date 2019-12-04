@@ -11,14 +11,14 @@ class MainComponent extends Component {
     user: undefined,
     pass: undefined
   }
-
+ 
   render() {
     return (
       <>
         <Router>
           {this.state.logged
             ?
-            <Route to="/home" render={() => <HomePage username={this.state.user} password={this.state.pass}/>}/>
+            <Route to="/home" render={() => <HomePage username={this.state.user} password={this.state.pass} />}/>
             : <>
               <form onSubmit={this.getCredentials}>
                 <input id="username" type="text" />

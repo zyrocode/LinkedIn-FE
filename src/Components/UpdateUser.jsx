@@ -62,7 +62,7 @@ class UpdateUser extends Component {
   }
 
 
-  componentDidMount = async () => {
+  componentDidMount = async () => { 
     let userProfile = await FetchByUserName(this.props.username, this.props.password)
 
     this.setState({

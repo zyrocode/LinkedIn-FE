@@ -10,22 +10,25 @@ import {
     Input
   } from "reactstrap";
   import FetchToUpdateExperience  from "../APIs/FetchToUpdateExperience";
-  import FetchEachExperienceByID from "../APIs/FetchEachExperienceByID"
-  import DeleteEachExperienceByID from "../APIs/DeleteEachExperienceByID"
+  import FetchEachExperienceByID from "../APIs/FetchEachExperienceByID";
+  import DeleteEachExperienceByID from "../APIs/DeleteEachExperienceByID";
+
+
+  
 
 
 class EditExperience extends Component {
     state = { 
         isOpen: true,
-    role: "",
-    company: "",
-    description: "",
-    area: "",
-    startDate: "",
-    endDate: ""
+     role: "",
+     company: "",
+     description: "",
+     area: "",
+     startDate: undefined,
+     endDate: undefined
      }
 
-
+  
 
      toggleClose = () => {
         this.props.closeModal();
@@ -36,7 +39,16 @@ class EditExperience extends Component {
     
 
     render() { 
+
+
+     
+
+      
+      
+
         return ( 
+
+        
          <div>
         <Modal isOpen={this.state.isOpen} toggle={this.toggleClose}>
           <ModalHeader toggle={this.toggleClose}>Modal title</ModalHeader>
@@ -46,9 +58,13 @@ class EditExperience extends Component {
               <FormGroup>
                 <Label>Role</Label>
                 <Input
-                onChange={val => this.setState({ role: val.target.value })} value={this.state.role}
+                onChange={val => this.setState({ role: val.target.value })} value=
+                
+                
+                
+                {this.state.role}
                   type="text"
-                  id="role"
+                  id="role1"
                   placeholder="Role"
                 />
               </FormGroup>
@@ -57,16 +73,18 @@ class EditExperience extends Component {
                 <Input
                 onChange={val => this.setState({ name: val.target.value })} value={this.state.company}
                   type="text"
-                  id="company"
+                  id="company1"
                   placeholder="Name placeholder"
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Description</Label>
                 <Input
-               onChange={val => this.setState({ surname: val.target.value })} value={this.state.description}
+               onChange={val => this.setState({ surname: val.target.value })} value={
+                this.state.description
+              }
                   type="text"
-                  id="description"
+                  id="description1"
                   placeholder="Name placeholder"
                 />
               </FormGroup>
@@ -76,35 +94,41 @@ class EditExperience extends Component {
                 onChange={val => this.setState({ area: val.target.value })} value={this.state.area}
                   type="text"
                   name="city"
-                  id="area"
+                  id="area1"
                 />
               </FormGroup>
 
+
+
               <FormGroup>
-                <label for="time">Start Date</label>
-                <input
-                onChange={(val) => this.setState({startDate: val.target.value})} value={this.state.startDate}
-                  type="datetime-local"
-                  className="form-control"
-                  id="startDate"
-                  required
-                />
+              <Label >StartDate</Label>
+        <Input
+        onChange={(val) => this.setState({startDate: val.target.value})} value={this.state.startDate}
+          type="date"
+         
+          id="startDate1"
+          placeholder={this.state.startDate}
+          required/>
               </FormGroup>
 
               <FormGroup>
-                <label for="time">End Date</label>
-                <input
-                onChange={(val) => this.setState({endDate: val.target.value})} value={this.state.endDate}
-                  type="datetime-local"
-                  className="form-control"
-                  id="endDate"
-                  required
-                />
+              <Label >StartDate</Label>
+        <Input
+        onChange={(val) => this.setState({endDate: val.target.value})} value={
+          
+          
+          this.state.endDate
+        }
+          type="date"
+          
+          id="endDate1"
+          placeholder="2019-12-12T00:00:00.000Z"
+          required/>
               </FormGroup>
 
               <Button color="success">Update</Button>
               <Button color="danger" onClick={async() => {
-                  await DeleteEachExperienceByID(this.props.id)
+                  await DeleteEachExperienceByID(this.props.id,this.props.username, this.props.password)
               this.props.closeModal()}}>  Delete</Button>
             </Form>
           </ModalBody>
@@ -119,9 +143,9 @@ class EditExperience extends Component {
 
 
     componentDidMount = async () => {
-        let oneUserExperienceProfile = await FetchEachExperienceByID(this.props.id)
-        console.log(oneUserExperienceProfile)
-    
+        let oneUserExperienceProfile = await FetchEachExperienceByID(this.props.id, this.props.username, this.props.password)
+        console.log("new dates", oneUserExperienceProfile)
+      
         this.setState({
             role: oneUserExperienceProfile.role,
             company: oneUserExperienceProfile.company,
@@ -131,6 +155,7 @@ class EditExperience extends Component {
             endDate: oneUserExperienceProfile.endDate
         })
 
+         
     
       }
 
@@ -149,17 +174,17 @@ class EditExperience extends Component {
         e.preventDefault();
         let editedProfileObject = {
     
-            "role": document.querySelector("#role").value,
-            "company": document.querySelector("#company").value,
-            "description": document.querySelector("#description").value,
-            "area": document.querySelector("#area").value,
-            "startDate": document.querySelector("#startDate").value,
-            "endDate": document.querySelector("#endDate").value
+            "role": document.querySelector("#role1").value,
+            "company": document.querySelector("#company1").value,
+            "description": document.querySelector("#description1").value,
+            "area": document.querySelector("#area1").value,
+            "startDate": this.state.startDate,
+            "endDate": this.state.startDate
            
       
           };
     
-            await FetchToUpdateExperience (this.props.id, editedProfileObject)
+            await FetchToUpdateExperience (this.props.id, editedProfileObject,this.props.username, this.props.password)
             this.props.closeModal()
 
 

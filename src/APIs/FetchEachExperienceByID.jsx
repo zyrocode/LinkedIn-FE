@@ -1,13 +1,13 @@
 
-const FetchEachExperienceByID = async (ID) => {
+const FetchEachExperienceByID = async (ID,userName,password) => {
 
 
-    let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/user18/experiences/".concat(ID)
+    let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/"+ userName + "/experiences/".concat(ID) 
     try {
         let response = await fetch(URL, {
             method: "GET",
             headers: {
-                "Authorization": "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
+                "Authorization": "Basic " + btoa(`${userName}:${password}`),
                 "Content-Type": "application/json"
             }
         })

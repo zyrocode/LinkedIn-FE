@@ -8,7 +8,8 @@ import EditExperience from "./EditExperience"
 class ExperienceComponent extends Component {
   state = {
     experiences: [],
-    openModal: false
+    openModal: false,
+    openModal1: false
   };
 
   render() {
@@ -16,16 +17,21 @@ class ExperienceComponent extends Component {
       <>
         <Container className="profile">
           <Container>
-              <Row>
-                 <Col md="10">
-                      Experiences
-                      
-                 </Col>
-                 <Col md="1">
-                 <i class="fa fa-plus" onClick={() => this.setState({ openModal: true })}></i>
-                   {this.state.openModal && <CreateExperience closeModal={() => this.setState({ openModal: false })}/>}   
-                 </Col> 
-                 
+            <Row>
+              <Col md="10">Experiences</Col>
+              <Col md="1">
+                <i
+                  className="fa fa-plus"
+                  onClick={() => this.setState({ openModal1: true })}
+                ></i>
+                {this.state.openModal1 && (
+                  <CreateExperience
+                    closeModal={() => this.setState({ openModal1: false })}
+                    username={this.props.username}
+                    password={this.props.password}
+                  />
+                )}
+              </Col>
             </Row>
           </Container>
           <Row>
@@ -34,7 +40,11 @@ class ExperienceComponent extends Component {
                 <Col md="10">
                   <div key={index}>
                     <small>
-                      {experience.startDate} - {experience.endDate} .
+                      <Moment format="MM/YYYY">
+                        {experience.startDate}
+                      </Moment>{" "}
+                      -{" "}
+                      <Moment format="MM/YYYY">{experience.endDate}</Moment>{" "}.{" "}
                       <span>
                         <Moment fromNow ago={experience.startDate}>
                           {experience.endDate}
@@ -50,8 +60,18 @@ class ExperienceComponent extends Component {
                 </Col>
                 <Col md="1">
                   {" "}
-                  <i class="fa fa-pencil" onClick={() => this.setState({ openModal: true })}></i>
-                  {this.state.openModal && <EditExperience closeModal={() => this.setState({ openModal: false })} id={experience._id} />} 
+                  <i
+                    className="fa fa-pencil"
+                    onClick={() => this.setState({ openModal: true })}
+                  ></i>
+                  {this.state.openModal && (
+                    <EditExperience
+                      closeModal={() => this.setState({ openModal: false })}
+                      id={experience._id}
+                      username={this.props.username}
+                      password={this.props.password}
+                    />
+                  )}
                 </Col>
               </>
             ))}
@@ -62,11 +82,11 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
-    let experiences = await FetchByExperience();
+    let experiences = await FetchByExperience(this.props.username, this.props.password);
     this.setState({
       experiences: experiences
     });
-    console.log(this.state.experiences);
+    // console.log('hey MAN', this.state.experiences); 
   };
 }
 

@@ -28,7 +28,7 @@ class ProfileComponent extends Component {
                                 <div className="m-3">
                                     {!this.state.openModal && <ProfileInfo username={this.props.username} password={this.props.password} />
                                     }
-                                </div>
+                                </div> 
                             </Col>  {/* end of a secondRow */}
                         </Row>
                     </Container>
