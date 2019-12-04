@@ -1,8 +1,8 @@
 
-const FetchByExperience = async (userName,password) => {
+const FetchByExperience = async (userName, password) => {
 
 
-    let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/"+ userName + "/experiences"
+    let URL = `https://strive-school-testing-apis.herokuapp.com/api/profile/${userName}/experiences`
     try {
         let response = await fetch(URL, {
             method: "GET",
