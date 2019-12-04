@@ -3,7 +3,7 @@ import FetchByNewsFeed from '../APIs/FetchByNewsFeed';
 import FetchUserByNewsFeed from '../APIs/FetchUserByNewsFeed';
 import { Container, Col, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
-<<<<<<< HEAD
+
 
 class NewsFeed extends Component {
     state = {
