@@ -32,15 +32,16 @@ class MainComponent extends Component {
               
 
             </Switch>
-            : <div className="login-form mx-auto mt-5">
+            :
+            <div className="login-form mx-auto mt-5">
               <Container>
                 <Row>
-                  <img className="mx-auto" style={{display: 'block' }} width="30%" src="https://brand.linkedin.com/etc/designs/linkedin/katy/global/clientlibs/img/default-share.png" alt="logo" />
+                  <img className="mx-auto" style={{ display: 'block' }} width="30%" src="https://seeklogo.net/wp-content/uploads/2017/01/linkedin-logo-512x512.png" alt="logo" />
                 </Row>
-                  <h1 className="text-center">WELCOME TO LINKEDIN!</h1>
+                <h1 className="text-center">WELCOME TO LINKEDIN!</h1>
                 {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
                 <Form onSubmit={this.getCredentials}>
-                  <Input className="login-input" id="username" type="text" />
+                  <Input className="login-input" id="username" type="text" placeholder="Username"/>
                   <Input className="login-input" id="password" type="password" />
                   <Input className="btn btn-primary" type="submit" value="Log In" />
                 </Form>

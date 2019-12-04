@@ -81,7 +81,7 @@ class EditExperience extends Component {
               </FormGroup>
 
               <FormGroup>
-                <Label>StartDate</Label>
+                <Label>End date</Label>
                 <Input
                   onChange={val =>
                     this.setState({ startDate: val.target.value })
@@ -95,7 +95,7 @@ class EditExperience extends Component {
               </FormGroup>
 
               <FormGroup>
-                <Label>StartDate</Label>
+                <Label>Start date</Label>
                 <Input
                   onChange={val => this.setState({ endDate: val.target.value })}
                   value={this.state.endDate}

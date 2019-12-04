@@ -14,15 +14,13 @@ class ProfilePage extends Component {
         return (
             <>
                 {this.state.isLoading && <PageLoading />}
-                {!this.state.isLoading && 
-                <Fade in={!this.state.isLoading}>
+                {!this.state.isLoading && <Fade in={!this.state.isLoading}>
                     <NavBar username={this.props.username} password={this.props.password} />
                     <ProfileComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
                     <ExperienceComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
                 </Fade>}
             </>);
     }
-
 
     componentDidMount = () => {
         setTimeout(() => {
@@ -31,7 +29,6 @@ class ProfilePage extends Component {
             })
         }, 1000);
     }
-
 }
 
 export default ProfilePage;
