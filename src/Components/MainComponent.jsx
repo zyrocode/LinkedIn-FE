@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
-import ProfilePage from './ProfilePage'
+import ProfilePages from './ProfilePages'
 import MyProfilePage from './MyProfilePage'
 
 
@@ -19,12 +19,18 @@ class MainComponent extends Component {
     return (
       <>
         <Router>
-          {this.state.logged
+          {this.state.logged 
             ?
             <Switch>
               <Route path="/" exact render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
               <Route path="/profile" exact render={() => <MyProfilePage username={this.state.user} password={this.state.pass} />} />
-              <Route path="/profiles/:user" render={() => <ProfilePage username={this.state.user} password={this.state.pass} />} />
+
+              {/* <Route path="/profiles/:user" render={() => <ProfilePages username={this.state.user} password={this.state.pass} />} /> */}
+
+              <Route path="/profile/:user" component={ProfilePages} />
+
+              
+
             </Switch>
             : <div className="login-form mx-auto mt-5">
               <Container>

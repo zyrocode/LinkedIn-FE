@@ -10,7 +10,7 @@ class ProfileComponent extends Component {
         openModal: false
     }
 
-    render() {
+    render() { 
         return (
             <>
                 <Fade in={!this.state.openModal}>

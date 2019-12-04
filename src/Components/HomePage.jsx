@@ -10,7 +10,7 @@ class HomePage extends Component {
         isLoading: true
     }
     render() {
-        return ( 
+        return (  
             <>
                 {this.state.isLoading && <PageLoading />}
                 {!this.state.isLoading && <Fade in={!this.state.isLoading}>

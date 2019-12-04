@@ -3,7 +3,7 @@ import FetchByNewsFeed from '../APIs/FetchByNewsFeed';
 import FetchUserByNewsFeed from '../APIs/FetchUserByNewsFeed';
 import { Container, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
-var merge = require('lodash.merge');
+
 
 class NewsFeed extends Component {
     state = {
@@ -17,8 +17,8 @@ class NewsFeed extends Component {
                     .map((post, index) =>
                         <Container key={index} className="profile">
                             <Row>
-                                <Link to={"/profiles/"+ post.username}><img className="newsfeed-pic" src={post.image} alt="profile pic" /></Link>
-                                <h5>{post.name}{" "}{post.surname}</h5>
+                                <Link to={"/profile/"+ post.username}><img className="newsfeed-pic" src={post.image} alt="profile pic" />
+                                <h5>{post.name}{" "}{post.surname}</h5></Link>
                             </Row>
                             <Row>
                                 <p>{post.text}</p>
