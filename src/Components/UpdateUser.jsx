@@ -78,11 +78,11 @@ class UpdateUser extends Component {
     e.preventDefault();
     let profileObject = {
 
-      "name": document.querySelector("#name").value,
-      "surname": document.querySelector("#surname").value,
-      "email": document.querySelector("#email").value,
-      "bio": document.querySelector("#bio").value,
-      "area": document.querySelector("#area").value,
+      name: this.state.name,
+      surname: this.state.surname,
+      email: this.state.email,
+      bio: this.state.bio,
+      area: this.state.area
 
     };
     await FetchToUpdate(profileObject, this.props.username, this.props.password)
