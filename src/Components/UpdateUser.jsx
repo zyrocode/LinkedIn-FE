@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import FetchToUpdate from "../APIs/FetchToUpdate"
-import FetchByUserName from "../APIs/FetchByUserName"
+import PutAPI from "../APIs/PutAPI"
+import GetAPI from "../APIs/GetAPI"
 
 class UpdateUser extends Component {
   state = {
@@ -29,9 +29,7 @@ class UpdateUser extends Component {
       <div>
         <Modal isOpen={this.state.isOpen} toggle={this.toggleClose} >
           <ModalHeader toggle={this.toggleClose}>Modal title</ModalHeader>
-
           <ModalBody>
-
             <Form onSubmit={this.postUpdatedDetails}>
                   <FormGroup>
                     <Label for="exampleEmail">Email</Label>
@@ -63,7 +61,7 @@ class UpdateUser extends Component {
 
 
   componentDidMount = async () => { 
-    let userProfile = await FetchByUserName(this.props.username, this.props.password)
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'myprofile')
 
     this.setState({
       name: userProfile.name,
@@ -85,7 +83,7 @@ class UpdateUser extends Component {
       area: this.state.area
 
     };
-    await FetchToUpdate(profileObject, this.props.username, this.props.password)
+    await PutAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile',profileObject)
     this.props.closeModal()
   }
 }

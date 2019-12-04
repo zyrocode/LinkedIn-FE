@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import FetchByNewsFeed from '../APIs/FetchByNewsFeed';
-import FetchUserByNewsFeed from '../APIs/FetchUserByNewsFeed';
+import GetAPI from '../APIs/GetAPI';
 import { Container, Col, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
@@ -14,42 +13,48 @@ class NewsFeed extends Component {
         return (
             <>
                 <Container>
-                    <Col md="8" className="mx-auto">
-                        <Col className="create-news-feed">
-                            <Link to="/">
-                                <i className="fas fa-edit"></i>
-                                <h3>Create a new</h3>
-                            </Link>
-                        </Col>
-
-                        {this.state.posts
-                            .map((post, index) =>
-                                <div key={index} className="news-feed">
-                                    <Link to={"/profiles/" + post.username}><img className="newsfeed-pic" src={post.image} alt="profile pic" />
-                                        <span style={{color: 'black', padding: '10px', 'font-weight': '600'}}>{post.name}{" "}{post.surname}</span>
+                    <Row>
+                        <Col className="mx-auto">
+                            <Row>
+                                <Col className="create-news-feed">
+                                    <Link to="/">
+                                        <i className="fas fa-edit"></i>
+                                        <h3>Create a new</h3>
                                     </Link>
-                                    {post._edit &&
-                                        <i className="fa fa-pencil"></i>}
-                                    <p style={{'padding-top': '20px'}}>{post.text}</p>
-                                    <hr />
-                                    <i className="fas fa-thumbs-up"></i>
-                                    <i className="fas fa-comment"></i>
-                                </div>)
-                        }
-                    </Col>
+                                </Col>
+                            </Row>
+                            {this.state.posts
+                                .map((post, index) =>
+                                    <Row key={index} className="news-feed">
+                                        <Col>
+                                            <Link to={"/profile/" + post.username}><img className="newsfeed-pic" src={post.image} alt="profile pic" />
+                                                <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{post.name}{" "}{post.surname}</span>
+                                            </Link>
+                                            {post._edit &&
+                                                <i className="fa fa-pencil"></i>}
+                                            <p style={{ paddingTop: '20px' }}>{post.text}</p>
+                                            <hr />
+                                            <i className="fas fa-thumbs-up"></i>
+                                            <i className="fas fa-comment"></i>
+                                        </Col>
+                                    </Row>)
+                            }
+                        </Col>
+                    </Row>
                 </Container>
             </>
         );
     }
 
     componentDidMount = async () => {
-        let posts = await FetchByNewsFeed(this.props.username, this.props.password)
+        console.log(localStorage.getItem('username'))
+        let posts = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'posts')
         posts.forEach(async post => {
             let oneUser = post.username
-            let profile = await FetchUserByNewsFeed(this.props.username, this.props.password, oneUser)
+            let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', oneUser)
             post.name = profile.name
             post.surname = profile.surname
-            if (this.props.username === post.username)
+            if (localStorage.getItem('username') === post.username)
                 post._edit = "true"
             profile.image
                 ?
@@ -60,8 +65,6 @@ class NewsFeed extends Component {
                 posts: [...this.state.posts, post]
             })
         })
-
-        console.log(posts)
     }
 }
 

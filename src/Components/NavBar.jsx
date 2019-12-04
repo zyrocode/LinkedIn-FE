@@ -5,7 +5,7 @@ import {
     NavItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
-import FetchByUserName from '../APIs/FetchByUserName';
+import GetAPI from '../APIs/GetAPI';
 
 class NavBar extends Component {
     state = {
@@ -28,32 +28,32 @@ class NavBar extends Component {
                         <NavItem>
                             <Link to="/">
                                 <span className="nav-icon nav-icon-home"></span>
-                                
+
                             </Link>
                         </NavItem>
                         <NavItem>
-                            <span className="nav-icon-group"></span>
+                            <span className="nav-icon nav-icon-group"></span>
                         </NavItem>
                         <NavItem>
-                            <span className="nav-icon-case"></span>
+                            <span className="nav-icon nav-icon-case"></span>
                         </NavItem>
                         <NavItem>
-                            <span className="nav-icon-chat"></span>
+                            <span className="nav-icon nav-icon-chat"></span>
                         </NavItem>
                         <NavItem>
-                            <span className="nav-icon-bell"></span>
+                            <span className="nav-icon nav-icon-bell"></span>
                         </NavItem>
                         <NavItem>
                             <Link to="/profile">
-                                <img className="nav-icon-userimg" src={this.state.image} alt="profile-img" />
+                                <img className="nav-icon nav-icon-userimg" src={this.state.image} alt="profile-img" />
                             </Link>
                         </NavItem>
                     </div>
                     <NavItem>
-                        <span className="nav-icon-grid"></span>
+                        <span className="nav-icon nav-icon-grid"></span>
                     </NavItem>
                     <NavItem>
-                        <span className="nav-icon-book"></span>
+                        <span className="nav-icon nav-icon-book"></span>
                     </NavItem>
                 </Nav>
             </>
@@ -61,7 +61,8 @@ class NavBar extends Component {
     }
 
     componentDidMount = async () => {
-        let profile = await FetchByUserName(this.props.username, this.props.password)
+        console.log(localStorage.getItem('username'))
+        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'myprofile')
         this.setState({
             image: profile.image
         })

@@ -16,9 +16,9 @@ class ProfilePage extends Component {
                 {this.state.isLoading && <PageLoading />}
                 {!this.state.isLoading && 
                 <Fade in={!this.state.isLoading}>
-                    <NavBar username={this.props.username} password={this.props.password} />
-                    <ProfileComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
-                    <ExperienceComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
+                    <NavBar/>
+                    <ProfileComponent/>
+                    <ExperienceComponent/>
                 </Fade>}
             </>);
     }

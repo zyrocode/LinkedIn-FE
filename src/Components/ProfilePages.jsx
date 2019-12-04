@@ -136,10 +136,7 @@ class ProfilePages extends Component {
     componentDidMount = async() => {
         let userID = this.props.match.params.user
         let userInfo = await FetchByEachNewsFeedUser(userID)
-         console.log("profile info", userInfo)
-
         let userExperience = await FetchByEachNewsFeedExperience (userID)
-       
         setTimeout(() => {
             this.setState({
                 isLoading: false,

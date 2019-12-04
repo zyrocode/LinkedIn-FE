@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
-import FetchByExperience from "../APIs/FetchByExperience";
+import GetAPI from "../APIs/GetAPI";
 import Moment from "react-moment";
 import CreateExperience from "./CreateExperience"
 import EditExperience from "./EditExperience"
@@ -8,84 +8,82 @@ import EditExperience from "./EditExperience"
 class ExperienceComponent extends Component {
   state = {
     experiences: [],
-    openModal: false,
-    openModal1: false
+    openModalEdit: false,
+    openModalCreate: false
   };
 
   render() {
     return (
       <>
-        <Container className="profile">
+        < Container className="profile mb-5">
           <Container>
             <Row>
               <Col md="12" className="my-4">
-                <b style={{'font-size': '30px'}}>Experiences</b>
+                <b style={{ fontSize: '30px' }}>Experiences</b>
                 <i
                   className="fa fa-plus"
-                  onClick={() => this.setState({ openModal1: true })}
+                  onClick={() => this.setState({ openModalCreate: true })}
                 ></i>
-                {this.state.openModal1 && (
+                {this.state.openModalCreate && (
                   <CreateExperience
-                    closeModal={() => this.setState({ openModal1: false })}
-                    username={this.props.username}
-                    password={this.props.password}
+                    closeModal={() => this.setState({ openModalCreate: false })}
                   />
                 )}
               </Col>
             </Row>
           </Container>
-
-          {this.state.experiences.map((experience, index) => (
-            <Container>
-              <Row key={index}>
-                <Col md="12">
-                  <hr />
-                  <i
-                    className="fa fa-pencil"
-                    onClick={() => this.setState({ openModal: true })}
-                  ></i>
-                  <div className="experience">
-                    <small>
-                      <Moment format="MM/YYYY">
-                        {experience.startDate}
-                      </Moment>{" "}
-                      -{" "}
-                      <Moment format="MM/YYYY">{experience.endDate}</Moment>{" "}.{" "}
-                      <span>
+          {this.state.experiences.map((experience, index) => 
+              <Container key={index}>
+                {this.state.openModalEdit && (
+                  <EditExperience
+                    closeModal={() => this.setState({ openModalEdit: false })}
+                    id={experience._id}
+                  />
+                )}
+                <hr />
+                <Row>
+                  <Col style={{ maxWidth: '60px' }}>
+                    <img width="40px" src="https://cdn0.iconfinder.com/data/icons/financial-business/512/company_building-512.png" alt="logo company" />
+                  </Col>
+                  <Col>
+                    <i
+                      className="fa fa-pencil"
+                      onClick={() => this.setState({ openModalEdit: true })}
+                    ></i>
+                    <div className="experience">
+                      <h6 style={{ fontWeight: '700' }}>{experience.role}</h6>
+                      <p>{experience.company}</p>
+                      <small>
+                        <Moment format="MM/YYYY">
+                          {experience.startDate}
+                        </Moment>
+                        {" "}–{" "}
+                        <Moment format="MM/YYYY">
+                          {experience.endDate}
+                        </Moment>
+                        {" "}-{" "}
                         <Moment fromNow ago={experience.startDate}>
                           {experience.endDate}
-                        </Moment>{" "}
-                      </span>{" "}
-                    </small>
-                    <p>{experience.role}</p>
-                    <p>{experience.company}</p>
-                    <p>{experience.description}</p>
-                    <p>{experience.area}</p>
-                  </div>
-                  {this.state.openModal && (
-                    <EditExperience
-                      closeModal={() => this.setState({ openModal: false })}
-                      id={experience._id}
-                      username={this.props.username}
-                      password={this.props.password}
-                    />
-                  )}
-                </Col>
-              </Row>
-            </Container>
-          ))}
-
+                        </Moment>
+                      </small>
+                      <p>{experience.description}</p>
+                      <p>{experience.area}</p>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            )}
         </Container>
       </>
     );
   }
 
   componentDidMount = async () => {
-    let experiences = await FetchByExperience(this.props.username, this.props.password);
+    console.log(this.state.experiences)
     this.setState({
-      experiences: experiences
+      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences')
     });
-    // console.log('hey MAN', this.state.experiences); 
+    
   };
 }
 

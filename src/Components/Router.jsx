@@ -4,6 +4,7 @@ import HomePage from "./HomePage";
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
 import ProfilePages from './ProfilePages'
 import MyProfilePage from './MyProfilePage'
+import GetAPI from "../APIs/GetAPI";
 
 
 class MainComponent extends Component {
@@ -11,26 +12,24 @@ class MainComponent extends Component {
   state = {
     logged: false,
     wrongPass: false,
-    user: undefined,
-    pass: undefined
   }
 
   render() {
+    /* // Save data to localStorage
+    localStorage.setItem('username', this.state.user);
+    /* Get saved data from localStorage  */
+    /* localStorage.getItem('username') */ 
+
+
     return (
       <>
         <Router>
-          {this.state.logged 
+          {this.state.logged
             ?
             <Switch>
-              <Route path="/" exact render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
-              <Route path="/profile" exact render={() => <MyProfilePage username={this.state.user} password={this.state.pass} />} />
-
-              {/* <Route path="/profiles/:user" render={() => <ProfilePages username={this.state.user} password={this.state.pass} />} /> */}
-
+              <Route path="/" exact component={HomePage} />
+              <Route path="/profile" exact component={MyProfilePage} />
               <Route path="/profile/:user" component={ProfilePages} />
-
-              
-
             </Switch>
             :
             <div className="login-form mx-auto mt-5">
@@ -41,7 +40,7 @@ class MainComponent extends Component {
                 <h1 className="text-center">WELCOME TO LINKEDIN!</h1>
                 {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
                 <Form onSubmit={this.getCredentials}>
-                  <Input className="login-input" id="username" type="text" placeholder="Username"/>
+                  <Input className="login-input" id="username" type="text" placeholder="Username" />
                   <Input className="login-input" id="password" type="password" />
                   <Input className="btn btn-primary" type="submit" value="Log In" />
                 </Form>
@@ -57,19 +56,10 @@ class MainComponent extends Component {
     e.preventDefault();
     let username = document.querySelector("#username").value
     let password = document.querySelector("#password").value
-    await this.setState({
-      user: username,
-      pass: password
-    })
-    let response = await fetch("https://strive-school-testing-apis.herokuapp.com/api/profile/", {
-      method: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(`${username}:${password}`),
-        "Content-Type": "application/json"
-      }
-    })
-
-    response.ok ? this.setState({ logged: true }) : this.setState({ wrongPass: true })
+    let response = await GetAPI(username, password)
+    localStorage.setItem('username', username)
+    localStorage.setItem('password', password)
+    response ? this.setState({ logged: true }) : this.setState({ wrongPass: true })
   }
 }
 

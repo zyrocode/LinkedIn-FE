@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FetchToPost from "../APIs/FetchToPost"
+import PostAPI from "../APIs/PostAPI"
 import {
   Modal,
   ModalHeader,
@@ -34,13 +34,11 @@ class CreateExperience extends Component {
       <div>
         <Modal isOpen={this.state.isOpen} toggle={this.toggleClose}>
           <ModalHeader toggle={this.toggleClose}>Modal title</ModalHeader>
-
           <ModalBody>
             <Form onSubmit={this.postNewDetails}>
               <FormGroup>
                 <Label>Role</Label>
                 <Input
-                //   onChange={val => this.setState({ role: val.target.value })}
                   type="text"
                   id="role"
                   placeholder="Role"
@@ -49,7 +47,6 @@ class CreateExperience extends Component {
               <FormGroup>
                 <Label>Company</Label>
                 <Input
-                //   onChange={val => this.setState({ name: val.target.value })}
                   type="text"
                   id="company"
                   placeholder="Add Company details"
@@ -58,7 +55,6 @@ class CreateExperience extends Component {
               <FormGroup>
                 <Label>Description</Label>
                 <Input
-                //   onChange={val => this.setState({ surname: val.target.value })}
                   type="text"
                   id="description"
                   placeholder="Add Description"
@@ -67,33 +63,29 @@ class CreateExperience extends Component {
               <FormGroup>
                 <Label>Area</Label>
                 <Input
-                //   onChange={val => this.setState({ area: val.target.value })}
                   type="text"
                   name="city"
                   id="area"
                 />
               </FormGroup>
-
               <FormGroup>
-              <Label >StartDate</Label>
-        <Input
-          type="date"
-          name="date"
-          id="startDate"
-          placeholder="Start Date"
-          />
+                <Label >Start Date</Label>
+                <Input
+                  type="date"
+                  name="date"
+                  id="startDate"
+                  placeholder="Start Date"
+                />
               </FormGroup>
-
               <FormGroup>
-              <Label >StartDate</Label>
-        <Input
-          type="date"
-          name="date"
-          id="endDate"
-          placeholder="End Date"
-          />
+                <Label >End Date</Label>
+                <Input
+                  type="date"
+                  name="date"
+                  id="endDate"
+                  placeholder="End Date"
+                />
               </FormGroup>
-
               <Button color="primary">Add Data</Button>
             </Form>
           </ModalBody>
@@ -105,45 +97,21 @@ class CreateExperience extends Component {
 
 
 
-  postNewDetails = async (e)=>{
+  postNewDetails = async (e) => {
     e.preventDefault();
     let profileObjectForPost = {
 
-        "role": document.querySelector("#role").value,
-        "company": document.querySelector("#company").value,
-        "description": document.querySelector("#description").value,
-        "area": document.querySelector("#area").value,
-        "startDate": document.querySelector("#startDate").value,
-        "endDate": document.querySelector("#endDate").value
-       
-  
-      };
-
-      let postData =  await FetchToPost(profileObjectForPost,this.props.username,this.props.password)
-      console.log(postData)
-
-      this.props.closeModal() 
+      "role": document.querySelector("#role").value,
+      "company": document.querySelector("#company").value,
+      "description": document.querySelector("#description").value,
+      "area": document.querySelector("#area").value,
+      "startDate": document.querySelector("#startDate").value,
+      "endDate": document.querySelector("#endDate").value
 
 
-
-
-
+    };
+    await PostAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experience',profileObjectForPost)
+    this.props.closeModal()
   }
-
- 
-
-
-
-
-
-
 }
-
 export default CreateExperience;
-
-// "role": "CTO",
-// "company": "Strive School",
-// "startDate": "2019-06-16T22:00:00.000Z",
-// "endDate": "2019-06-16T22:00:00.000Z",
-// "description": "Doing stuff here and there",
-// "area": "Berlin",

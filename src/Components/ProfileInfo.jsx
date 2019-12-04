@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FetchByUserName from "../APIs/FetchByUserName"
+import GetAPI from "../APIs/GetAPI"
 import { Row, Col } from 'reactstrap';
 
 class ProfileInfo extends Component {
@@ -37,7 +37,7 @@ class ProfileInfo extends Component {
 
 
   componentDidMount = async () => {
-    let userProfile = await FetchByUserName(this.props.username, this.props.password)
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'myprofile')
     this.setState({
       userInfo: {
         name: userProfile.name,
