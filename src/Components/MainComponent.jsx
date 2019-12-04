@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
-import MyProfilePage from './MyProfilePage'
 import ProfilePage from './ProfilePage'
+import MyProfilePage from './MyProfilePage'
 
 
 class MainComponent extends Component {

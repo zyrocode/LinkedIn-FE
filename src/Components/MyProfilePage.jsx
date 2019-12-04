@@ -6,21 +6,23 @@ import ProfileComponent from './ProfileComponent'
 import ExperienceComponent from './ExperienceComponent'
 
 
-class HomePage extends Component {
+class ProfilePage extends Component {
     state = {
         isLoading: true
     }
     render() {
-        return ( 
+        return (
             <>
                 {this.state.isLoading && <PageLoading />}
                 {!this.state.isLoading && <Fade in={!this.state.isLoading}>
-                    <NavBar username={this.props.username} password={this.props.password}/>
-                    <ProfileComponent username={this.props.username} password={this.props.password}/>
-                    <ExperienceComponent  username={this.props.username} password={this.props.password}/>
+                    <NavBar username={this.props.username} password={this.props.password} />
+                    <ProfileComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
+                    <ExperienceComponent userid={this.state.user} username={this.props.username} password={this.props.password} />
                 </Fade>}
             </>);
     }
+
+
     componentDidMount = () => {
         setTimeout(() => {
             this.setState({
@@ -31,4 +33,4 @@ class HomePage extends Component {
 
 }
 
-export default HomePage;
+export default ProfilePage;
