@@ -5,9 +5,6 @@ import { Container, Col, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
 <<<<<<< HEAD
 
-=======
->>>>>>> 9b7eaab95f8e0011c4ce9f4a53ee661ea7746e30
-
 class NewsFeed extends Component {
     state = {
         posts: []
@@ -16,21 +13,6 @@ class NewsFeed extends Component {
     render() {
         return (
             <>
-<<<<<<< HEAD
-                {this.state.posts
-                    .map((post, index) =>
-                        <Container key={index} className="profile">
-                            <Row>
-                                <Link to={"/profile/"+ post.username}><img className="newsfeed-pic" src={post.image} alt="profile pic" />
-                                <h5>{post.name}{" "}{post.surname}</h5></Link>
-                            </Row>
-                            <Row>
-                                <p>{post.text}</p>
-                            </Row>
-                        </Container>
-                    )
-                }
-=======
                 <Container>
                     <Col md="8" className="mx-auto">
                         <Col className="create-news-feed">
@@ -56,7 +38,6 @@ class NewsFeed extends Component {
                         }
                     </Col>
                 </Container>
->>>>>>> 9b7eaab95f8e0011c4ce9f4a53ee661ea7746e30
             </>
         );
     }
