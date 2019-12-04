@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import HomePage from "./HomePage";
+import { Alert, Form, Input, Container } from 'reactstrap'
 
 
 class MainComponent extends Component {
@@ -11,21 +12,23 @@ class MainComponent extends Component {
     user: undefined,
     pass: undefined
   }
- 
+
   render() {
     return (
       <>
         <Router>
           {this.state.logged
             ?
-            <Route to="/home" render={() => <HomePage username={this.state.user} password={this.state.pass} />}/>
+            <Route to="/home" render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
             : <>
-              <form onSubmit={this.getCredentials}>
-                <input id="username" type="text" />
-                <input id="password" type="password" />
-                <input type="submit"  />
-              </form>
-              {this.state.wrongPass && <h1>WRONG PASS</h1>}
+              <Container>
+              {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
+                <Form onSubmit={this.getCredentials}>
+                  <Input id="username" type="text" />
+                  <Input id="password" type="password" />
+                  <Input type="submit" value="Log In" />
+                </Form>
+                </Container>
             </>
           }
         </Router>

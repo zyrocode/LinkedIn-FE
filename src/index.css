@@ -97,7 +97,7 @@ input[type="search"] {
   margin: 5px;
   border-radius: 3px;
 }
-.fa-pencil {
+.pencil {
   position: absolute;
   top: -40px;
   right: 10px;
@@ -122,5 +122,18 @@ input[type="search"] {
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.377);
   width: 150px;
   height: 150px;
+}
+
+.nav-icon-userimg {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 1px solid #dbe6ea;
+}
+
+.fa-plus {
+  position: absolute ;
+  right: 0;
+  top: 5px;
 }
 

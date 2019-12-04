@@ -15,7 +15,7 @@ class HomePage extends Component {
             <>
                 {this.state.isLoading && <PageLoading />}
                 {!this.state.isLoading && <Fade in={!this.state.isLoading}>
-                    <NavBar/>
+                    <NavBar username={this.props.username} password={this.props.password}/>
                     <ProfileComponent username={this.props.username} password={this.props.password}/>
                     <ExperienceComponent  username={this.props.username} password={this.props.password}/>
                 </Fade>}

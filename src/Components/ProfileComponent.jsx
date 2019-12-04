@@ -21,7 +21,7 @@ class ProfileComponent extends Component {
                         {/* start of a secondRow */}
                         <Row className="profile-body">
                             <Col>
-                                <i className="fa fa-pencil" style={{ color: "#006097", background: "transparent" }} onClick={() => this.setState({ openModal: true })}></i>
+                                <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>
 
                                 {this.state.openModal && <UpdateUser username={this.props.username} password={this.props.password}closeModal={() => this.setState({ openModal: false })} id={this.state.id} />}
 
