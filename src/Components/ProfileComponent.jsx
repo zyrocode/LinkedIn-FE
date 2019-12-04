@@ -16,7 +16,7 @@ class ProfileComponent extends Component {
                 <Fade in={!this.state.openModal}>
                     <Container text-center className="profile">
                         <Row className="profile-header">
-                            <img height="150px" width="100%" src="https://www.titanui.com/wp-content/uploads/2014/01/27/Grey-Checker-Pattern-Background-Vector.jpg" alt="" className="src" />
+                            <img height="150px" width="100%" src="https://cdn.hipwallpaper.com/i/62/8/uDtR6w.jpg" alt="" className="src" />
                         </Row>
                         {/* start of a secondRow */}
                         <Row className="profile-body">
