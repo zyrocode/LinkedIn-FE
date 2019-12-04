@@ -26,7 +26,9 @@ class NavBar extends Component {
                     </NavItem>
                     <div align="right" className="nav-right-side">
                         <NavItem>
-                            <span className="nav-icon-home"></span>
+                            <Link to="/">
+                                <span className="nav-icon-home"></span>
+                            </Link>
                         </NavItem>
                         <NavItem>
                             <span className="nav-icon-group"></span>

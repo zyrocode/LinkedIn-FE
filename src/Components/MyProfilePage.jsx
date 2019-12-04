@@ -8,8 +8,7 @@ import ExperienceComponent from './ExperienceComponent'
 
 class HomePage extends Component {
     state = {
-        isLoading: true,
-        user: this.props.match.params.user
+        isLoading: true
     }
     render() {
         return ( 
@@ -28,7 +27,6 @@ class HomePage extends Component {
                 isLoading: false
             })
         }, 1000);
-        
     }
 
 }
