@@ -22,7 +22,6 @@ class ProfilePage extends Component {
             </>);
     }
 
-
     componentDidMount = () => {
         setTimeout(() => {
             this.setState({
@@ -30,7 +29,6 @@ class ProfilePage extends Component {
             })
         }, 1000);
     }
-
 }
 
 export default ProfilePage;
