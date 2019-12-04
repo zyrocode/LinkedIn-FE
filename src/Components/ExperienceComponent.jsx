@@ -37,9 +37,9 @@ class ExperienceComponent extends Component {
           </Container>
           <Row>
             {this.state.experiences.map((experience, index) => (
-              <>
+              <div key={index}>
                 <Col md="10">
-                  <div className="experience" key={index}>
+                  <div className="experience">
                     <small>
                       <Moment format="MM/YYYY">
                         {experience.startDate}
@@ -74,7 +74,7 @@ class ExperienceComponent extends Component {
                     />
                   )}
                 </Col>
-              </>
+              </div>
             ))}
           </Row>
         </Container>

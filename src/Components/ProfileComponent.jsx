@@ -10,11 +10,11 @@ class ProfileComponent extends Component {
         openModal: false
     }
 
-    render() {
+    render() { 
         return (
             <>
                 <Fade in={!this.state.openModal}>
-                    <Container text-center className="profile">
+                    <Container className="profile">
                         <Row className="profile-header">
                             <img height="150px" width="100%" src="https://cdn.hipwallpaper.com/i/62/8/uDtR6w.jpg" alt="" className="src" />
                         </Row>
