@@ -4,6 +4,7 @@ import {
     Nav,
     NavItem
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 import FetchByUserName from '../APIs/FetchByUserName';
 
 class NavBar extends Component {
@@ -16,7 +17,9 @@ class NavBar extends Component {
             <>
                 <Nav className="sticky-top">
                     <NavItem>
-                        <img className="logo-img" src="http://www.prepare1.com/wp-content/uploads/2014/04/linkedin-logo-high-res-1254-1024x1024.jpg" alt="" />
+                        <Link to="/">
+                            <img className="logo-img" src="http://www.prepare1.com/wp-content/uploads/2014/04/linkedin-logo-high-res-1254-1024x1024.jpg" alt="logo-img" />
+                        </Link>
                     </NavItem>
                     <NavItem>
                         <Input type="search" placeholder="Search" />
@@ -38,7 +41,9 @@ class NavBar extends Component {
                             <span className="nav-icon-bell"></span>
                         </NavItem>
                         <NavItem>
-                            <img className="nav-icon-userimg" src={this.state.image}></img>
+                            <Link to="/profile">
+                                <img className="nav-icon-userimg" src={this.state.image} alt="profile-img" />
+                            </Link>
                         </NavItem>
                     </div>
                     <NavItem>

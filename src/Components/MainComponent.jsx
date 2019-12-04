@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import { Alert, Form, Input, Container } from 'reactstrap'
+import ProfilePage from './ProfilePage'
 
 
 class MainComponent extends Component {
@@ -19,16 +20,19 @@ class MainComponent extends Component {
         <Router>
           {this.state.logged
             ?
-            <Route to="/home" render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
+            <Switch>
+              <Route path="/" exact render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
+              <Route path="/profile" exact render={() => <ProfilePage username={this.state.user} password={this.state.pass} />} />
+            </Switch>
             : <>
               <Container>
-              {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
+                {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
                 <Form onSubmit={this.getCredentials}>
                   <Input id="username" type="text" />
                   <Input id="password" type="password" />
                   <Input type="submit" value="Log In" />
                 </Form>
-                </Container>
+              </Container>
             </>
           }
         </Router>
