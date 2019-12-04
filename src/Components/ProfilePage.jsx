@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Fade } from 'reactstrap'
 import NavBar from './NavBar'
-import PageLoading from './PageLoading'
 import ProfileComponent from './ProfileComponent'
 import ExperienceComponent from './ExperienceComponent'
 
@@ -12,22 +11,17 @@ class ProfilePage extends Component {
     }
     render() {
         return (
-            <>
-                {this.state.isLoading && <PageLoading />}
-                {!this.state.isLoading && <Fade in={!this.state.isLoading}>
-                    <NavBar/>
-                    <ProfileComponent/>
-                    <ExperienceComponent/>
-                </Fade>}
-            </>);
+                <Fade in={!this.state.isLoading}>
+                    <NavBar />
+                    <ProfileComponent userID={this.props.match.params.user}/>
+                    <ExperienceComponent userID={this.props.match.params.user}/>
+                </Fade>);
     }
 
     componentDidMount = () => {
-        setTimeout(() => {
-            this.setState({
-                isLoading: false
-            })
-        }, 1000);
+        this.setState({
+            isLoading: false
+        })
     }
 }
 

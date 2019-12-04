@@ -11,20 +11,15 @@ class HomePage extends Component {
     }
     render() {
         return (  
-            <>
-                {this.state.isLoading && <PageLoading />}
-                {!this.state.isLoading && <Fade in={!this.state.isLoading}>
+                <Fade in={!this.state.isLoading}>
                     <NavBar/>
                     <NewsFeed/>
-                </Fade>}
-            </>);
+                </Fade>);
     }
     componentDidMount = () => {
-        setTimeout(() => {
-            this.setState({
-                isLoading: false
-            })
-        }, 1000);
+        this.setState({
+            isLoading: false
+        })
     }
 
 }

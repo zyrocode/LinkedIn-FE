@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomePage from "./HomePage";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HomePage from './HomePage';
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
+import ProfilePage from './ProfilePage'
+import GetAPI from '../APIs/GetAPI';
 import ProfilePages from './ProfilePages'
-import MyProfilePage from './MyProfilePage'
-import GetAPI from "../APIs/GetAPI";
 
 
 class MainComponent extends Component {
@@ -15,12 +15,6 @@ class MainComponent extends Component {
   }
 
   render() {
-    /* // Save data to localStorage
-    localStorage.setItem('username', this.state.user);
-    /* Get saved data from localStorage  */
-    /* localStorage.getItem('username') */ 
-
-
     return (
       <>
         <Router>
@@ -28,8 +22,8 @@ class MainComponent extends Component {
             ?
             <Switch>
               <Route path="/" exact component={HomePage} />
-              <Route path="/profile" exact component={MyProfilePage} />
-              <Route path="/profile/:user" component={ProfilePages} />
+              <Route path="/profile/:user" component={ProfilePage} />
+              {/* <Route path="/profiles/:user" component={ProfilePages} /> */}
             </Switch>
             :
             <div className="login-form mx-auto mt-5">

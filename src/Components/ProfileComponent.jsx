@@ -20,10 +20,10 @@ class ProfileComponent extends Component {
                         {/* start of a secondRow */}
                         <Row className="profile-body">
                             <Col>
-                                <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>
+                            {localStorage.getItem('username') === this.props.userID && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
                                 {this.state.openModal && <UpdateUser closeModal={() => this.setState({ openModal: false })}/>}
                                 <div className="m-3">
-                                    {!this.state.openModal && <ProfileInfo/>
+                                    {!this.state.openModal && <ProfileInfo userID={this.props.userID}/>
                                     }
                                 </div> 
                             </Col>  {/* end of a secondRow */}

@@ -10,15 +10,20 @@ const GetAPI = async (userName, password, whatToFetch, userName2, ID) => {
             URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/" + userName + "/experiences/".concat(ID)
             break
         case 'experiences':
+            !userName2
+            ?
             URL = `https://strive-school-testing-apis.herokuapp.com/api/profile/${userName}/experiences`
+            :
+            URL = `https://strive-school-testing-apis.herokuapp.com/api/profile/${userName2}/experiences`
             break
         case 'posts':
             URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/"
             break
-        case 'myprofile':
-            URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName)
-            break
         case 'profile':
+            !userName2
+            ?
+            URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName)
+            :
             URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName2)
     }
 

@@ -37,7 +37,9 @@ class ProfileInfo extends Component {
 
 
   componentDidMount = async () => {
-    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'myprofile')
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID)
+    if (!userProfile.image)
+      userProfile.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
     this.setState({
       userInfo: {
         name: userProfile.name,

@@ -44,7 +44,7 @@ class NavBar extends Component {
                             <span className="nav-icon nav-icon-bell"></span>
                         </NavItem>
                         <NavItem>
-                            <Link to="/profile">
+                            <Link to={'/profile/' + localStorage.getItem('username')}>
                                 <img className="nav-icon nav-icon-userimg" src={this.state.image} alt="profile-img" />
                             </Link>
                         </NavItem>
@@ -61,8 +61,7 @@ class NavBar extends Component {
     }
 
     componentDidMount = async () => {
-        console.log(localStorage.getItem('username'))
-        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'myprofile')
+        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
         this.setState({
             image: profile.image
         })

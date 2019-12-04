@@ -20,10 +20,10 @@ class ExperienceComponent extends Component {
             <Row>
               <Col md="12" className="my-4">
                 <b style={{ fontSize: '30px' }}>Experiences</b>
-                <i
+                {localStorage.getItem('username') === this.props.userID && <i
                   className="fa fa-plus"
                   onClick={() => this.setState({ openModalCreate: true })}
-                ></i>
+                ></i>}
                 {this.state.openModalCreate && (
                   <CreateExperience
                     closeModal={() => this.setState({ openModalCreate: false })}
@@ -46,10 +46,10 @@ class ExperienceComponent extends Component {
                     <img width="40px" src="https://cdn0.iconfinder.com/data/icons/financial-business/512/company_building-512.png" alt="logo company" />
                   </Col>
                   <Col>
-                    <i
+                    {localStorage.getItem('username') === this.props.userID && <i
                       className="fa fa-pencil"
                       onClick={() => this.setState({ openModalEdit: true })}
-                    ></i>
+                    ></i>}
                     <div className="experience">
                       <h6 style={{ fontWeight: '700' }}>{experience.role}</h6>
                       <p>{experience.company}</p>
@@ -81,7 +81,7 @@ class ExperienceComponent extends Component {
   componentDidMount = async () => {
     console.log(this.state.experiences)
     this.setState({
-      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences')
+      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences', this.props.userID)
     });
     
   };
