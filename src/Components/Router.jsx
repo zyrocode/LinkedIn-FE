@@ -5,6 +5,7 @@ import { Alert, Form, Input, Container, Row } from 'reactstrap'
 import PageProfile from './PageProfile'
 import GetAPI from '../APIs/GetAPI';
 import PageLoading from './PageLoading'
+import NavBar from './SectionNavBar'
 
 
 class MainComponent extends Component {
@@ -25,6 +26,7 @@ class MainComponent extends Component {
               {this.state.isLoading && <PageLoading />}
               {!this.state.isLoading &&
                 <>
+                  <NavBar />
                   <Route path="/" exact component={PageHome} />
                   <Route path="/profile/:user" component={PageProfile} />
                 </>}

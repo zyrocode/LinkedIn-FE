@@ -9,7 +9,9 @@ import GetAPI from '../APIs/GetAPI';
 
 class NavBar extends Component {
     state = {
-        image: undefined
+        image: undefined,
+        allUsers: [],
+        search: undefined
     }
 
     render() {
@@ -22,13 +24,12 @@ class NavBar extends Component {
                         </Link>
                     </NavItem>
                     <NavItem>
-                        <Input type="search" placeholder="Search" />
+                        <Input type="search" placeholder="Search" onChange={(val) => this.filterUsers(val)} value={this.state.search} />
                     </NavItem>
                     <div align="right" className="nav-right-side">
                         <NavItem>
                             <Link to="/">
                                 <span className="nav-icon nav-icon-home"></span>
-
                             </Link>
                         </NavItem>
                         <NavItem>
@@ -45,7 +46,7 @@ class NavBar extends Component {
                         </NavItem>
                         <NavItem>
                             <Link to={'/profile/' + localStorage.getItem('username')}>
-                                <img className="nav-icon nav-icon-userimg" src={this.state.image} alt="profile-img" />
+                                <img className="nav-icon nav-icon-userimg" src={this.state.image ? this.state.image : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
                             </Link>
                         </NavItem>
                     </div>
@@ -62,9 +63,28 @@ class NavBar extends Component {
 
     componentDidMount = async () => {
         let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
+        let allUsers = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'))
         this.setState({
-            image: profile.image
+            image: profile.image,
+            allUsers: allUsers
         })
+    }
+
+    filterUsers = (e) => {
+        if (e.target.value && e.target.value.length > 0) {
+            let search = e.target.value
+            let allUsersFilter = this.state.allUsers
+                .filter(user =>
+                    user.name.toUpperCase().includes(search.toUpperCase()) ||
+                    user.surname.toUpperCase().includes(search.toUpperCase())
+                )
+                allUsersFilter && allUsersFilter.length > 0 
+                ?
+                console.log(allUsersFilter)
+                :
+                console.log("NO USER FOUND")
+            
+        }
     }
 }
 

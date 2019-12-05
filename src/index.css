@@ -150,6 +150,7 @@ i:hover {
   height: 30px;
   border-radius: 100%;
   border: 1px solid #dbe6ea;
+  background-color: white;
 }
 
 .fa-plus {
