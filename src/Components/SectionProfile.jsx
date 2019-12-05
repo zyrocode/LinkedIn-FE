@@ -10,7 +10,7 @@ class ProfileComponent extends Component {
     }
 
     render() { 
-        return (
+        return ( 
             <>
                 <Fade in={!this.state.openModal}>
                     <Container className="profile">

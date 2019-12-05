@@ -25,6 +25,7 @@ const GetAPI = async (userName, password, whatToFetch, userName2, ID) => {
             URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName)
             :
             URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/".concat(userName2)
+            break
     }
 
     try {

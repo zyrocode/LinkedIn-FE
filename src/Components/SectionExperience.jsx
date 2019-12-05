@@ -42,8 +42,18 @@ class ExperienceComponent extends Component {
                 )}
                 <hr />
                 <Row>
+
+                
+
+
+
+
                   <Col style={{ maxWidth: '60px' }}>
-                    <img width="40px" src="https://cdn0.iconfinder.com/data/icons/financial-business/512/company_building-512.png" alt="logo company" />
+                    {experience.image
+                    ? <img width="100%" src={experience.image}alt={"institution " + experience.image}/>
+                    : <img width="40px" src="https://cdn0.iconfinder.com/data/icons/financial-business/512/company_building-512.png" alt="logo company" />
+                    }
+                    
                   </Col>
                   <Col>
                     {localStorage.getItem('username') === this.props.userID && <i
@@ -71,6 +81,7 @@ class ExperienceComponent extends Component {
                     </div>
                   </Col>
                 </Row>
+                
               </Container>
             )}
         </Container>
@@ -83,10 +94,13 @@ class ExperienceComponent extends Component {
     
   };
 
-  componentDidUpdate = async (pProps, pState) => {
-    if(pProps !== this.props.userID)
-      await this.fetchInfo()
-  }
+
+  // componentDidUpdate = async(prevProps, prevState) => {
+  //   if(prevState.match.params.user !== this.props.userID) 
+  //      await this.fetchInfo()  
+  //      }
+ 
+       
 
   fetchInfo = async () => {
     this.setState({
