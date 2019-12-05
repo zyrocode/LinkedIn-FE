@@ -8,7 +8,7 @@ class ProfileInfo extends Component {
       name: "",
       surname: "",
       title: "",
-      bio: "",
+      bio: "", 
       area: "",
       image: ""
     }
@@ -40,10 +40,11 @@ class ProfileInfo extends Component {
     await this.fetchInfo()
   }
 
-  componentDidUpdate = async(prevProps, prevState) => {
-    if(prevProps !== this.props.userID)
-      await this.fetchInfo()
-  }
+
+
+//   componentDidUpdate = async(prevProps, prevState) => {
+//  if(this.props.location.pathname !== prevProps.location.pathname) 
+//     await this.fetchInfo()   }
 
   fetchInfo = async () => {
     let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID)
