@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Container, Row, Spinner } from 'reactstrap'
-
+import Loader from 'react-loader-spinner'
 
 class PageLoading extends Component {
     render() {
@@ -13,7 +13,7 @@ class PageLoading extends Component {
                 </Row>
                 <Row>
                     <Col>
-                        <Spinner style={{ width: '3rem', height: '3rem', color: 'white' }} />
+                        <Loader type="ThreeDots" color="#fff" height={80} width={80} />
                     </Col>
                 </Row>
             </Container>

@@ -9,8 +9,8 @@ import {
   Label,
   Input
 } from "reactstrap";
-import FetchToUpdateExperience from "../APIs/FetchToUpdateExperience";
-import FetchEachExperienceByID from "../APIs/FetchEachExperienceByID";
+import PutAPI from "../APIs/PutAPI";
+import GetAPI from "../APIs/GetAPI";
 import DeleteEachExperienceByID from "../APIs/DeleteEachExperienceByID";
 
 class EditExperience extends Component {
@@ -52,7 +52,7 @@ class EditExperience extends Component {
               <FormGroup>
                 <Label>Company</Label>
                 <Input
-                  onChange={val => this.setState({ name: val.target.value })}
+                  onChange={val => this.setState({ company: val.target.value })}
                   value={this.state.company}
                   type="text"
                   id="company1"
@@ -62,7 +62,7 @@ class EditExperience extends Component {
               <FormGroup>
                 <Label>Description</Label>
                 <Input
-                  onChange={val => this.setState({ surname: val.target.value })}
+                  onChange={val => this.setState({ description: val.target.value })}
                   value={this.state.description}
                   type="text"
                   id="description1"
@@ -105,15 +105,13 @@ class EditExperience extends Component {
                   required
                 />
               </FormGroup>
-
-              <Button color="success">Update</Button>
               <Button
                 color="danger"
                 onClick={async () => {
                   await DeleteEachExperienceByID(
                     this.props.id,
-                    this.props.username,
-                    this.props.password
+                    localStorage.getItem('username'), 
+                    localStorage.getItem('password')
                   );
                   this.props.closeModal();
                 }}
@@ -121,6 +119,7 @@ class EditExperience extends Component {
                 {" "}
                 Delete
               </Button>
+              <Button color="success">Update</Button>
             </Form>
           </ModalBody>
         </Modal>
@@ -129,12 +128,13 @@ class EditExperience extends Component {
   }
 
   componentDidMount = async () => {
-    let oneUserExperienceProfile = await FetchEachExperienceByID(
-      this.props.id,
-      this.props.username,
-      this.props.password
+    let oneUserExperienceProfile = await GetAPI(
+      localStorage.getItem('username'), 
+      localStorage.getItem('password'),
+      'experience',
+      '',
+      this.props.id
     );
-    console.log("new dates", oneUserExperienceProfile);
 
     this.setState({
       role: oneUserExperienceProfile.role,
@@ -157,11 +157,12 @@ class EditExperience extends Component {
       endDate: this.state.startDate
     };
 
-    await FetchToUpdateExperience(
+    await PutAPI(
+      localStorage.getItem('username'), 
+      localStorage.getItem('password'),
+      'experience',
       this.props.id,
       editedProfileObject,
-      this.props.username,
-      this.props.password
     );
     this.props.closeModal();
   };

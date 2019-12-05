@@ -27,41 +27,37 @@ code {
 
 .nav-icon-home::before {
   font-family: 'Font Awesome 5 Free';
-  content:"\f015";
+  content: "\f015";
 }
 
 .nav-icon-group::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f0c0";
+  content: "\f0c0";
 }
 
 .nav-icon-case::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f0b1";
+  content: "\f0b1";
 }
 
 .nav-icon-chat::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f086";
+  content: "\f086";
 }
 
 .nav-icon-bell::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f0f3";
+  content: "\f0f3";
 }
 
 .nav-icon-grid::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f00a";
-  font-weight: 900;
-  font-size: 120%;
+  content: "\f00a";
 }
 
 .nav-icon-book::after {
   font-family: 'Font Awesome 5 Free';
-  content:"\f02d";
-  font-weight: 900;
-  font-size: 120%;
+  content: "\f02d";
 }
 
 .nav-item {
@@ -73,12 +69,21 @@ code {
   color: #0274b3 !important;
 }
 
-.nav-right-side {
-  display:flex;
-  margin: 0 0 0 auto;
+.nav-icon {
   font-weight: 900;
   color: #e1e9ee;
   font-size: 120%;
+}
+
+@media only screen and (max-width: 700px) {
+  .nav-item {
+    font-size: smaller;
+  }
+}
+
+.nav-right-side {
+  display: flex;
+  margin: 0 0 0 auto;
   border-right: 1px solid #5c6f7c;
 }
 
@@ -95,15 +100,20 @@ input[type="search"] {
   border-radius: 3px;
 }
 
+.col {
+  float: none !important;
+  display: table-cell !important;
+}
+
 .pencil {
   position: absolute;
   top: -40px;
   right: 10px;
   color: black !important;
-  
+
 }
 
-i{
+i {
   padding: 10px;
   border-radius: 100%;
   transition: all 0.2s;
@@ -111,7 +121,7 @@ i{
 
 i:hover {
   background-color: #0274b3;
-  color: white !important; 
+  color: white !important;
   cursor: pointer;
 }
 
@@ -132,6 +142,7 @@ i:hover {
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.377);
   width: 150px;
   height: 150px;
+  background-color: white;
 }
 
 .nav-icon-userimg {
@@ -161,9 +172,9 @@ i:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
 }
-  
+
 .login-input {
   border: 1px solid black !important;
   border-radius: 3px !important;
@@ -176,14 +187,14 @@ i:hover {
 }
 
 .btn-danger {
-  float:right
+  float: right
 }
 
 .btn {
   margin: 10px;
 }
 
-.news-feed{
+.news-feed {
   background-color: white;
   border: 1px solid #dadada;
   padding: 30px;
@@ -192,12 +203,12 @@ i:hover {
   display: block;
 }
 
-.create-news-feed{
+.create-news-feed {
   background-color: white;
   border: 1px solid #dadada;
   padding: 30px;
   margin-top: 20px;
-  padding-left: 30px !important; 
+  padding-left: 30px !important;
 }
 
 span {
@@ -220,5 +231,3 @@ a:hover {
   color: black !important;
   text-decoration: none !important;
 }
-
-

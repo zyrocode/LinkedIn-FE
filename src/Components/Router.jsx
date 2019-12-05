@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomePage from "./HomePage";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PageHome from './PageHome';
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
-import ProfilePages from './ProfilePages'
-import MyProfilePage from './MyProfilePage'
+import PageProfile from './PageProfile'
+import GetAPI from '../APIs/GetAPI';
+import PageLoading from './PageLoading'
 
 
 class MainComponent extends Component {
@@ -11,26 +12,22 @@ class MainComponent extends Component {
   state = {
     logged: false,
     wrongPass: false,
-    user: undefined,
-    pass: undefined
+    isLoading: true
   }
 
   render() {
     return (
       <>
         <Router>
-          {this.state.logged 
+          {this.state.logged
             ?
             <Switch>
-              <Route path="/" exact render={() => <HomePage username={this.state.user} password={this.state.pass} />} />
-              <Route path="/profile" exact render={() => <MyProfilePage username={this.state.user} password={this.state.pass} />} />
-
-              {/* <Route path="/profiles/:user" render={() => <ProfilePages username={this.state.user} password={this.state.pass} />} /> */}
-
-              <Route path="/profile/:user" component={ProfilePages} />
-
-              
-
+              {this.state.isLoading && <PageLoading />}
+              {!this.state.isLoading &&
+                <>
+                  <Route path="/" exact component={PageHome} />
+                  <Route path="/profile/:user" component={PageProfile} />
+                </>}
             </Switch>
             :
             <div className="login-form mx-auto mt-5">
@@ -41,7 +38,7 @@ class MainComponent extends Component {
                 <h1 className="text-center">WELCOME TO LINKEDIN!</h1>
                 {this.state.wrongPass && <Alert color="danger">The username/password is incorrect!</Alert>}
                 <Form onSubmit={this.getCredentials}>
-                  <Input className="login-input" id="username" type="text" placeholder="Username"/>
+                  <Input className="login-input" id="username" type="text" placeholder="Username" />
                   <Input className="login-input" id="password" type="password" />
                   <Input className="btn btn-primary" type="submit" value="Log In" />
                 </Form>
@@ -53,23 +50,22 @@ class MainComponent extends Component {
     );
   }
 
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 2000);
+  }
+
   getCredentials = async (e) => {
     e.preventDefault();
     let username = document.querySelector("#username").value
     let password = document.querySelector("#password").value
-    await this.setState({
-      user: username,
-      pass: password
-    })
-    let response = await fetch("https://strive-school-testing-apis.herokuapp.com/api/profile/", {
-      method: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(`${username}:${password}`),
-        "Content-Type": "application/json"
-      }
-    })
-
-    response.ok ? this.setState({ logged: true }) : this.setState({ wrongPass: true })
+    let response = await GetAPI(username, password)
+    localStorage.setItem('username', username)
+    localStorage.setItem('password', password)
+    response ? this.setState({ logged: true }) : this.setState({ wrongPass: true })
   }
 }
 

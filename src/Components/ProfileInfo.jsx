@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FetchByUserName from "../APIs/FetchByUserName"
+import GetAPI from "../APIs/GetAPI"
 import { Row, Col } from 'reactstrap';
 
 class ProfileInfo extends Component {
@@ -37,7 +37,18 @@ class ProfileInfo extends Component {
 
 
   componentDidMount = async () => {
-    let userProfile = await FetchByUserName(this.props.username, this.props.password)
+    await this.fetchInfo()
+  }
+
+  componentDidUpdate = async(prevProps, prevState) => {
+    if(prevProps !== this.props.userID)
+      await this.fetchInfo()
+  }
+
+  fetchInfo = async () => {
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID)
+    if (!userProfile.image)
+      userProfile.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
     this.setState({
       userInfo: {
         name: userProfile.name,

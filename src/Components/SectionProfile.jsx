@@ -6,7 +6,6 @@ import { Container, Col, Fade, Row } from 'reactstrap'
 
 class ProfileComponent extends Component {
     state = {
-        id: undefined,
         openModal: false
     }
 
@@ -21,12 +20,10 @@ class ProfileComponent extends Component {
                         {/* start of a secondRow */}
                         <Row className="profile-body">
                             <Col>
-                                <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>
-
-                                {this.state.openModal && <UpdateUser username={this.props.username} password={this.props.password}closeModal={() => this.setState({ openModal: false })} id={this.state.id} />}
-
+                            {localStorage.getItem('username') === this.props.userID && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
+                                {this.state.openModal && <UpdateUser closeModal={() => this.setState({ openModal: false })}/>}
                                 <div className="m-3">
-                                    {!this.state.openModal && <ProfileInfo username={this.props.username} password={this.props.password} />
+                                    {!this.state.openModal && <ProfileInfo userID={this.props.userID}/>
                                     }
                                 </div> 
                             </Col>  {/* end of a secondRow */}
