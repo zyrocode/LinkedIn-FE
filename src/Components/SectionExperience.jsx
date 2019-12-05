@@ -4,12 +4,13 @@ import GetAPI from "../APIs/GetAPI";
 import Moment from "react-moment";
 import CreateExperience from "./CreateExperience"
 import EditExperience from "./EditExperience"
+import {  withRouter } from 'react-router-dom';
 
 class ExperienceComponent extends Component {
   state = {
     experiences: [],
     openModalEdit: false,
-    openModalCreate: false
+    openModalCreate: false 
   };
 
   render() {
@@ -95,10 +96,11 @@ class ExperienceComponent extends Component {
   };
 
 
-  // componentDidUpdate = async(prevProps, prevState) => {
-  //   if(prevState.match.params.user !== this.props.userID) 
-  //      await this.fetchInfo()  
-  //      }
+  componentDidUpdate = async(prevProps, prevState) => {
+    //  if(this.props.match.params.user !== this.props.userID)) 
+    if (this.props.location.pathname !== prevProps.location.pathname)
+        await this.fetchInfo()   
+   }
  
        
 
@@ -109,4 +111,4 @@ class ExperienceComponent extends Component {
   }
 }
 
-export default ExperienceComponent;
+export default withRouter(ExperienceComponent);
