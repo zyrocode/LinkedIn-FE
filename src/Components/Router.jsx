@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HomePage from './HomePage';
+import PageHome from './PageHome';
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
-import ProfilePage from './ProfilePage'
+import PageProfile from './PageProfile'
 import GetAPI from '../APIs/GetAPI';
 import PageLoading from './PageLoading'
 
@@ -25,8 +25,8 @@ class MainComponent extends Component {
               {this.state.isLoading && <PageLoading />}
               {!this.state.isLoading &&
                 <>
-                  <Route path="/" exact component={HomePage} />
-                  <Route path="/profile/:user" component={ProfilePage} />
+                  <Route path="/" exact component={PageHome} />
+                  <Route path="/profile/:user" component={PageProfile} />
                 </>}
             </Switch>
             :

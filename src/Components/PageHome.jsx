@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Fade } from 'reactstrap'
-import NavBar from './NavBar'
+import NavBar from './SectionNavBar'
 import PageLoading from './PageLoading'
-import NewsFeed from './NewsFeed'
+import NewsFeed from './SectionNewsFeed'
 
 
-class HomePage extends Component {
+class PageHome extends Component {
     state = {
         isLoading: true
     }
@@ -27,4 +27,4 @@ class HomePage extends Component {
 
 }
 
-export default HomePage;
+export default PageHome;

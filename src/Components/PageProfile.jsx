@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Fade } from 'reactstrap'
-import NavBar from './NavBar'
-import ProfileComponent from './ProfileComponent'
-import ExperienceComponent from './ExperienceComponent'
+import NavBar from './SectionNavBar'
+import ProfileComponent from './SectionProfile'
+import ExperienceComponent from './SectionExperience'
 
 
-class ProfilePage extends Component {
+class PageProfile extends Component {
     state = {
         isLoading: true
     }
@@ -25,4 +25,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage;
+export default PageProfile;
