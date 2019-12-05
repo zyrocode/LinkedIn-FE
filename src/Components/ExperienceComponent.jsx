@@ -79,12 +79,20 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
-    console.log(this.state.experiences)
+    await this.fetchInfo()
+    
+  };
+
+  componentDidUpdate = async (pProps, pState) => {
+    if(pProps !== this.props.userID)
+      await this.fetchInfo()
+  }
+
+  fetchInfo = async () => {
     this.setState({
       experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences', this.props.userID)
     });
-    
-  };
+  }
 }
 
 export default ExperienceComponent;

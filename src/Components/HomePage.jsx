@@ -10,16 +10,19 @@ class HomePage extends Component {
         isLoading: true
     }
     render() {
-        return (  
+        return (
+            <>
                 <Fade in={!this.state.isLoading}>
-                    <NavBar/>
-                    <NewsFeed/>
-                </Fade>);
+                    <NavBar />
+                    <NewsFeed />
+                </Fade>
+            </>)
     }
     componentDidMount = () => {
         this.setState({
             isLoading: false
         })
+
     }
 
 }
