@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HomePage from './HomePage';
+import PageHome from './PageHome';
 import { Alert, Form, Input, Container, Row } from 'reactstrap'
-import ProfilePage from './ProfilePage'
+import PageProfile from './PageProfile'
 import GetAPI from '../APIs/GetAPI';
-import ProfilePages from './ProfilePages'
+import PageLoading from './PageLoading'
 
 
 class MainComponent extends Component {
@@ -12,6 +12,7 @@ class MainComponent extends Component {
   state = {
     logged: false,
     wrongPass: false,
+    isLoading: true
   }
 
   render() {
@@ -21,9 +22,12 @@ class MainComponent extends Component {
           {this.state.logged
             ?
             <Switch>
-              <Route path="/" exact component={HomePage} />
-              <Route path="/profile/:user" component={ProfilePage} />
-              {/* <Route path="/profiles/:user" component={ProfilePages} /> */}
+              {this.state.isLoading && <PageLoading />}
+              {!this.state.isLoading &&
+                <>
+                  <Route path="/" exact component={PageHome} />
+                  <Route path="/profile/:user" component={PageProfile} />
+                </>}
             </Switch>
             :
             <div className="login-form mx-auto mt-5">
@@ -44,6 +48,14 @@ class MainComponent extends Component {
         </Router>
       </>
     );
+  }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 2000);
   }
 
   getCredentials = async (e) => {

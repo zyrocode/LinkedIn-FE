@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
 import { Fade } from 'reactstrap'
-import NavBar from './NavBar'
+import NavBar from './SectionNavBar'
 import PageLoading from './PageLoading'
-import NewsFeed from './NewsFeed'
+import NewsFeed from './SectionNewsFeed'
 
 
-class HomePage extends Component {
+class PageHome extends Component {
     state = {
         isLoading: true
     }
     render() {
-        return (  
+        return (
+            <>
                 <Fade in={!this.state.isLoading}>
-                    <NavBar/>
-                    <NewsFeed/>
-                </Fade>);
+                    <NavBar />
+                    <NewsFeed />
+                </Fade>
+            </>)
     }
     componentDidMount = () => {
         this.setState({
             isLoading: false
         })
+
     }
 
 }
 
-export default HomePage;
+export default PageHome;
