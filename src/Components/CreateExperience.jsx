@@ -10,6 +10,7 @@ import {
   Label,
   Input
 } from "reactstrap";
+import PostImageExperience from "../APIs/PostImageExperience";
 
 class CreateExperience extends Component {
   state = {
@@ -19,7 +20,8 @@ class CreateExperience extends Component {
     description: "",
     area: "",
     startDate: "",
-    endDate: ""
+    endDate: "",
+    selectedFile: null
   };
 
   toggleClose = () => {
@@ -86,6 +88,11 @@ class CreateExperience extends Component {
                   placeholder="End Date"
                 />
               </FormGroup>
+              <FormGroup >
+                
+                <Input onChange={(val) => this.setState({selectedFile: val.target.files[0]})}  type="file"  name= "file" />
+                
+              </FormGroup>
               <Button color="primary">Add Data</Button>
             </Form>
           </ModalBody>
@@ -93,6 +100,21 @@ class CreateExperience extends Component {
       </div>
     );
   }
+
+
+  uploadImage = async(e)=>{
+    e.preventDefault();
+    let fdExp = new FormData();
+    fdExp.append("experience", this.state.selectedFile)
+    let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.id, fdExp)
+
+    console.log(fileUploaded) 
+
+
+
+
+  }
+
 
 
 
@@ -110,7 +132,13 @@ class CreateExperience extends Component {
 
 
     };
-    await PostAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experience',profileObjectForPost)
+    let newPostResponse = await PostAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experience',profileObjectForPost)
+
+
+    let fdataExp = new FormData();
+    fdataExp.append("experience", this.state.selectedFile)
+    let newfileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), newPostResponse._id, fdataExp)
+
     this.props.closeModal()
   }
 }
