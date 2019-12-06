@@ -58,17 +58,12 @@ class UpdateUser extends Component {
               <Button color="success">Update</Button>
             </Form>
 
-
-
-
             <Form onSubmit={this.uploadImage}>
             <FormGroup >
-                
                 <Input onChange={(val) => this.setState({selectedFile: val.target.files[0]})}  type="file"  name= "file" />
                 <Button color="success" >Change Profile Image</Button>
               </FormGroup>
               </Form>
-           
           </ModalBody>
         </Modal>
       </div>

@@ -11,7 +11,7 @@ import NavBar from './SectionNavBar'
 class MainComponent extends Component {
 
   state = {
-    logged: false,
+    logged: undefined,
     wrongPass: false,
     isLoading: true
   }
@@ -20,8 +20,7 @@ class MainComponent extends Component {
     return (
       <>
         <Router>
-          {this.state.logged
-            ?
+          {this.state.logged &&
             <Switch>
               {this.state.isLoading && <PageLoading />}
               {!this.state.isLoading &&
@@ -31,7 +30,8 @@ class MainComponent extends Component {
                   <Route path="/profile/:user" component={PageProfile} />
                 </>}
             </Switch>
-            :
+          }
+          {this.state.logged !== true && this.state.logged !== undefined &&
             <div className="login-form mx-auto mt-5">
               <Container>
                 <Row>
@@ -52,12 +52,22 @@ class MainComponent extends Component {
     );
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    if (localStorage.getItem('username')) {
+      let response = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'))
+      response ? this.setState({ logged: true }) : this.setState({ logged: false })
+    }
+    else
+      this.setState({ logged: false })
+
     setTimeout(() => {
       this.setState({
         isLoading: false
       })
     }, 2000);
+    document.title = "LinkedIn"
+    var link = document.querySelector("link[rel='icon']")
+    link = 'https://techcrunch.com/wp-content/uploads/2014/02/linkedin_logo.png'
   }
 
   getCredentials = async (e) => {

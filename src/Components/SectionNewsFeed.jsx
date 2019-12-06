@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import GetAPI from '../APIs/GetAPI';
-import { Container, Col, Fade, Row } from 'reactstrap'
+import { Container, Col, Fade, Row, Modal, ModalHeader, ModalBody, ModalFooter, Button, Input } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 
 class NewsFeed extends Component {
     state = {
         posts: [],
-        isLoading: true
+        isLoading: true,
+        createOpen: false,
+        personalProfile: undefined
     }
 
     render() {
@@ -18,10 +20,30 @@ class NewsFeed extends Component {
                         <Col className="mx-auto">
                             <Row>
                                 <Col className="create-news-feed">
-                                    <Link to="/">
+                                    <a onClick={() => this.setState({ createOpen: !this.state.createOpen })}>
                                         <i className="fas fa-edit"></i>
-                                        <h3>Create a new</h3>
-                                    </Link>
+                                        <span style={{ color: 'black', padding: '10px', fontWeight: '600' , fontSize: '20px'}}>Create a new</span>
+                                    </a>
+                                    <Modal toggle={() => this.setState({ createOpen: !this.state.createOpen })} isOpen={this.state.createOpen} >
+                                        <ModalHeader toggle={() => this.setState({ createOpen: !this.state.createOpen })} style={{ backgroundColor: '#0073b1', color: 'white' }}>Create Post</ModalHeader>
+                                        <ModalBody>
+                                            {this.state.personalProfile
+                                                ?
+                                                < img className='newsfeed-pic' src={this.state.personalProfile.image} alt='profile pic' />
+                                                :
+                                                <img className='newsfeed-pic' src='src="https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"' alt='profile pic' />
+                                            }
+                                            {this.state.personalProfile &&
+                                                <>
+                                                    <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{this.state.personalProfile.name}{" "}{this.state.personalProfile.surname}</span>
+                                                    <Input type="textarea" placeholder='What would you like to talk about?' style={{ borderColor: 'white' }} />
+                                                </>
+                                            }
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button color="primary" >Publish</Button>
+                                        </ModalFooter>
+                                    </Modal>
                                 </Col>
                             </Row>
                             {this.state.posts
@@ -29,12 +51,18 @@ class NewsFeed extends Component {
                                     <Row key={index} className="news-feed">
                                         <Col>
                                             <Link to={"/profile/" + post.username}>
-                                                <img className="newsfeed-pic" src={post.image} alt="profile pic" />
+                                                <img className="newsfeed-pic" src={post.userImage} alt="profile pic" />
                                                 <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{post.name}{" "}{post.surname}</span>
                                             </Link>
                                             {post._edit &&
                                                 <i className="fa fa-pencil"></i>}
-                                            <p style={{ paddingTop: '20px' }}>{post.text}</p>
+                                            <Row>
+                                                <p style={{ paddingTop: '20px' }}>{post.text}</p>
+                                            </Row>
+                                            <Row>
+                                                {post.image &&
+                                                    <img src={post.image} alt='IMAGE MISSING' />}
+                                            </Row>
                                             <hr />
                                             <i className="fas fa-thumbs-up"></i>
                                             <i className="fas fa-comment"></i>
@@ -59,14 +87,19 @@ class NewsFeed extends Component {
                 post._edit = "true"
             profile.image
                 ?
-                post.image = profile.image
+                post.userImage = profile.image
                 :
-                post.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
+                post.userImage = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
             this.setState({
                 posts: [...this.state.posts, post],
                 isLoading: false
             })
         })
+        let personalProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
+        this.setState({
+            personalProfile: personalProfile
+        })
+        console.log(this.state.personalProfile)
     }
 }
 
