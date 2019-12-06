@@ -36,10 +36,26 @@ class ProfileInfo extends Component {
   }
 
 
+
+   abortController = new AbortController();
+
+
+
   componentDidMount = async () => {
     await this.fetchInfo()
   }
 
+  
+  componentDidUpdate  = async (prevProps)=>{
+    console.log("PROFILE INFO=> ",prevProps.userID, this.props.userID)
+    if (prevProps.userID !== this.props.userID){
+      await this.fetchInfo();
+    }
+  }
+
+  // componentWillUnmount = ()=>{
+  //   this.abortController.abort()
+  // }
 
 
 //   componentDidUpdate = async(prevProps, prevState) => {
@@ -47,7 +63,7 @@ class ProfileInfo extends Component {
 //     await this.fetchInfo()   }
 
   fetchInfo = async () => {
-    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID)
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID, {signal: this.abortController.signal})
     if (!userProfile.image)
       userProfile.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
     this.setState({
