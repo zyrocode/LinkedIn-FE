@@ -13,6 +13,14 @@ class ExperienceComponent extends Component {
     openModalCreate: false 
   };
 
+
+  updateExperience =()=>{
+    this.setState({
+      experiences: this.state.experiences
+    })
+  }
+
+
   render() {
     return (
       <>
@@ -35,13 +43,14 @@ class ExperienceComponent extends Component {
           </Container>
           {this.state.experiences.map((experience, index) => 
               <Container key={index}>
-                {this.state.openModalEdit && (
+                {this.state.openModalEdit && 
+                
                   <EditExperience
                     closeModal={() => this.setState({ openModalEdit: false })}
-                    id={experience._id}
+                    experience={experience} updatexp = {this.updateExperience}
                   />
-                )}
-                <hr />
+                }
+                <hr /> 
                 <Row>
 
                 
@@ -91,7 +100,12 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
-    await this.fetchInfo()
+    this.setState({
+      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences', this.props.userID)
+    });
+
+  (console.log("all our exp", this.state.experiences))
+   
     
   };
 

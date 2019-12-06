@@ -6,7 +6,7 @@ import {
   Button,
   Form,
   FormGroup,
-  Label,
+  Label, 
   Input, ModalFooter
 } from "reactstrap";
 import PutAPI from "../APIs/PutAPI";
@@ -107,10 +107,15 @@ class EditExperience extends Component {
                   required
                 />
               </FormGroup>
+              <FormGroup >
+                
+                <Input onChange={(val) => this.setState({selectedFile: val.target.files[0]})}  type="file"  name= "file" />
+                
+              </FormGroup>
               <Button
                 color="danger"
                 onClick={async () => {
-                  await DeleteEachExperienceByID(
+                  await DeleteEachExperienceByID( 
                     this.props.id,
                     localStorage.getItem('username'), 
                     localStorage.getItem('password')
@@ -132,7 +137,7 @@ class EditExperience extends Component {
 
           </ModalBody>
 
-          <ModalFooter>
+          {/* <ModalFooter>
           <Form onSubmit={this.uploadImage}>
             <FormGroup >
                 
@@ -140,25 +145,25 @@ class EditExperience extends Component {
                 <Button color="success" >Change Experience Image</Button>
               </FormGroup>
               </Form>
-          </ModalFooter>
+          </ModalFooter> */}
         </Modal>
       </div>
     );
   }
 
 
-  uploadImage = async(e)=>{
-    e.preventDefault();
-    let fdExp = new FormData();
-    fdExp.append("experience", this.state.selectedFile)
-    let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.id, fdExp)
+  // uploadImage = async(e)=>{
+  //   e.preventDefault();
+  //   let fdExp = new FormData();
+  //   fdExp.append("experience", this.state.selectedFile)
+  //   let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.id, fdExp)
 
-    console.log(fileUploaded) 
-
-
+  //   console.log(fileUploaded) 
 
 
-  }
+
+
+  // }
 
 
 
@@ -171,7 +176,7 @@ class EditExperience extends Component {
       localStorage.getItem('password'),
       'experience',
       '',
-      this.props.id
+      this.props.experience._id 
     );
 
     this.setState({
@@ -182,6 +187,9 @@ class EditExperience extends Component {
       startDate: oneUserExperienceProfile.startDate.split('T')[0],
       endDate: oneUserExperienceProfile.endDate.split('T')[0]
     });
+
+
+    console.log("ID here", this.props.experience._id )
   };
 
   postUpdatedDetails = async e => {
@@ -195,15 +203,31 @@ class EditExperience extends Component {
       endDate: this.state.startDate
     };
 
-    await PutAPI(
+    await PutAPI( 
       localStorage.getItem('username'), 
       localStorage.getItem('password'),
       'experience',
-      this.props.id,
       editedProfileObject,
+      this.props.experience._id 
     );
+
+    let fdExp = new FormData();
+    fdExp.append("experience", this.state.selectedFile)
+    let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.experience._id, fdExp)
+
+    console.log("put img", fileUploaded)
+
     this.props.closeModal();
+   
   };
+
+
+ 
+
+
+
+
+
 }
 
 export default EditExperience;
