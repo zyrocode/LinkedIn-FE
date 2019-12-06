@@ -72,7 +72,7 @@ class NavBar extends Component {
                     <NavItem>
                         <span className="nav-icon nav-icon-grid"></span>
                     </NavItem>
-                    <NavItem>
+                    <NavItem onClick={() => this.props.logout()}>
                         <span className="nav-icon nav-icon-book"></span>
                     </NavItem>
                 </Nav>
