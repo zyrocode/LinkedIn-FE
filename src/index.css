@@ -16,7 +16,7 @@ code {
 }
 
 .loading {
-  background-color: #283e4a;
+  background-color: #0274b3;
   height: 100vh;
   display: block;
 }
@@ -28,6 +28,13 @@ code {
 .nav-icon-home::before {
   font-family: 'Font Awesome 5 Free';
   content: "\f015";
+}
+
+.time-date {
+  font-size: 70%;
+  font-weight: 400;
+  color: rgba(58, 58, 58, 0.712);
+  padding-left: 23px;
 }
 
 .nav-icon-group::after {
@@ -57,7 +64,7 @@ code {
 
 .nav-icon-book::after {
   font-family: 'Font Awesome 5 Free';
-  content: "\f02d";
+  content: "\f2f5";
 }
 
 .nav-item {
@@ -71,7 +78,7 @@ code {
 
 .nav-icon {
   font-weight: 900;
-  color: #e1e9ee;
+  color: #ffffff;
   font-size: 120%;
 }
 
@@ -113,13 +120,14 @@ input[type="search"] {
 
 }
 
-textarea:focus{
+textarea:focus {
   outline: none !important;
   border-color: white !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  border:none !important
+  border: none !important
 }
+
 i {
   padding: 10px;
   border-radius: 100%;
@@ -136,6 +144,8 @@ i:hover {
   background-color: white;
   border: 1px solid #dadada;
   margin-top: 30px !important;
+  border-radius: 5px;
+  max-width: 700px !important;
 }
 
 .profile-body {
@@ -156,7 +166,7 @@ i:hover {
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  border: 1px solid #dbe6ea;
+  border: 1px solid #dbe6ea; 
   background-color: white;
 }
 
@@ -172,6 +182,12 @@ i:hover {
   width: 50px;
   height: 50px;
   border-radius: 100%;
+}
+
+.newsfeed-img {
+  max-height: 400px;
+  min-height: 350px;
+  max-width: 100%;
 }
 
 .login-form {
@@ -208,7 +224,8 @@ i:hover {
   padding: 30px;
   margin-top: 20px;
   padding-bottom: 10px !important;
-  display: block;
+  border-radius: 5px;
+  max-width: 700px !important;
 }
 
 .create-news-feed {
@@ -217,9 +234,12 @@ i:hover {
   padding: 30px;
   margin-top: 20px;
   padding-left: 30px !important;
+  border-radius: 5px;
 }
 
-img {color:#fff}
+img {
+  color: #fff
+}
 
 span {
   color: white;
@@ -243,15 +263,15 @@ a:hover {
   text-decoration: none !important;
 }
 
-.search-item{
-  padding:15px;
+.search-item {
+  padding: 15px;
   border-radius: 5px;
   border-bottom: 1px solid rgb(216, 216, 216);
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-.search-item:hover{
+.search-item:hover {
   background-color: #f5f5f5;
   cursor: pointer;
 }

@@ -15,7 +15,7 @@ class ProfileComponent extends Component {
                 <Fade in={!this.state.openModal}>
                     <Container className="profile">
                         <Row className="profile-header">
-                            <img height="150px" width="100%" src="https://cdn.hipwallpaper.com/i/62/8/uDtR6w.jpg" alt="" className="src" />
+                            <img height="150px" style={{borderTopRightRadius: '5px',borderTopLeftRadius: '5px'}} width="100%" src="https://cdn.hipwallpaper.com/i/62/8/uDtR6w.jpg" alt="" className="src" />
                         </Row>
                         {/* start of a secondRow */}
                         <Row className="profile-body">

@@ -74,13 +74,7 @@ class UpdateUser extends Component {
     e.preventDefault();
     let fd = new FormData();
     fd.append("profile", this.state.selectedFile)
-    let fileUploaded = await PostImageAPI (localStorage.getItem('username'), localStorage.getItem('password'), fd)
-
-    console.log(fileUploaded) 
-
-
-
-
+    let fileUploaded = await PostImageAPI (localStorage.getItem('username'), localStorage.getItem('password'), fd, 'profile')
   }
   
 
