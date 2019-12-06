@@ -90,7 +90,6 @@ class MainComponent extends Component {
     this.setState({ logged: false })
     localStorage.setItem('username', undefined)
     localStorage.setItem('password', undefined)
-    console.log('logout')
   }
 }
 

@@ -32,7 +32,7 @@ class NavBar extends Component {
                             <Input id="search" style={{ maxWidth: '300px' }} type="search" placeholder="Search" onChange={(val) => this.filterUsers(val)} value={this.state.search} />
 
                         </NavItem>
-                        <Collapse style={{ backgroundColor: 'white', borderRadius: '5px', marginTop: '5px', marginLeft: '20px', position: 'absolute', border: '1px solid black'}} isOpen={this.state.isOpen}>
+                        <Collapse style={{ backgroundColor: 'white', borderRadius: '5px', marginTop: '5px', marginLeft: '20px', position: 'absolute', border: '1px solid #ddd'}} isOpen={this.state.isOpen}>
                             {this.state.allUsersFilter
                                 .map((user, index) =>
                                     <Link onClick={() => this.setState({isOpen: false, search: ""})} key={index} to={"/profile/" + user.username}>

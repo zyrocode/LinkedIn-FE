@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GetAPI from "../APIs/GetAPI"
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Fade } from 'reactstrap';
+import Loading from './Loading'
 
 class ProfileInfo extends Component {
   state = {
@@ -8,9 +9,10 @@ class ProfileInfo extends Component {
       name: "",
       surname: "",
       title: "",
-      bio: "", 
+      bio: "",
       area: "",
-      image: ""
+      image: "",
+      isLoading: true
     }
 
   }
@@ -18,36 +20,40 @@ class ProfileInfo extends Component {
     let userInfo = this.state.userInfo
     return (
       <>
-        <img className="profile-pic" src={userInfo.image} alt="profile pic" />
-        <Row>
-          <Col sm="6" l="8">
-            <h3>{`${userInfo.name} ${userInfo.surname}`}</h3>
-            <h6>{userInfo.title}</h6>
-            <p>{userInfo.bio}</p>
-            <small>{userInfo.area}</small>
-            <small>{userInfo.email}</small>
-          </Col>
-          <Col sm="6" l="4">
-            <span className="mr-1 text-left"><i className="fa fa-building-o mr-1"></i>Strive School</span>
-          </Col>
-        </Row>
+        {this.state.isLoading
+          ?
+          <Loading />
+          :
+          <Fade>
+            <img className="profile-pic" src={userInfo.image} alt="profile pic" />
+            <Row>
+              <Col sm="6" l="8">
+                <h3>{`${userInfo.name} ${userInfo.surname}`}</h3>
+                <h6>{userInfo.title}</h6>
+                <p>{userInfo.bio}</p>
+                <small>{userInfo.area}</small>
+                <small>{userInfo.email}</small>
+              </Col>
+              <Col sm="6" l="4">
+                <span className="mr-1 text-left"><i className="fa fa-building-o mr-1"></i>Strive School</span>
+              </Col>
+            </Row>
+          </Fade>
+        }
       </>
     );
   }
 
-
-
-   abortController = new AbortController();
-
-
+  abortController = new AbortController();
 
   componentDidMount = async () => {
     await this.fetchInfo()
+    this.setState({isLoading: false})
   }
 
-  
-  componentDidUpdate  = async (prevProps)=>{
-    if (prevProps.userID !== this.props.userID){
+
+  componentDidUpdate = async (prevProps) => {
+    if (prevProps.userID !== this.props.userID) {
       await this.fetchInfo();
     }
   }
@@ -57,12 +63,12 @@ class ProfileInfo extends Component {
   // }
 
 
-//   componentDidUpdate = async(prevProps, prevState) => {
-//  if(this.props.location.pathname !== prevProps.location.pathname) 
-//     await this.fetchInfo()   }
+  //   componentDidUpdate = async(prevProps, prevState) => {
+  //  if(this.props.location.pathname !== prevProps.location.pathname) 
+  //     await this.fetchInfo()   }
 
   fetchInfo = async () => {
-    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID, {signal: this.abortController.signal})
+    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', this.props.userID, { signal: this.abortController.signal })
     if (!userProfile.image)
       userProfile.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
     this.setState({

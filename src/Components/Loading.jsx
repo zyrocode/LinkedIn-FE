@@ -6,12 +6,7 @@ class PageLoading extends Component {
     render() {
         return (
             <Fade>
-                <Container fluid style={{backgroundColor: 'white'}} className="d-block text-center loading">
-                    <Row>
-                        <Col>
-                            <img width="30%" src="http://www.userlogos.org/files/logos/siipikarja/linkedin_white_silhouet.png" alt="LinkedIn Logo" />
-                        </Col>
-                    </Row>
+                <Container fluid style={{backgroundColor: '#f5f5f5'}} className="d-block mt-5 text-center">
                     <Row>
                         <Col>
                             <Loader type="ThreeDots" color="#0274b3" height={80} width={80} />

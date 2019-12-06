@@ -23,7 +23,7 @@ class EditExperience extends Component {
     area: "",
     startDate: undefined,
     endDate: undefined,
-    selectedFile: null
+    selectedFile: null,
   };
 
   toggleClose = () => {
@@ -176,7 +176,7 @@ class EditExperience extends Component {
       localStorage.getItem('password'),
       'experience',
       '',
-      this.props.experience._id 
+      this.props.id
     );
 
     this.setState({
@@ -189,7 +189,7 @@ class EditExperience extends Component {
     });
 
 
-    console.log("ID here", this.props.experience._id )
+    console.log("ID here", this.props.id )
   };
 
   postUpdatedDetails = async e => {
@@ -208,26 +208,18 @@ class EditExperience extends Component {
       localStorage.getItem('password'),
       'experience',
       editedProfileObject,
-      this.props.experience._id 
+      this.props.id
     );
 
-    let fdExp = new FormData();
+    
+    if(this.state.selectedFile) {
+      let fdExp = new FormData();
     fdExp.append("experience", this.state.selectedFile)
-    let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.experience._id, fdExp)
-
-    console.log("put img", fileUploaded)
+      await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.experience._id, fdExp)
+    }
 
     this.props.closeModal();
-   
   };
-
-
- 
-
-
-
-
-
 }
 
 export default EditExperience;
