@@ -15,7 +15,7 @@ class NewsFeed extends Component {
     render() {
         return (
             <Fade in={!this.state.isLoading}>
-                <Container>
+                <Container style={{maxWidth: '700px'}}>
                     <Row>
                         <Col className="mx-auto">
                             <Row>
@@ -61,7 +61,7 @@ class NewsFeed extends Component {
                                             </Row>
                                             <Row>
                                                 {post.image &&
-                                                    <img src={post.image} alt='IMAGE MISSING' />}
+                                                    <img width="60%" src={post.image} alt='IMAGE MISSING' />}
                                             </Row>
                                             <hr />
                                             <i className="fas fa-thumbs-up"></i>
