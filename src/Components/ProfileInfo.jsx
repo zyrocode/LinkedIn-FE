@@ -37,7 +37,7 @@ class ProfileInfo extends Component {
 
 
 
-   abortController = new AbortController()
+   abortController = new AbortController();
 
 
 
