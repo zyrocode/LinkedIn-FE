@@ -79,13 +79,14 @@ class NavBar extends Component {
             </>
         );
     }
-
+ 
     componentDidMount = async () => {
-        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
-        let allUsers = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'))
+        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'), 'profile')
+        console.log(profile)
+        let allUsers = await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'))
         this.setState({
-            image: profile.image,
-            allUsers: allUsers
+            image: profile.imageUrl,
+            allUsers: allUsers.profileList
         })
     }
 

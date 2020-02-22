@@ -103,7 +103,7 @@ class ExperienceComponent extends Component {
 
   componentDidMount = async () => {
     this.setState({
-      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences', this.props.userID)
+      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'), 'experiences', this.props.userID)
     });
     this.setState({
       isLoading: false
