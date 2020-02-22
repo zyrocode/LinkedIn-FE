@@ -26,7 +26,8 @@ class MainComponent extends Component {
     logged: undefined,
     wrongPass: false,
     isLoading: false,
-    signup: false
+    signup: false,
+    userToken: null
   };
   defaultIsLoading=()=>{
     this.setState({
@@ -40,6 +41,10 @@ class MainComponent extends Component {
   }
 
   render() {
+
+    console.log("redux",this.props.userToken)
+    console.log("state",this.state.userToken)
+    console.log("local",localStorage.getItem("access_token"))
     return (
 
       <>
@@ -98,17 +103,17 @@ class MainComponent extends Component {
        */}
 
 
-          <Route exact path = "/" component={()=>"/ router"} />
+          {/* <Route exact path = "/" component={()=>"/ router"} /> */}
 
+            
+
+            <PrivateRoute exact path="/" component={PageHome} isAuthenticated={this.props.userToken || localStorage.getItem("access_token") }/>
+            <PrivateRoute exact path="/profile" component={PageProfile} isAuthenticated={this.props.userToken || localStorage.getItem("access_token")}/>
             <Route path="/login">
             <Login removeIsLoading={this.defaultIsLoading}/>
             </Route>
             <Route path="/register" component={SignUp} />
             <Route path="/callback" component={CallbackComponent} />
-
-           
-            <PrivateRoute path="/profile" component={PageProfile}/>
-            <PrivateRoute   path="/home" component={PageHome}/>
           
             <Route path = "*" component={()=>"404 Not Found"} />
            
@@ -140,6 +145,7 @@ class MainComponent extends Component {
     
         const userJson = await response.json();
         this.props.setUserToken(userJson.access_token);
+        this.setState({userToken: userJson.access_token})
         localStorage.setItem("access_token", userJson.access_token);
         localStorage.setItem("username", userJson.user.username);
 

@@ -45,13 +45,15 @@ class Login extends Component {
               const respJson = await resp.json();
               console.log(respJson)
               if (this.state.saveCredentials){
+                this.props.setUserToken(respJson.access_token)
                 localStorage.setItem("access_token", respJson.access_token)
                 localStorage.setItem("username", respJson.user.username)
+                this.props.history.push("/")
               }
                 
-                
-              this.props.setUserToken(respJson.access_token)
-              this.props.history.push("/profile")
+                else{
+                  this.props.setUserToken(respJson.access_token)
+                }
 
               this.props.removeIsLoading()
             }

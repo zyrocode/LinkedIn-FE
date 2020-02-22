@@ -1,20 +1,18 @@
-import React, { Component } from "react"
+import React from "react"
 import { Route, Redirect, withRouter } from "react-router-dom"
-import { connect } from "react-redux";
-
-const mapStateToProps = state => state;
+// import { connect } from "react-redux";
 
 
 
-const PrivateRoute = ({ component: Component, ...rest}) => 
 
-(
+
+const PrivateRoute = ({ component: Component, ...rest}) => (
    
     <Route {...rest} render={(props) =>
         
-                props.userToken
-                ? <Component {...props} />
-                : <Redirect to="/login" />
+                 rest.isAuthenticated
+                ? (<Component {...props} />)
+                : (<Redirect to={{pathname:"/login" }}/>)
         // {
         //     if (!rest.isAuthenticated)
         //         props.history.push("/login")
@@ -26,6 +24,7 @@ const PrivateRoute = ({ component: Component, ...rest}) =>
         // create a new token for that user generateToken({ _id. ....})
     }/>
     
-) 
+        ) 
 
-export default withRouter(connect(mapStateToProps)(PrivateRoute))
+
+export default PrivateRoute
