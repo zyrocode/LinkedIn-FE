@@ -6,8 +6,10 @@ import { Route, Redirect, withRouter } from "react-router-dom"
 
 
 
-const PrivateRoute = ({ component: Component, ...rest}) => (
-   
+const PrivateRoute = ({ component: Component, ...rest}) => 
+
+(
+  
     <Route {...rest} render={(props) =>
         
                  rest.isAuthenticated

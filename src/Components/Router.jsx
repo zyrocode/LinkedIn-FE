@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect
+} from "react-router-dom";
 import PageHome from "./PageHome";
 import { Alert, Form, Input, Container, Row, Fade } from "reactstrap";
 import PageProfile from "./PageProfile";
@@ -29,38 +35,31 @@ class MainComponent extends Component {
     signup: false,
     userToken: null
   };
-  defaultIsLoading=()=>{
+  defaultIsLoading = () => {
     this.setState({
       isLoading: true
-    })
+    });
     setTimeout(() => {
       this.setState({
         isLoading: false
-      })
+      });
     }, 1000);
-  }
+  };
 
   render() {
-
-    console.log("redux",this.props.userToken)
-    console.log("state",this.state.userToken)
-    console.log("local",localStorage.getItem("access_token"))
     return (
-
       <>
-      { this.state.isLoading &&
-        <PageLoading /> }
-      <Router>
-
-
-        {/* 
+        {this.state.isLoading && <PageLoading />}
+        <Router>
+          <Fade>
+            {/* 
                   <Fade>
                     <NavBar logout={this.logout} />
                     <Route path="/" exact component={PageHome} />
                     <Route path="/profile/:user" component={PageProfile} />
                   </Fade> */}
 
-        {/* {this.props.userToken ? 
+            {/* {this.props.userToken ? 
           this.state.isLoading ? 
           <PageLoading />:
           <Fade>
@@ -70,8 +69,8 @@ class MainComponent extends Component {
           </Fade>
         :  ( <Login removeIsLoading={this.defaultIsLoading}/>)} */}
 
-        <Switch>
-          {/* 
+            <Switch>
+              {/* 
           <Route path="/register">
           
            <SignUp/>
@@ -102,38 +101,100 @@ class MainComponent extends Component {
           />
        */}
 
+              {/* <Route exact path = "/" component={()=>"/ router"} /> */}
 
-          {/* <Route exact path = "/" component={()=>"/ router"} /> */}
+              <PrivateRoute
+                exact
+                path="/newsfeed"
+                component={PageHome}
+                isAuthenticated={
+                  localStorage.getItem("access_token") || this.props.userToken
+                }
+              />
+              <PrivateRoute
+                exact
+                path="/profile"
+                component={PageProfile}
+                isAuthenticated={this.props.userToken}
+              />
 
-            
-
-            <PrivateRoute exact path="/" component={PageHome} isAuthenticated={this.props.userToken || localStorage.getItem("access_token") }/>
-            <PrivateRoute exact path="/profile" component={PageProfile} isAuthenticated={this.props.userToken || localStorage.getItem("access_token")}/>
-            <Route path="/login">
-            <Login removeIsLoading={this.defaultIsLoading}/>
-            </Route>
-            <Route path="/register" component={SignUp} />
-            <Route path="/callback" component={CallbackComponent} />
-          
-            <Route path = "*" component={()=>"404 Not Found"} />
-           
+              {/* <Route
+                
+                path="/"
+                render={() =>
+                   <Redirect to="/home" /> 
+                }
+              /> */}
 
 
+              
+          {/* <Route exact path="/" render={() => (
+            localStorage.getItem("access_token") || this.props.userToken ? 
+               <Redirect to="/home"/>
+                     : 
+                     <>
+                     <Route path="/login">
+                       <Login removeIsLoading={this.defaultIsLoading} />
+                     </Route>
+                     <Route path="/register" component={SignUp} />
+                     <Route path="/callback" component={CallbackComponent} />
+                   </>
+                  
+            )}/> */}
 
-            </Switch> 
-      </Router>
+
+
+              {localStorage.getItem("access_token") || this.props.userToken ? (
+                <Redirect to="/newsfeed" />
+              ) : (
+                <>
+                  <Route path="/login">
+                    <Login removeIsLoading={this.defaultIsLoading} />
+                  </Route>
+                  <Route path="/register" component={SignUp} />
+                  <Route path="/callback" component={CallbackComponent} />
+                  <Route path="*" component={() => "404 Not Found"} />
+                </>
+              )}
+
+             
+            </Switch>
+          </Fade>
+        </Router>
       </>
     );
   }
 
+  UNSAFE_componentWillMount = async () => {
+    const token = await localStorage.getItem("access_token");
+    const seessionToken = await sessionStorage.getItem("access_token");
+
+    token || seessionToken
+      ? token
+        ? await this.props.setUserToken(token)
+        : await this.props.setUserToken(seessionToken)
+      : console.log("no token to mount");
+  };
+
+  componentWillUnmount =()=>{
+    sessionStorage.clear()
+  }
+  // componentWillUnmount=()=>{
+  //   console.log("will unmount")
+  // }
+
+  // componentDidUpdate=()=>{
+  //   // if(this.prevProps.userToken != this.props.userToken)
+  //   console.log("did update" )
+  // }
+
   componentDidMount = async () => {
-    const access_token = localStorage.getItem("access_token"); 
+    // console.log("did mount")
+    const access_token = localStorage.getItem("access_token");
     if (access_token) {
-     
       const response = await fetch(
         "http://app-be.azurewebsites.net/users/refresh",
         {
-          
           headers: {
             Authorization: "Bearer " + access_token
           },
@@ -142,28 +203,28 @@ class MainComponent extends Component {
       );
 
       if (response.ok) {
-    
         const userJson = await response.json();
-        this.props.setUserToken(userJson.access_token);
-        this.setState({userToken: userJson.access_token})
+        //this.props.setUserToken(userJson.access_token);
+        //this.setState({ userToken: userJson.access_token });
         localStorage.setItem("access_token", userJson.access_token);
         localStorage.setItem("username", userJson.user.username);
 
-        this.defaultIsLoading()
-     
+        this.defaultIsLoading();
+
         console.log("token was ok, refreshed");
       } else {
-      
         delete localStorage["access_token"];
         delete localStorage["username"];
         console.log("token was expired, removed");
       }
-
-      document.title = "LinkedIn";
-      var link = document.querySelector("link[rel='icon']");
-      link =
-        "https://techcrunch.com/wp-content/uploads/2014/02/linkedin_logo.png";
+    } else {
+      this.props.setUserToken();
     }
+
+    document.title = "LinkedIn";
+    var link = document.querySelector("link[rel='icon']");
+    link =
+      "https://techcrunch.com/wp-content/uploads/2014/02/linkedin_logo.png";
     // if (localStorage.getItem('username')) {
     //   let response = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'))
     //   response ? this.setState({ logged: true }) : this.setState({ logged: false })
@@ -194,8 +255,7 @@ class MainComponent extends Component {
   // };
 
   logout = () => {
-
-    delete localStorage["username"]
+    delete localStorage["username"];
 
     delete localStorage["access_token"];
   };
