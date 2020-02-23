@@ -69,7 +69,7 @@ class Login extends Component {
         this.props.setUserToken(respJson.access_token);
       }
       // <Redirect to={{pathname:"/login" }}/>
-       this.props.history.push("/home");
+       this.props.history.push("/newsfeed");
 
       this.props.removeIsLoading();
     } else {
