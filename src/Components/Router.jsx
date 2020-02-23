@@ -18,22 +18,23 @@ import Login from "./Login";
 import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "./NotFound";
+import {loginWithThunk} from "../action/index"
 
 const mapStateToProps = state => state;
 
 
-// const mapDispatchToProps = dispatch => ({
-//   setUserToken: (token, pass) => dispatch(loginWithThunk(user, pass))
-// });
 const mapDispatchToProps = dispatch => ({
-  setUserToken: base64 =>
-    dispatch({
-      type: "SET_USERBASE64",
-      payload: base64
+  setUserToken: (t, u) => dispatch(loginWithThunk(t, u))
+});
+// const mapDispatchToProps = dispatch => ({
+//   setUserToken: base64 =>
+//     dispatch({
+//       type: "SET_USERBASE64",
+//       payload:base64
 
       
-    })
-});
+//     })
+// });
 
 // const mapDispatchToProps = dispatch => ({
 //   setUserToken: base64 =>
@@ -229,7 +230,7 @@ class MainComponent extends Component {
 
       if (response.ok) {
         const userJson = await response.json();
-        this.props.setUserToken(userJson.access_token);
+        this.props.setUserToken(userJson.access_token, userJson.user.username);
         this.setState({ userToken: userJson.access_token });
         localStorage.setItem("access_token", userJson.access_token);
         localStorage.setItem("username", userJson.user.username);

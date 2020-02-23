@@ -1,19 +1,19 @@
 
  
-export const loginWithThunk = (token, user) => {
+export const loginWithThunk = (t,u) => {
     return async (dispatch, getState) => {
       
-      const {loginDetails} = getState()
+      const {token} = getState()
   
-  console.log(loginDetails)
+  console.log(token)
 
    
    
         dispatch({
             type: "SET_USERBASE64",
             payload: {
-              token:token.access_token,
-              user:user.user.username
+              token:t,
+              user:u
           }
         });
   

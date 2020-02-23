@@ -2,15 +2,26 @@ import React, { Component } from "react";
 import { Alert, Form, Input, Container, Row, Fade } from "reactstrap";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import {loginWithThunk} from "../action/index"
+
+
+
 
 const mapStateToProps = state => state;
+
 const mapDispatchToProps = dispatch => ({
-  setUserToken: base64 =>
-    dispatch({
-      type: "SET_USERBASE64",
-      payload: base64
-    })
+  setUserToken: (t, u) => dispatch(loginWithThunk(t, u))
 });
+// const mapDispatchToProps = dispatch => ({
+//   setUserToken: base64 =>
+//     dispatch({
+//       type: "SET_USERBASE64",
+//       payload:{
+//         token: base64,
+//         user: base64.user.username
+//       } 
+//     })
+// });
 
 class Login extends Component {
   state = {
@@ -60,7 +71,7 @@ class Login extends Component {
       const respJson = await resp.json();
       console.log(respJson);
       if (this.state.saveCredentials) {
-        this.props.setUserToken(respJson.access_token);
+        this.props.setUserToken(respJson.access_token,respJson.user.username );
         localStorage.setItem("access_token", respJson.access_token);
         localStorage.setItem("username", respJson.user.username);
       } else {
