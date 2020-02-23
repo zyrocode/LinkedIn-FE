@@ -17,15 +17,37 @@ import CallbackComponent from "./CallbackComponent";
 import Login from "./Login";
 import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
+import NotFound from "./NotFound";
 
 const mapStateToProps = state => state;
+
+
+// const mapDispatchToProps = dispatch => ({
+//   setUserToken: (token, pass) => dispatch(loginWithThunk(user, pass))
+// });
 const mapDispatchToProps = dispatch => ({
   setUserToken: base64 =>
     dispatch({
       type: "SET_USERBASE64",
       payload: base64
+
+      
     })
 });
+
+// const mapDispatchToProps = dispatch => ({
+//   setUserToken: base64 =>
+//     dispatch({
+//       type: "SET_USERBASE64",
+//       payload: {
+//         token:base64.access_token,
+//         user:base64.user.username,
+
+//       }
+//     })
+// });
+
+
 
 class MainComponent extends Component {
   state = {
@@ -108,14 +130,15 @@ class MainComponent extends Component {
                 path="/newsfeed"
                 component={PageHome}
                 isAuthenticated={
-                  localStorage.getItem("access_token") || this.props.userToken
+                  localStorage.getItem("access_token") || this.props.userToken || sessionStorage.getItem("access_token")
                 }
               />
+             
               <PrivateRoute
                 exact
                 path="/profile"
                 component={PageProfile}
-                isAuthenticated={this.props.userToken}
+                isAuthenticated={this.props.userToken || localStorage.getItem("access_token") || sessionStorage.getItem("access_token")}
               />
 
               {/* <Route
@@ -148,12 +171,14 @@ class MainComponent extends Component {
                 <Redirect to="/newsfeed" />
               ) : (
                 <>
-                  <Route path="/login">
-                    <Login removeIsLoading={this.defaultIsLoading} />
-                  </Route>
-                  <Route path="/register" component={SignUp} />
-                  <Route path="/callback" component={CallbackComponent} />
-                  <Route path="*" component={() => "404 Not Found"} />
+                  <Switch>
+                    <Route path="/login">
+                      <Login removeIsLoading={this.defaultIsLoading} />
+                    </Route>
+                    <Route path="/register" component={SignUp} />
+                    <Route path="/callback" component={CallbackComponent} />
+                    <Route path="*"><NotFound /> </Route>
+                  </Switch>
                 </>
               )}
 
@@ -165,16 +190,16 @@ class MainComponent extends Component {
     );
   }
 
-  UNSAFE_componentWillMount = async () => {
-    const token = await localStorage.getItem("access_token");
-    const seessionToken = await sessionStorage.getItem("access_token");
+  // UNSAFE_componentWillMount = async () => {
+  //   const token = await localStorage.getItem("access_token");
+  //   const seessionToken = await sessionStorage.getItem("access_token");
 
-    token || seessionToken
-      ? token
-        ? await this.props.setUserToken(token)
-        : await this.props.setUserToken(seessionToken)
-      : console.log("no token to mount");
-  };
+  //   token || seessionToken
+  //     ? token
+  //       ? await this.props.setUserToken(token)
+  //       : await this.props.setUserToken(seessionToken)
+  //     : console.log("no token to mount");
+  // };
 
   componentWillUnmount =()=>{
     sessionStorage.clear()
@@ -204,8 +229,8 @@ class MainComponent extends Component {
 
       if (response.ok) {
         const userJson = await response.json();
-        //this.props.setUserToken(userJson.access_token);
-        //this.setState({ userToken: userJson.access_token });
+        this.props.setUserToken(userJson.access_token);
+        this.setState({ userToken: userJson.access_token });
         localStorage.setItem("access_token", userJson.access_token);
         localStorage.setItem("username", userJson.user.username);
 
