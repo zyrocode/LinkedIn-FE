@@ -5,7 +5,7 @@ import ExperienceComponent from './SectionExperience'
 
 
 class PageProfile extends Component {
-    render() {
+    render() { 
         return (
             <>
                 <SectionProfile userID={this.props.match.params.user} />

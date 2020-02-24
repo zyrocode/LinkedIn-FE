@@ -4,8 +4,8 @@ export default function (state={}, action) {
             return {
                 ...state.details,
            
-                 userToken: action.payload.user,
-                  username: action.payload.token
+                 userToken: action.payload.token,
+                  username: action.payload.user
             }
         default:
             return state

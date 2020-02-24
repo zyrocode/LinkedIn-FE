@@ -19,6 +19,9 @@ import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "./NotFound";
 import {loginWithThunk} from "../action/index"
+import RefreshTokenAPI from "../APIs/RefreshAPI"
+
+
 
 const mapStateToProps = state => state;
 
@@ -131,7 +134,7 @@ class MainComponent extends Component {
                 path="/newsfeed"
                 component={PageHome}
                 isAuthenticated={
-                  localStorage.getItem("access_token") || this.props.userToken || sessionStorage.getItem("access_token")
+                  localStorage.getItem("access_token") || this.props.details.userToken || sessionStorage.getItem("access_token")
                 }
               />
              
@@ -139,16 +142,16 @@ class MainComponent extends Component {
                 exact
                 path="/profile"
                 component={PageProfile}
-                isAuthenticated={this.props.userToken || localStorage.getItem("access_token") || sessionStorage.getItem("access_token")}
+                isAuthenticated={this.props.details.userToken || localStorage.getItem("access_token") || sessionStorage.getItem("access_token")}
               />
 
-              {/* <Route
+              <Route
                 
-                path="/"
+                exact path="/"
                 render={() =>
-                   <Redirect to="/home" /> 
+                   <Redirect to="/newsfeed" /> 
                 }
-              /> */}
+              />
 
 
               
@@ -168,7 +171,7 @@ class MainComponent extends Component {
 
 
 
-              {localStorage.getItem("access_token") || this.props.userToken ? (
+              {localStorage.getItem("access_token") || this.props.details.userToken ? (
                 <Redirect to="/newsfeed" />
               ) : (
                 <>
@@ -202,9 +205,9 @@ class MainComponent extends Component {
   //     : console.log("no token to mount");
   // };
 
-  componentWillUnmount =()=>{
-    sessionStorage.clear()
-  }
+  // componentWillUnmount =()=>{
+  //   sessionStorage.clear()
+  // }
   // componentWillUnmount=()=>{
   //   console.log("will unmount")
   // }
@@ -216,36 +219,53 @@ class MainComponent extends Component {
 
   componentDidMount = async () => {
     // console.log("did mount")
-    const access_token = localStorage.getItem("access_token");
-    if (access_token) {
-      const response = await fetch(
-        "http://app-be.azurewebsites.net/users/refresh",
-        {
-          headers: {
-            Authorization: "Bearer " + access_token
-          },
-          method: "POST"
-        }
-      );
+    const access_token =  localStorage.getItem("access_token");
+    const sessionToken =  sessionStorage.getItem("access_token");
 
-      if (response.ok) {
-        const userJson = await response.json();
-        this.props.setUserToken(userJson.access_token, userJson.user.username);
-        this.setState({ userToken: userJson.access_token });
-        localStorage.setItem("access_token", userJson.access_token);
-        localStorage.setItem("username", userJson.user.username);
+   if (access_token || sessionToken) {
 
-        this.defaultIsLoading();
-
-        console.log("token was ok, refreshed");
-      } else {
-        delete localStorage["access_token"];
-        delete localStorage["username"];
-        console.log("token was expired, removed");
+     if(access_token){
+        const userJson = await RefreshTokenAPI (access_token)
+        await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+        localStorage.setItem("access_token", userJson.access_token)
+        this.defaultIsLoading()
       }
-    } else {
-      this.props.setUserToken();
-    }
+        else{
+          const userJson = await RefreshTokenAPI (sessionToken)
+           await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+           sessionStorage.setItem("access_token", userJson.access_token)
+           this.defaultIsLoading()
+        }
+          
+   }
+     //else     
+     else{
+     await this.props.setUserToken();
+    delete localStorage["access_token"];
+    delete sessionStorage["access_token"];
+      
+  }
+
+    // if (access_token) {
+    //   const response = await RefreshTokenAPI (access_token)
+    //   if (response) {
+    //     const userJson = await response;
+    //    await  this.props.setUserToken(userJson.access_token, userJson.user.username);
+    //     this.setState({ userToken: userJson.access_token });
+    //     localStorage.setItem("access_token", userJson.access_token);
+    //     localStorage.setItem("username", userJson.user.username);
+
+    //     this.defaultIsLoading();
+
+    //     console.log("token was ok, refreshed");
+    //   } else {
+    //     delete localStorage["access_token"];
+    //     delete localStorage["username"];
+    //     console.log("token was expired, removed");
+    //   }
+    // } else {
+    //   this.props.setUserToken();
+    // }
 
     document.title = "LinkedIn";
     var link = document.querySelector("link[rel='icon']");
@@ -281,9 +301,9 @@ class MainComponent extends Component {
   // };
 
   logout = () => {
-    delete localStorage["username"];
-
+    delete sessionStorage["access_token"];
     delete localStorage["access_token"];
+    this.props.setUserToken();
   };
 }
 

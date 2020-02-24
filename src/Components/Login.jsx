@@ -3,7 +3,7 @@ import { Alert, Form, Input, Container, Row, Fade } from "reactstrap";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {loginWithThunk} from "../action/index"
-
+import LoginAPI from "../APIs/LoginAPI"
 
 
 
@@ -56,28 +56,22 @@ class Login extends Component {
     e.preventDefault();
     //create my "token" starting from username and password
     //contact the APIs to prove identity
-    const resp = await fetch("http://app-be.azurewebsites.net/users/signin", {
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    if (resp.ok) {
-      const respJson = await resp.json();
+    let obj = {
+      email: this.state.email,
+      password: this.state.password
+    }
+    const respJson = await LoginAPI(obj)
+    if (respJson) {
+     
       console.log(respJson);
       if (this.state.saveCredentials) {
         this.props.setUserToken(respJson.access_token,respJson.user.username );
         localStorage.setItem("access_token", respJson.access_token);
-        localStorage.setItem("username", respJson.user.username);
+  
       } else {
         sessionStorage.setItem("access_token", respJson.access_token);
-        sessionStorage.setItem("username", respJson.user.username);
-        this.props.setUserToken(respJson.access_token);
+  
+        this.props.setUserToken(respJson.access_token,respJson.user.username);
       }
       // <Redirect to={{pathname:"/login" }}/>
        this.props.history.push("/newsfeed");

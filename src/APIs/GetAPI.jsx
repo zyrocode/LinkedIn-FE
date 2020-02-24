@@ -35,8 +35,8 @@ const GetAPI = async (userName, access_token, whatToFetch, userName2, ID) => {
             method: "GET",
             headers: {
                 // "Authorization": "Basic " + btoa(`${userName}:${token}`),
-                "Authorization": "Bearer " + access_token,
-                "Content-Type": "application/json"
+                "Authorization": "Bearer " + access_token
+               
             }
         })
         if (response.ok) {

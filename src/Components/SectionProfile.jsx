@@ -3,6 +3,14 @@ import UpdateUser from './UpdateUser'
 import { Container, Col, Fade, Row } from 'reactstrap'
 import Loading from './Loading'
 import GetAPI from "../APIs/GetAPI"
+import { connect } from "react-redux";
+
+
+
+const mapStateToProps = state => state
+
+
+
 
 class ProfileComponent extends Component {
     state = {
@@ -31,7 +39,7 @@ class ProfileComponent extends Component {
                             {/* start of a secondRow */}
                             <Row className="profile-body">
                                 <Col>
-                                    {localStorage.getItem('username') === this.props.userID && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
+                                    {this.props.details.username && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
                                     {this.state.openModal && <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false })} />}
                                     {this.state.isLoading
                                         ?
@@ -64,6 +72,7 @@ class ProfileComponent extends Component {
     abortController = new AbortController();
 
     componentDidMount = async () => {
+        console.log(this.props.details.username)
         await this.fetchInfo()
         this.setState({ isLoading: false })
     }
@@ -73,21 +82,36 @@ class ProfileComponent extends Component {
         }
     }
 
+
+    // "imageUrl": "https://via.placeholder.com/150",
+    // "_id": "5e501c1b0a9ddc0044195a1f",
+    // "firstname": "Maryline",
+    // "surname": "Ofoaro",
+    // "area": "Berlin",
+    // "email": "chijeffo@gmail.com",
+    // "username": "mary",
+    // "userId": "5e501c1a0a9ddc0044195a1e",
+    // "experience": [],
+    // "createdAt": "2020-02-21T18:06:19.482Z",
+    // "updatedAt": "2020-02-21T18:06:19.482Z",
+    // "__v": 0
+
     fetchInfo = async () => {
-        let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'), 'profile', this.props.userID, { signal: this.abortController.signal })
-        if (!userProfile.image)
-            userProfile.image = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
+        let userProfile = await GetAPI(this.props.details.username, localStorage.getItem('access_token'), 'profile', { signal: this.abortController.signal })
+        console.log("fetchd data -->",this.props.details.username)
+        if (!userProfile.imageUrl)
+            userProfile.imageUrl = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
         this.setState({
             userInfo: {
-                name: userProfile.name,
+                name: userProfile.firstname,
                 surname: userProfile.surname,
                 title: userProfile.title,
                 bio: userProfile.bio,
                 area: userProfile.area,
-                image: userProfile.image
+                image: userProfile.imageUrl
             }
         })
     }
 }
 
-export default ProfileComponent;
+export default connect(mapStateToProps) (ProfileComponent);
