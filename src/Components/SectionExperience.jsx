@@ -31,6 +31,41 @@ class ExperienceComponent extends Component {
 
 
   render() {
+
+
+      if(this.state.experiences >= 0){
+          return (
+            <>
+              <Container className="profile mb-5">
+                <Row>
+                  <Col md="12" className="my-4">
+                    <p style={{ fontSize: "30px",textAlign:"center" }}>You have No Experience to Show at the moment!</p>
+                  </Col>
+                  <button  className="btn btn-outline-primary container mx-5"
+                onClick={() =>
+                  this.setState({
+                    openModalCreate: true
+                  })
+                }
+              >
+                Add New Experience
+              </button>
+                </Row>
+              </Container>
+
+             
+              {this.state.openModalCreate && (
+                <CreateExperience
+                  closeModal={() => this.setState({ openModalCreate: false })}
+                />
+              )}
+            </>
+          );
+      }
+     
+
+
+
     return (
       <>{this.state.isLoading
         ?
@@ -106,9 +141,7 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
-    console.log(this.props.details.userToken, "is equal -->", localStorage.getItem("access_token"))
    const resp = await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences')
-   console.log(resp, "eexp")
     this.setState({
       experiences: resp
     });
