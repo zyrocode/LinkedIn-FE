@@ -1,8 +1,8 @@
-const PostImageAPI = async (userName, password, body1, whatToPost, idPost) => {
+const PostImageAPI = async (userName, userToken, body1, whatToPost, idPost) => {
     let URL
     switch (whatToPost) {
         case 'profile':
-            URL = "https://striveschool.herokuapp.com/api/profile/" + userName + "/picture"
+            URL = "http://app-be.azurewebsites.net/profiles/" + userName + "/picture"
             break;
         case 'post':
             URL = "https://striveschool.herokuapp.com/api/posts/" + idPost
@@ -13,7 +13,7 @@ const PostImageAPI = async (userName, password, body1, whatToPost, idPost) => {
         let response = await fetch(URL, {
             method: "POST",
             headers: {
-                "Authorization": "Basic " + btoa(`${userName}:${password}`)
+                "Authorization": "Bearer " + userToken
             },
             body: body1
         })

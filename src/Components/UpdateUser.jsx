@@ -3,6 +3,10 @@ import { Modal, ModalHeader, ModalBody, Button, Form, FormGroup, Label, Input } 
 import PutAPI from "../APIs/PutAPI"
 import GetAPI from "../APIs/GetAPI"
 import PostImageAPI from '../APIs/PostImageAPI';
+import {connect}  from "react-redux"
+
+
+const mapStateToProps = state => state
 
 class UpdateUser extends Component {
   state = {
@@ -48,17 +52,12 @@ class UpdateUser extends Component {
               </FormGroup>
               <FormGroup>
                 <Label>Bio</Label>
-                <Input onChange={(val) => this.setState({ bio: val.target.value })} value={this.state.bio} type="text" id="bio" />
+                <Input onChange={(val) => this.setState({ bio: val.target.value })} value={this.state.bio} type="textarea"  id="bio" />
               </FormGroup>
               <FormGroup>
                 <Label>Area</Label>
-                <Input onChange={(val) => this.setState({ area: val.target.value })} value={this.state.area} type="text" name="city" id="area" />
+                <Input onChange={(val) => this.setState({ area: val.target.value })} value={this.state.area} type="city" name="city" id="area" />
               </FormGroup>
-
-              <Button color="primary">Update Info</Button>
-            </Form>
-            <hr/>
-            <Form onSubmit={this.uploadImage}>
               <FormGroup>
                 <Label className="btn btn-secondary">
                   <Input onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} type="file" />
@@ -69,50 +68,65 @@ class UpdateUser extends Component {
                   {this.state.selectedFile.name}
                 </Label>}
               </FormGroup>
+              <Button color="primary">Update Info</Button>
+            </Form>
+            <hr/>
+            {/* <Form onSubmit={this.uploadImage}>
+              
               <FormGroup>
                 <Button color="primary" >Update Profile Image</Button>
               </FormGroup>
-            </Form>
+            </Form> */}
           </ModalBody>
         </Modal>
       </div>
     );
   }
 
-  uploadImage = async (e) => {
-    e.preventDefault();
+  uploadImage = async () => { 
+  
     let fd = new FormData();
-    fd.append("profile", this.state.selectedFile)
-    let fileUploaded = await PostImageAPI(localStorage.getItem('username'), localStorage.getItem('password'), fd, 'profile')
+    fd.append("profileImg", this.state.selectedFile)
+    await PostImageAPI(this.props.details.username, this.props.details.userToken, fd, 'profile')
   }
 
-
-  componentDidMount = async () => {
-    let userProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
+initialiseState =async()=>{
+  let userProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
 
     this.setState({
-      name: userProfile.name,
+      name: userProfile.firstname,
       surname: userProfile.surname,
       email: userProfile.email,
       bio: userProfile.bio,
-      area: userProfile.area
+      area: userProfile.area,
+      title: userProfile.title,
+      id: userProfile._id
     })
+}
+
+  componentDidMount = async () => {
+    await this.initialiseState()
   }
 
   postUpdatedDetails = async (e) => {
     e.preventDefault();
     let profileObject = {
 
-      name: this.state.name,
+      firstname: this.state.name,
       surname: this.state.surname,
       email: this.state.email,
       bio: this.state.bio,
-      area: this.state.area
+      area: this.state.area,
+      title:this.state.title
 
     };
-    await PutAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', profileObject)
+    await PutAPI(this.props.details.username, this.props.details.userToken, 'profile', profileObject, this.state.id)
+
+    await this.uploadImage()
     this.props.closeModal()
+
+    await this.props.refresh()
   }
 }
 
-export default UpdateUser;
+export default connect(mapStateToProps)(UpdateUser);

@@ -40,7 +40,9 @@ class ProfileComponent extends Component {
                             <Row className="profile-body">
                                 <Col>
                                     {this.props.details.username && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
-                                    {this.state.openModal && <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false })} />}
+                                    {this.state.openModal && 
+                                    <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false }) }  refresh={this.fetchInfo}/>
+                                    }
                                     {this.state.isLoading
                                         ?
                                         <Loading />
@@ -97,8 +99,9 @@ class ProfileComponent extends Component {
     // "__v": 0
 
     fetchInfo = async () => {
-        let userProfile = await GetAPI(this.props.details.username, localStorage.getItem('access_token'), 'profile', { signal: this.abortController.signal })
-        console.log("fetchd data -->",this.props.details.username)
+        let userProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile') 
+        console.log("fetchd data -->",userProfile)
+        //{ signal: this.abortController.signal })
         if (!userProfile.imageUrl)
             userProfile.imageUrl = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
         this.setState({

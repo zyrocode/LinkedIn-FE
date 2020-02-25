@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Alert, Form, Input, Container, Row, Fade } from "reactstrap";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {loginWithThunk} from "../action/index"
 import LoginAPI from "../APIs/LoginAPI"
@@ -67,10 +67,10 @@ class Login extends Component {
       if (this.state.saveCredentials) {
         this.props.setUserToken(respJson.access_token,respJson.user.username );
         localStorage.setItem("access_token", respJson.access_token);
-  
+        localStorage.setItem("username", respJson.user.username);
       } else {
         sessionStorage.setItem("access_token", respJson.access_token);
-  
+        sessionStorage.setItem("username", respJson.user.username);
         this.props.setUserToken(respJson.access_token,respJson.user.username);
       }
       // <Redirect to={{pathname:"/login" }}/>
@@ -88,6 +88,12 @@ class Login extends Component {
   };
 
   render() {
+console.log(this.props.match.params.redirect || "newsfeed")
+    if ( this.props.details.userToken){
+      return <Redirect to= "/newsfeed" />
+    }
+    
+      // return <Redirect to={{pathname:"/"+ (this.props.match.params.redirect || "newsfeed") }} />
     return (
       <div className="login-form mx-auto mt-5">
         <Container>

@@ -6,6 +6,10 @@ import CreateExperience from "./CreateExperience"
 import EditExperience from "./EditExperience"
 import { withRouter } from 'react-router-dom';
 import Loading from './Loading'
+import { connect } from "react-redux"
+
+
+const mapStateToProps = state => state
 
 class ExperienceComponent extends Component {
   state = {
@@ -102,8 +106,11 @@ class ExperienceComponent extends Component {
   }
 
   componentDidMount = async () => {
+    console.log(this.props.details.userToken, "is equal -->", localStorage.getItem("access_token"))
+   const resp = await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences')
+   console.log(resp, "eexp")
     this.setState({
-      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'), 'experiences', this.props.userID)
+      experiences: resp
     });
     this.setState({
       isLoading: false
@@ -120,9 +127,9 @@ class ExperienceComponent extends Component {
 
   fetchInfo = async () => {
     this.setState({
-      experiences: await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experiences', this.props.userID)
+      experiences: await GetAPI(this.props.details.username, this.props.details.access_token, 'experiences')
     });
   }
 }
 
-export default withRouter(ExperienceComponent);
+export default withRouter(connect(mapStateToProps)(ExperienceComponent));

@@ -23,6 +23,10 @@ import RefreshTokenAPI from "../APIs/RefreshAPI"
 
 
 
+
+
+
+
 const mapStateToProps = state => state;
 
 
@@ -134,7 +138,7 @@ class MainComponent extends Component {
                 path="/newsfeed"
                 component={PageHome}
                 isAuthenticated={
-                  localStorage.getItem("access_token") || this.props.details.userToken || sessionStorage.getItem("access_token")
+                  this.props.details.userToken
                 }
               />
              
@@ -142,7 +146,7 @@ class MainComponent extends Component {
                 exact
                 path="/profile"
                 component={PageProfile}
-                isAuthenticated={this.props.details.userToken || localStorage.getItem("access_token") || sessionStorage.getItem("access_token")}
+                isAuthenticated={this.props.details.userToken}
               />
 
               <Route
@@ -152,8 +156,25 @@ class MainComponent extends Component {
                    <Redirect to="/newsfeed" /> 
                 }
               />
+ <Route path="/login/:redirect">
+                      <Login removeIsLoading={this.defaultIsLoading} />
+                    </Route>
+                  { !this.props.details.userToken && <>
+                   
 
+                    <Route path="/login">
+                      <Login removeIsLoading={this.defaultIsLoading} />
+                    </Route>
 
+                    <Route path="/register" component={SignUp} />
+                   
+                   
+                   <Route path="/callback" component={CallbackComponent} />
+                   
+                   </>
+}
+<Route path="*"><NotFound /> </Route>
+                  
               
           {/* <Route exact path="/" render={() => (
             localStorage.getItem("access_token") || this.props.userToken ? 
@@ -171,7 +192,7 @@ class MainComponent extends Component {
 
 
 
-              {localStorage.getItem("access_token") || this.props.details.userToken ? (
+              {/* {localStorage.getItem("access_token") || this.props.details.userToken ? (
                 <Redirect to="/newsfeed" />
               ) : (
                 <>
@@ -184,7 +205,7 @@ class MainComponent extends Component {
                     <Route path="*"><NotFound /> </Route>
                   </Switch>
                 </>
-              )}
+              )} */}
 
              
             </Switch>
@@ -220,27 +241,37 @@ class MainComponent extends Component {
   componentDidMount = async () => {
     // console.log("did mount")
     const access_token =  localStorage.getItem("access_token");
+  
     const sessionToken =  sessionStorage.getItem("access_token");
 
-   if (access_token || sessionToken) {
 
-     if(access_token){
-        const userJson = await RefreshTokenAPI (access_token)
-        await  this.props.setUserToken(userJson.access_token, userJson.user.username)
-        localStorage.setItem("access_token", userJson.access_token)
-        this.defaultIsLoading()
-      }
-        else{
-          const userJson = await RefreshTokenAPI (sessionToken)
-           await  this.props.setUserToken(userJson.access_token, userJson.user.username)
-           sessionStorage.setItem("access_token", userJson.access_token)
-           this.defaultIsLoading()
-        }
+  
+   if (access_token || sessionToken) {
+    const userJson = await RefreshTokenAPI (access_token || sessionToken)
+
+    await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+    // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
+    localStorage.setItem("access_token", userJson.access_token)
+    localStorage.setItem("username", userJson.user.username)
+    this.defaultIsLoading()
+
+    //  if(access_token){
+    //     const userJson = await RefreshTokenAPI (access_token)
+    //     await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+    //     localStorage.setItem("access_token", userJson.access_token)
+    //     this.defaultIsLoading()
+    //   }
+    //     else{
+    //       const userJson = await RefreshTokenAPI (sessionToken)
+    //        await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+    //        sessionStorage.setItem("access_token", userJson.access_token)
+    //        this.defaultIsLoading()
+    //     }
           
-   }
+    }
      //else     
      else{
-     await this.props.setUserToken();
+     await this.props.setUserToken(null, null);
     delete localStorage["access_token"];
     delete sessionStorage["access_token"];
       
