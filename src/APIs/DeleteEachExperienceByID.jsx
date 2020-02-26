@@ -1,11 +1,11 @@
 
-const DeleteEachExperienceByID = async (ID,userName,password) => {
-    let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/"+ userName + "/experiences/".concat(ID) 
+const DeleteEachExperienceByID = async (theID,userName,access_token) => {
+    let URL = `http://app-be.azurewebsites.net/experiences/${userName}/${theID}`
     try {
         let response = await fetch(URL, {
             method: "DELETE",
             headers: {
-                "Authorization": "Basic " + btoa(`${userName}:${password}`),
+                "Authorization": "Bearer " + access_token,
                 "Content-Type": "application/json"
             }
         })

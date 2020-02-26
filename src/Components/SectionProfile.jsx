@@ -4,6 +4,8 @@ import { Container, Col, Fade, Row } from 'reactstrap'
 import Loading from './Loading'
 import GetAPI from "../APIs/GetAPI"
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
+
 
 
 
@@ -39,7 +41,7 @@ class ProfileComponent extends Component {
                             {/* start of a secondRow */}
                             <Row className="profile-body">
                                 <Col>
-                                    {this.props.details.username && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
+                                    {this.props.details.username === this.props.match.params.username && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
                                     {this.state.openModal && 
                                     <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false }) }  refresh={this.fetchInfo}/>
                                     }
@@ -117,4 +119,4 @@ class ProfileComponent extends Component {
     }
 }
 
-export default connect(mapStateToProps) (ProfileComponent);
+export default withRouter(connect(mapStateToProps) (ProfileComponent));

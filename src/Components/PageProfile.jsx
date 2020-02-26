@@ -8,8 +8,8 @@ class PageProfile extends Component {
     render() { 
         return (
             <>
-                <SectionProfile userID={this.props.match.params.user} />
-                <ExperienceComponent userID={this.props.match.params.user} />
+                <SectionProfile userID={this.props.match.params.username} />
+                <ExperienceComponent userID={this.props.match.params.username} />
             </>
         );
     }

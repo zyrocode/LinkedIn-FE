@@ -18,17 +18,10 @@ import Login from "./Login";
 import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "./NotFound";
-import {loginWithThunk} from "../action/index"
-import RefreshTokenAPI from "../APIs/RefreshAPI"
-
-
-
-
-
-
+import { loginWithThunk } from "../action/index";
+import RefreshTokenAPI from "../APIs/RefreshAPI";
 
 const mapStateToProps = state => state;
-
 
 const mapDispatchToProps = dispatch => ({
   setUserToken: (t, u) => dispatch(loginWithThunk(t, u))
@@ -39,7 +32,6 @@ const mapDispatchToProps = dispatch => ({
 //       type: "SET_USERBASE64",
 //       payload:base64
 
-      
 //     })
 // });
 
@@ -54,8 +46,6 @@ const mapDispatchToProps = dispatch => ({
 //       }
 //     })
 // });
-
-
 
 class MainComponent extends Component {
   state = {
@@ -82,6 +72,12 @@ class MainComponent extends Component {
         {this.state.isLoading && <PageLoading />}
         <Router>
           <Fade>
+
+          {this.props.details.userToken && (
+                <>
+                  <NavBar logout={this.logout} />
+                </>
+              )}
             {/* 
                   <Fade>
                     <NavBar logout={this.logout} />
@@ -131,52 +127,62 @@ class MainComponent extends Component {
           />
        */}
 
-              {/* <Route exact path = "/" component={()=>"/ router"} /> */}
+             
 
               <PrivateRoute
                 exact
                 path="/newsfeed"
                 component={PageHome}
-                isAuthenticated={
-                  this.props.details.userToken
-                }
+                isAuthenticated={this.props.details.userToken}
               />
-             
+
               <PrivateRoute
-                exact
-                path="/profile"
+                
+                exact path="/profile/:username"
+                component={PageProfile}
+                isAuthenticated={this.props.details.userToken}
+              />
+
+            <PrivateRoute       
+                 path="/profile"
                 component={PageProfile}
                 isAuthenticated={this.props.details.userToken}
               />
 
               <Route
-                
-                exact path="/"
-                render={() =>
-                   <Redirect to="/newsfeed" /> 
-                }
+                exact
+                path="/"
+                render={() => <Redirect to="/newsfeed" />}
               />
- <Route path="/login/:redirect">
-                      <Login removeIsLoading={this.defaultIsLoading} />
-                    </Route>
-                  { !this.props.details.userToken && <>
-                   
 
-                    <Route path="/login">
-                      <Login removeIsLoading={this.defaultIsLoading} />
-                    </Route>
+            
+              {/* <Route
+               
+                path="*"
+                render={() => <Redirect to="/newsfeed" />}
+              /> */}
 
-                    <Route path="/register" component={SignUp} />
-                   
-                   
-                   <Route path="/callback" component={CallbackComponent} />
-                   
-                   </>
-}
-<Route path="*"><NotFound /> </Route>
-                  
-              
-          {/* <Route exact path="/" render={() => (
+              {/* <Route path="/login">
+                <Login removeIsLoading={this.defaultIsLoading} />
+              </Route> */}
+              {!this.props.details.userToken && (
+                <>
+                  <Route path="/login">
+                    <Login removeIsLoading={this.defaultIsLoading} />
+                  </Route>
+
+                  <Route path="/register" component={SignUp} />
+
+                  <Route path="/callback" component={CallbackComponent} />
+                
+                 <Route path="*">
+                 <NotFound />
+               </Route>
+               </>
+              )}
+             
+
+              {/* <Route exact path="/" render={() => (
             localStorage.getItem("access_token") || this.props.userToken ? 
                <Redirect to="/home"/>
                      : 
@@ -189,8 +195,6 @@ class MainComponent extends Component {
                    </>
                   
             )}/> */}
-
-
 
               {/* {localStorage.getItem("access_token") || this.props.details.userToken ? (
                 <Redirect to="/newsfeed" />
@@ -206,8 +210,6 @@ class MainComponent extends Component {
                   </Switch>
                 </>
               )} */}
-
-             
             </Switch>
           </Fade>
         </Router>
@@ -240,42 +242,41 @@ class MainComponent extends Component {
 
   componentDidMount = async () => {
     // console.log("did mount")
-    const access_token =  localStorage.getItem("access_token");
-  
-    const sessionToken =  sessionStorage.getItem("access_token");
+    const access_token = localStorage.getItem("access_token");
 
+    const sessionToken = sessionStorage.getItem("access_token");
 
-  
-   if (access_token || sessionToken) {
-    const userJson = await RefreshTokenAPI (access_token || sessionToken)
+    if (access_token || sessionToken) {
+      const userJson = await RefreshTokenAPI(access_token || sessionToken);
 
-    await  this.props.setUserToken(userJson.access_token, userJson.user.username)
-    // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
-    localStorage.setItem("access_token", userJson.access_token)
-    localStorage.setItem("username", userJson.user.username)
-    this.defaultIsLoading()
+      await this.props.setUserToken(
+        userJson.access_token,
+        userJson.user.username
+      );
+      // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
+      localStorage.setItem("access_token", userJson.access_token);
+      localStorage.setItem("username", userJson.user.username);
+      this.defaultIsLoading();
 
-    //  if(access_token){
-    //     const userJson = await RefreshTokenAPI (access_token)
-    //     await  this.props.setUserToken(userJson.access_token, userJson.user.username)
-    //     localStorage.setItem("access_token", userJson.access_token)
-    //     this.defaultIsLoading()
-    //   }
-    //     else{
-    //       const userJson = await RefreshTokenAPI (sessionToken)
-    //        await  this.props.setUserToken(userJson.access_token, userJson.user.username)
-    //        sessionStorage.setItem("access_token", userJson.access_token)
-    //        this.defaultIsLoading()
-    //     }
-          
+      //  if(access_token){
+      //     const userJson = await RefreshTokenAPI (access_token)
+      //     await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+      //     localStorage.setItem("access_token", userJson.access_token)
+      //     this.defaultIsLoading()
+      //   }
+      //     else{
+      //       const userJson = await RefreshTokenAPI (sessionToken)
+      //        await  this.props.setUserToken(userJson.access_token, userJson.user.username)
+      //        sessionStorage.setItem("access_token", userJson.access_token)
+      //        this.defaultIsLoading()
+      //     }
     }
-     //else     
-     else{
-     await this.props.setUserToken(null, null);
-    delete localStorage["access_token"];
-    delete sessionStorage["access_token"];
-      
-  }
+    //else
+    else {
+      await this.props.setUserToken(null, null);
+      delete localStorage["access_token"];
+      delete sessionStorage["access_token"];
+    }
 
     // if (access_token) {
     //   const response = await RefreshTokenAPI (access_token)
@@ -332,9 +333,10 @@ class MainComponent extends Component {
   // };
 
   logout = () => {
-    delete sessionStorage["access_token"];
-    delete localStorage["access_token"];
+    sessionStorage.clear();
+    localStorage.clear();
     this.props.setUserToken();
+    
   };
 }
 

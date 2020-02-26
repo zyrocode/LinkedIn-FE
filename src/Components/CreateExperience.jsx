@@ -8,9 +8,14 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  Container
 } from "reactstrap";
 import PostImageExperience from "../APIs/PostImageExperience";
+import {connect} from "react-redux"
+
+
+const mapStateToProps = state => state
 
 class CreateExperience extends Component {
   state = {
@@ -21,7 +26,9 @@ class CreateExperience extends Component {
     area: "",
     startDate: "",
     endDate: "",
-    selectedFile: null
+    selectedFile: null,
+    noEndDate:false,
+    expId:""
   };
 
   toggleClose = () => {
@@ -42,29 +49,28 @@ class CreateExperience extends Component {
                 <Label>Role</Label>
                 <Input
                   type="text"
-                  id="role"
+                 value ={this.state.role} onChange={(e)=>this.setState({role:e.currentTarget.value})}
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Company</Label>
                 <Input
                   type="text"
-                  id="company"
+                  value ={this.state.company} onChange={(e)=>this.setState({company:e.currentTarget.value})}
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Description</Label>
                 <Input
-                  type="text"
-                  id="description"
+                  type="textarea"
+                  value ={this.state.description} onChange={(e)=>this.setState({description:e.currentTarget.value})}
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Area</Label>
                 <Input
-                  type="text"
-                  name="city"
-                  id="area"
+                  type="city"
+                  value ={this.state.area} onChange={(e)=>this.setState({area:e.currentTarget.value})}
                 />
               </FormGroup>
               <FormGroup>
@@ -72,20 +78,48 @@ class CreateExperience extends Component {
                 <Input
                   type="date"
                   name="date"
-                  id="startDate"
+                  value ={this.state.startDate} onChange={(e)=>this.setState({startDate:e.currentTarget.value})}
                 />
               </FormGroup>
-              <FormGroup>
+
+
+<Container>
+  
+                <FormGroup check className="m-3">
+              <Label check>
+                <Input type="checkbox"   onChange={()=> this.setState({
+                  noEndDate: !this.state.noEndDate,
+  
+                })}/>
+                I am still currently working there 
+                </Label>
+              
+            </FormGroup>
+</Container>
+
+              { !this.state.noEndDate &&
+              
+                <FormGroup>
                 <Label >End Date</Label>
                 <Input
                   type="date"
-                  name="date"
-                  id="endDate"
+                  value ={this.state.endDate} onChange={(e)=>this.setState({endDate:e.currentTarget.value})}
                 />
               </FormGroup>
+              
+              }
+              
+
               <FormGroup >
-                
-                <Input onChange={(val) => this.setState({selectedFile: val.target.files[0]})}  type="file"  name= "file" />
+
+              <Label className="btn btn-secondary">
+                  <Input onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} type="file" />
+                  Select Image
+                </Label>
+                {this.state.selectedFile &&
+                <Label>
+                  {this.state.selectedFile.name}
+                </Label>}
                 
               </FormGroup>
               <Button color="primary">Add Data</Button>
@@ -97,18 +131,7 @@ class CreateExperience extends Component {
   }
 
 
-  uploadImage = async(e)=>{
-    e.preventDefault();
-    let fdExp = new FormData();
-    fdExp.append("experience", this.state.selectedFile)
-    let fileUploaded = await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), this.props.id, fdExp)
-
-    console.log(fileUploaded) 
-
-
-
-
-  }
+  
 
 
 
@@ -118,23 +141,33 @@ class CreateExperience extends Component {
     e.preventDefault();
     let profileObjectForPost = {
 
-      "role": document.querySelector("#role").value,
-      "company": document.querySelector("#company").value,
-      "description": document.querySelector("#description").value,
-      "area": document.querySelector("#area").value,
-      "startDate": document.querySelector("#startDate").value,
-      "endDate": document.querySelector("#endDate").value
+      "role": this.state.role,
+      "company": this.state.company,
+      "description": this.state.description,
+      "area": this.state.area,
+      "startDate": this.state.startDate,
+      "endDate": this.state.endDate
 
 
     };
-    let newPostResponse = await PostAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'experience',profileObjectForPost)
+    let newPostResponse = await PostAPI(this.props.details.username, this.props.details.userToken, 'experience',profileObjectForPost)
 
+    this.setState({
+      expId: await newPostResponse._id
+    })
+    console.log(await newPostResponse._id)
 
-    let fdataExp = new FormData();
-    fdataExp.append("experience", this.state.selectedFile)
-    await PostImageExperience (localStorage.getItem('username'), localStorage.getItem('password'), newPostResponse._id, fdataExp)
+    if(this.state.selectedFile){
 
+      let fdataExp = new FormData();
+      fdataExp.append("imageUrl", this.state.selectedFile)
+      await PostImageExperience (this.props.details.username, this.props.details.userToken, await newPostResponse._id, fdataExp)
+    }
+
+    // this.props.updatexp()
+    await this.props.refreshExp()
     this.props.closeModal()
   }
+
 }
-export default CreateExperience;
+export default connect(mapStateToProps)(CreateExperience);

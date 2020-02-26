@@ -9,6 +9,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import GetAPI from '../APIs/GetAPI';
+import { connect } from "react-redux"
+
+const mapStateToProps = state => state
+
 
 class NavBar extends Component {
     state = {
@@ -37,8 +41,8 @@ class NavBar extends Component {
                                 .map((user, index) =>
                                     <Link onClick={() => this.setState({isOpen: false, search: undefined})} key={index} to={"/profile/" + user.username}>
                                         <Row className="mx-auto search-item">
-                                            <img className="nav-icon nav-icon-userimg" src={user.image ? user.image : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
-                                            <h5 style={{ marginLeft: '10px', color: 'black' }}>{user.name + " " + user.surname}</h5>
+                                            <img className="nav-icon nav-icon-userimg" src={user.imageUrl ? user.imageUrl : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
+                                            <h5 style={{ marginLeft: '10px', color: 'black' }}>{user.firstname + " " + user.surname}</h5>
                                         </Row>
                                     </Link>
                                 )
@@ -81,13 +85,15 @@ class NavBar extends Component {
     }
  
     componentDidMount = async () => {
-        let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'), 'profile')
+        let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
         console.log(profile)
-        let allUsers = await GetAPI(localStorage.getItem('username'), localStorage.getItem('access_token'))
+        let allUsers = await GetAPI(this.props.details.username, this.props.details.userToken)
         this.setState({
             image: profile.imageUrl,
             allUsers: allUsers.profileList
         })
+
+        console.log(this.state.allUsers)
     }
 
 
@@ -98,9 +104,8 @@ class NavBar extends Component {
                 isOpen: true
             })
             let search = e.target.value
-            let allUsersFilter = this.state.allUsers
-                .filter(user =>
-                    user.name.toUpperCase().includes(search.toUpperCase()) ||
+            let allUsersFilter = this.state.allUsers.filter(user =>
+                    user.firstname.toUpperCase().includes(search.toUpperCase()) ||
                     user.surname.toUpperCase().includes(search.toUpperCase())
                 )
             allUsersFilter && allUsersFilter.length > 0
@@ -116,4 +121,4 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+export default connect(mapStateToProps) (NavBar);

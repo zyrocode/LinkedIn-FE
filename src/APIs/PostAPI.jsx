@@ -1,17 +1,17 @@
-const PostAPI = async (userName, password, whatToCreate, objectToCreate, imageData) => {
+const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, imageData) => {
     let URL = undefined
     switch(whatToCreate){
         case 'experience':
-                URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/" + userName + "/experiences"
+                URL = "http://app-be.azurewebsites.net/profiles/experience/".concat(userName) 
             break
         case 'post':
                 URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/"
             }
-    try {
+    try {//profiles/experience/jeff
         let response = await fetch(URL, {
             method: "POST",
             headers: {
-                "Authorization": "Basic " + btoa(`${userName}:${password}`),
+                "Authorization": "Bearer " + access_token,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(objectToCreate)

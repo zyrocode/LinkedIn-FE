@@ -1,16 +1,16 @@
-const PostImageExperience = async (userName, password , expID, body1)=> {
+const PostImageExperience = async (userName, token , expID, imagePayload)=> {
 
-    // https://striveschool.herokuapp.com/api/profile/userName/experiences/:expId/picture
+    // /:username/:experienceID/imgUpload
 
-    let URL = "https://striveschool.herokuapp.com/api/profile/" + userName + "/experiences/" + expID + "/picture"
+    let URL = `http://app-be.azurewebsites.net/experiences/${userName}/${expID}/imgUpload`
     try {
         let response = await fetch(URL, {
             method: "POST",
             headers: {
-                "Authorization": "Basic " + btoa(`${userName}:${password}`)
+                "Authorization": "Bearer " + token
                 
             },
-            body: body1
+            body: imagePayload
            
         })
         if (response.ok) {
@@ -18,6 +18,7 @@ const PostImageExperience = async (userName, password , expID, body1)=> {
         }
     } catch (error) {
         console.log(error);
+        return (error)
     }
 }
 

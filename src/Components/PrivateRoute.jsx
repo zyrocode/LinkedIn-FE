@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest}) =>
         
                  rest.isAuthenticated
                 ? (<Component {...props} />)
-                : (<Redirect to={{pathname:"/login" + props.match.path }}/>)
+                : (<Redirect to={{pathname:"/login" }}/>)
         // {
         //     if (!rest.isAuthenticated)
         //         props.history.push("/login")

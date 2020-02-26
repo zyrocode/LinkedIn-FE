@@ -2,7 +2,8 @@ const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID) => 
     let URL = undefined
     switch(whatToUpdate){
         case 'experience':
-            URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/"+ userName + "/experiences/".concat(theID)
+            //http://localhost:7000/experiences/jeff/5e45ec286a042e4bc0c8dd33
+            URL = `http://app-be.azurewebsites.net/experiences/${userName}/${theID}`
         break
         case 'profile':
             URL = `http://app-be.azurewebsites.net/profiles/${theID}` 

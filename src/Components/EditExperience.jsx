@@ -7,12 +7,15 @@ import {
   Form,
   FormGroup,
   Label,
-  Input, ModalFooter
+  Input, ModalFooter, Container
 } from "reactstrap";
 import PutAPI from "../APIs/PutAPI";
 import GetAPI from "../APIs/GetAPI";
 import DeleteEachExperienceByID from "../APIs/DeleteEachExperienceByID";
 import PostImageExperience from "../APIs/PostImageExperience";
+import { connect } from "react-redux"
+
+const mapStateToProps = state => state
 
 class EditExperience extends Component {
   state = {
@@ -24,6 +27,7 @@ class EditExperience extends Component {
     startDate: undefined,
     endDate: undefined,
     selectedFile: null,
+    noEndDate:false
   };
 
   toggleClose = () => {
@@ -83,7 +87,7 @@ class EditExperience extends Component {
               </FormGroup>
 
               <FormGroup>
-                <Label>End date</Label>
+                <Label>Start date</Label>
                 <Input
                   onChange={val =>
                     this.setState({ startDate: val.target.value })
@@ -96,17 +100,35 @@ class EditExperience extends Component {
                 />
               </FormGroup>
 
-              <FormGroup>
-                <Label>Start date</Label>
-                <Input
-                  onChange={val => this.setState({ endDate: val.target.value })}
-                  value={this.state.endDate}
-                  type="date"
-                  id="endDate1"
-                  placeholder="2019-12-12T00:00:00.000Z"
-                  required
-                />
-              </FormGroup>
+             
+<Container>
+  
+  <FormGroup check className="m-3">
+<Label check>
+  <Input type="checkbox"   onChange={()=> this.setState({
+    noEndDate: !this.state.noEndDate,
+    endDate: null
+
+  })}/>
+  I am still currently working there 
+  </Label>
+
+</FormGroup>
+</Container>
+
+{ !this.state.noEndDate &&
+
+  <FormGroup>
+  <Label >End Date</Label>
+  <Input
+    type="date"
+    value ={this.state.endDate} onChange={(e)=>this.setState({endDate:e.currentTarget.value})}
+  />
+</FormGroup>
+
+}
+             
+
               <FormGroup >
 
                 <Input onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} type="file" name="file" />
@@ -117,9 +139,10 @@ class EditExperience extends Component {
                 onClick={async () => {
                   await DeleteEachExperienceByID(
                     this.props.id,
-                    localStorage.getItem('username'),
-                    localStorage.getItem('password')
+                    this.props.details.username,
+                    this.props.details.userToken
                   );
+                  await this.props.refreshExp()
                   this.props.closeModal();
                 }}
               >
@@ -165,20 +188,21 @@ class EditExperience extends Component {
 
   componentDidMount = async () => {
     let oneUserExperienceProfile = await GetAPI(
-      localStorage.getItem('username'),
-      localStorage.getItem('password'),
+      this.props.details.username, this.props.details.userToken,
       'experience',
       '',
       this.props.id
     );
 
+console.log(oneUserExperienceProfile.profileExperience[0].experience)
+
     this.setState({
-      role: oneUserExperienceProfile.role,
-      company: oneUserExperienceProfile.company,
-      description: oneUserExperienceProfile.description,
-      area: oneUserExperienceProfile.area,
-      startDate: oneUserExperienceProfile.startDate.split('T')[0],
-      endDate: oneUserExperienceProfile.endDate.split('T')[0]
+      role: oneUserExperienceProfile.profileExperience[0].experience.role,
+      company: oneUserExperienceProfile.profileExperience[0].experience.company,
+      description: oneUserExperienceProfile.profileExperience[0].experience.description,
+      area: oneUserExperienceProfile.profileExperience[0].experience.area,
+      startDate: oneUserExperienceProfile.profileExperience[0].experience.startDate.split('T')[0],
+      endDate: oneUserExperienceProfile.profileExperience[0].experience.endDate
     });
 
 
@@ -197,18 +221,19 @@ class EditExperience extends Component {
       endDate: this.state.startDate
     };
     await PutAPI(
-      localStorage.getItem('username'),
-      localStorage.getItem('password'),
+      this.props.details.username, 
+      this.props.details.userToken,
       'experience',
       editedProfileObject,
       this.props.id
     );
     if(this.state.selectedFile) {
       let fdExp = new FormData();
-      fdExp.append("experience", this.state.selectedFile)
-      await PostImageExperience(localStorage.getItem('username'), localStorage.getItem('password'), this.props.id, fdExp)
+      fdExp.append("imageUrl", this.state.selectedFile)
+      await PostImageExperience(this.props.details.username, this.props.details.userToken, this.props.id, fdExp)
     }
+    await this.props.refreshExp()
   };
 }
 
-export default EditExperience;
+export default connect(mapStateToProps) (EditExperience);

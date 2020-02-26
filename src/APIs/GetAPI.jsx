@@ -7,7 +7,8 @@ const GetAPI = async (userName, access_token, whatToFetch, userName2, ID) => {
             URL = "http://app-be.azurewebsites.net/profiles/"
             break
         case 'experience':
-            URL = "http://app-be.azurewebsites.net/profiles/" + userName + "/experiences/".concat(ID)
+            //http://localhost:7000/experiences/ds/experience/5e5496f570602b00440ce503
+            URL = `http://app-be.azurewebsites.net/experiences/${userName}/experience/${ID}` 
             break
         case 'experiences':
             !userName2

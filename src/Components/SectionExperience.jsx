@@ -33,7 +33,7 @@ class ExperienceComponent extends Component {
   render() {
 
 
-      if(this.state.experiences >= 0){
+      if(this.state.experiences <= 0){
           return (
             <>
               <Container className="profile mb-5">
@@ -57,6 +57,8 @@ class ExperienceComponent extends Component {
               {this.state.openModalCreate && (
                 <CreateExperience
                   closeModal={() => this.setState({ openModalCreate: false })}
+                  refreshExp = {this.fetchInfo}
+                  
                 />
               )}
             </>
@@ -65,7 +67,7 @@ class ExperienceComponent extends Component {
      
 
 
-
+else{
     return (
       <>{this.state.isLoading
         ?
@@ -76,13 +78,14 @@ class ExperienceComponent extends Component {
             <Row>
               <Col md="12" className="my-4">
                 <b style={{ fontSize: '30px' }}>Experiences</b>
-                {localStorage.getItem('username') === this.props.userID && <i
+                {this.props.details.username === this.props.match.params.username && <i
                   className="fa fa-plus"
                   onClick={() => this.setState({ openModalCreate: true })}
                 ></i>}
                 {this.state.openModalCreate && (
                   <CreateExperience
                     closeModal={() => this.setState({ openModalCreate: false })}
+                    refreshExp = {this.fetchInfo}
                   />
                 )}
               </Col>
@@ -92,7 +95,7 @@ class ExperienceComponent extends Component {
                 <EditExperience
                   closeModal={() => this.setState({ openModalEdit: false })}
                   onselected={this.onselected}
-                  id={this.state.editSelected} updatexp={this.updateExperience}
+                  id={this.state.editSelected} refreshExp = {this.fetchInfo}
                 />
 
               }
@@ -107,7 +110,7 @@ class ExperienceComponent extends Component {
                   }
                 </Col>
                 <Col>
-                  {localStorage.getItem('username') === this.props.userID && <i
+                  {this.props.details.username === this.props.match.params.username  && <i
                     className="fa fa-pencil"
                     onClick={() => this.setState({ openModalEdit: true,editSelected: experience._id  })}
                   ></i>}
@@ -118,15 +121,31 @@ class ExperienceComponent extends Component {
                       <Moment format="MM/YYYY">
                         {experience.startDate}
                       </Moment>
-                      {" "}–{" "}
-                      <Moment format="MM/YYYY">
-                        {experience.endDate}
-                      </Moment>
-                      {" "}-{" "}
-                      <Moment fromNow ago={experience.startDate}>
-                        {experience.endDate}
-                      </Moment>
-                    </small>
+                      &nbsp; – &nbsp;
+{
+  experience.endDate && experience.endDate!==null ? 
+ <> <Moment format="MM/YYYY">
+  {experience.endDate}
+</Moment>
+
+
+
+<small>
+&nbsp;&nbsp; .
+  <Moment  fromNow ago={experience.startDate}>
+    {experience.endDate}
+  </Moment> 
+</small>
+          
+</>
+: 
+
+<small>present</small>
+ 
+}
+
+  
+          </small>
                     <p>{experience.description}</p>
                     <p>{experience.area}</p>
                   </div>
@@ -138,13 +157,16 @@ class ExperienceComponent extends Component {
         </Container>}
       </>
     );
+  }}
+
+  fetchInfo = async () => {
+    this.setState({
+      experiences: await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences')
+    });
   }
 
   componentDidMount = async () => {
-   const resp = await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences')
-    this.setState({
-      experiences: resp
-    });
+   await this.fetchInfo()
     this.setState({
       isLoading: false
     })
@@ -158,11 +180,7 @@ class ExperienceComponent extends Component {
 
 
 
-  fetchInfo = async () => {
-    this.setState({
-      experiences: await GetAPI(this.props.details.username, this.props.details.access_token, 'experiences')
-    });
-  }
+  
 }
 
 export default withRouter(connect(mapStateToProps)(ExperienceComponent));
