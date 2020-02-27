@@ -83,6 +83,7 @@ class ProfileComponent extends Component {
     componentDidUpdate = async (prevProps) => {
         if (prevProps.userID !== this.props.userID) {
             await this.fetchInfo();
+             
         }
     }
 
