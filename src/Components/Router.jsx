@@ -167,19 +167,24 @@ class MainComponent extends Component {
               </Route> */}
               {!this.props.details.userToken && (
                 <>
-                  <Route exact path="/login">
-                    <Login exact removeIsLoading={this.defaultIsLoading} />
-                  </Route>
 
-                  <Route exact path="/register">
-                    <SignUp />
-                    </Route> 
+                  <Switch>
+                    <Route exact path="/login">
+                      <Login exact removeIsLoading={this.defaultIsLoading} />
+                    </Route>
+  
+                    <Route exact path="/register">
+                      <SignUp />
+                      </Route> 
+  
+                    <Route exact path="/callback" component={CallbackComponent} />
+                  
+                   <Route path="*">
+                   <NotFound />
+                 </Route>
+                  </Switch>
 
-                  <Route exact path="/callback" component={CallbackComponent} />
-                
-                 <Route path="*">
-                 <NotFound />
-               </Route>
+               
                </>
               )}
              
