@@ -26,6 +26,7 @@ const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
   setUserToken: (t, u) => dispatch(loginWithThunk(t, u))
 });
+
 // const mapDispatchToProps = dispatch => ({
 //   setUserToken: base64 =>
 //     dispatch({
