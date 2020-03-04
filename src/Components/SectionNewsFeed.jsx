@@ -7,6 +7,12 @@ import PostImageAPI from '../APIs/PostImageAPI'
 import Moment from "react-moment";
 import Loading from './Loading';
 import DeletePostAPI from '../APIs/DeletePostAPI'
+import { connect } from "react-redux"
+
+
+
+const mapStateToProps = state => state
+
 
 class NewsFeed extends Component {
     state = {
@@ -157,10 +163,10 @@ class NewsFeed extends Component {
     }
 
     componentDidMount = async () => {
-        let posts = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'posts')
+        let posts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
         posts.forEach(async post => {
             let oneUser = post.username
-            let profile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile', oneUser)
+            let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
             post.name = profile.name
             post.surname = profile.surname
             if (localStorage.getItem('username') === post.username)
@@ -178,7 +184,7 @@ class NewsFeed extends Component {
         posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt)
         })
-        let personalProfile = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'profile')
+        let personalProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
         this.setState({
             personalProfile: personalProfile,
             isLoading: false,
@@ -228,4 +234,4 @@ class NewsFeed extends Component {
     }
 }
 
-export default NewsFeed;
+export default connect(mapStateToProps) (NewsFeed);
