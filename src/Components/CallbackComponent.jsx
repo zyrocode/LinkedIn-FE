@@ -28,7 +28,7 @@ class CallbackComponent extends React.Component{
             const accessToken = search.split("=")[1];
             this.props.setUserToken(accessToken)
             localStorage.setItem("access_token", accessToken)
-            this.props.history.push("/profile")
+            this.props.history.push("/newsfeed")
 
             this.setState({
                 isLoading:true
