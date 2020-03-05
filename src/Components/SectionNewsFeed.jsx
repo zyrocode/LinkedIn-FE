@@ -193,7 +193,7 @@ class NewsFeed extends Component {
     }
 
     removePost = async (id) => {
-        await DeletePostAPI(localStorage.getItem('username'), localStorage.getItem('password'), id)
+        await DeletePostAPI(this.props.details.username, this.props.details.userToken, id)
         this.setState({ posts: this.state.posts.filter(post => post._id !== id) })
     }
 
@@ -206,7 +206,7 @@ class NewsFeed extends Component {
             let postObject = {
                 text: this.state.createPostText
             }
-            let response = await PostAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'post', postObject)
+            let response = await PostAPI(this.props.details.username, localStorage.getItem('password'), 'post', postObject)
             if (this.state.createPostImage) {
                 let fd = new FormData();
                 fd.append("post", this.state.createPostImage)
