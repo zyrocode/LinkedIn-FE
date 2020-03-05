@@ -1,11 +1,11 @@
 
-const DeletePostAPI = async (userName,password, postID) => {
+const DeletePostAPI = async (userName,userToken, postID) => {
     let URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/".concat(postID) 
     try {
         let response = await fetch(URL, {
             method: "DELETE",
             headers: {
-                "Authorization": "Basic " + btoa(`${userName}:${password}`),
+                "Authorization": "Bearer " + userToken,
                 "Content-Type": "application/json"
             }
         })
