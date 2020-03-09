@@ -1,6 +1,7 @@
 const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, imageData) => {
     let URL = undefined
     switch(whatToCreate){
+        // `http://app-be.azurewebsites.net/experiences/${userName}/${expID}/imgUpload`
         case 'experience':
                 URL = "http://app-be.azurewebsites.net/profiles/experience/".concat(userName) 
             break
