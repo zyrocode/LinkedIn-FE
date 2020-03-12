@@ -2,7 +2,7 @@ export default function (state={}, action) {
     switch(action.type){
         case "SET_USERBASE64":
             return {
-                 ...state.details,
+                 ...state,
                 
                  userToken: action.payload.token,
                   username: action.payload.user
