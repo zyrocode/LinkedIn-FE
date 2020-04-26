@@ -38,7 +38,7 @@ class NewsFeed extends Component {
                     :
                     <Fade >
                         <div className="feed-profile">
-                            <img className="profile-pic mt-0 mb-2" src={this.state.personalProfile.image} alt="no image" />
+                            <img className="profile-pic mt-0 mb-2" src={this.state.personalProfile.image} alt="profile" />
                             <h4>{this.state.personalProfile.name + " " + this.state.personalProfile.surname}</h4>
                             <h6>{this.state.personalProfile.title}</h6>
                         </div>
@@ -163,10 +163,12 @@ class NewsFeed extends Component {
     }
 
     componentDidMount = async () => {
-        let posts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
+        let getPosts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
+        let posts = getPosts.posts
         posts.forEach(async post => {
             let oneUser = post.username
             let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
+            console.log(profile,"pr")
             post.name = profile.name
             post.surname = profile.surname
             if (localStorage.getItem('username') === post.username)

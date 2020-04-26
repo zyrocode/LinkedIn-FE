@@ -1,9 +1,9 @@
 const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, imageData) => {
     let URL = undefined
     switch(whatToCreate){
-        // `http://app-be.azurewebsites.net/experiences/${userName}/${expID}/imgUpload`
+        // `http://localhost:7000/experiences/${userName}/${expID}/imgUpload`
         case 'experience':
-                URL = "http://app-be.azurewebsites.net/profiles/experience/".concat(userName) 
+                URL = "http://localhost:7000/profiles/experience/".concat(userName) 
             break
         case 'post':
                 URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/"

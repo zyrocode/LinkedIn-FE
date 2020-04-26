@@ -33,7 +33,7 @@ class ExperienceComponent extends Component {
   render() {
 
 
-      if(this.state.experiences <= 0){
+      if( this.props.details.username === this.props.match.params.username && this.state.experiences < 0 ){
           return (
             <>
               <Container className="profile mb-5">
@@ -159,14 +159,18 @@ else{
     );
   }}
 
-  fetchInfo = async () => {
+  fetchInfo = async (anotherUsername) => {
+    anotherUsername ?
     this.setState({
+      experiences: await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences',anotherUsername)
+    })
+    :  this.setState({
       experiences: await GetAPI(this.props.details.username, this.props.details.userToken, 'experiences')
     });
   }
 
   componentDidMount = async () => {
-   await this.fetchInfo()
+   await this.fetchInfo(this.props.userID)
     this.setState({
       isLoading: false
     })
@@ -175,7 +179,7 @@ else{
   componentDidUpdate = async (prevProps, prevState) => {
     //  if(this.props.match.params.user !== this.props.userID)) 
     if (this.props.location.pathname !== prevProps.location.pathname)
-      await this.fetchInfo()
+      await this.fetchInfo(this.props.userID)
   }
 
 

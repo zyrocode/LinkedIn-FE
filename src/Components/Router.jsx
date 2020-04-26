@@ -308,7 +308,7 @@ class MainComponent extends Component {
     // }
 
     document.title = "LinkedIn";
-    var link = document.querySelector("link[rel='icon']");
+    let link = document.querySelector("link[rel='icon']");
     link =
       "https://techcrunch.com/wp-content/uploads/2014/02/linkedin_logo.png";
     // if (localStorage.getItem('username')) {

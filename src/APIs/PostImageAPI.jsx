@@ -2,7 +2,7 @@ const PostImageAPI = async (userName, userToken, body1, whatToPost, idPost) => {
     let URL
     switch (whatToPost) {
         case 'profile':
-            URL = "http://app-be.azurewebsites.net/profiles/" + userName + "/picture"
+            URL = "http://localhost:7000/profiles/" + userName + "/picture"
             break;
         case 'post':
             URL = "https://striveschool.herokuapp.com/api/posts/" + idPost

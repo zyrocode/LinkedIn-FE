@@ -27,7 +27,7 @@ class ProfileComponent extends Component {
             image: undefined,
         }
     }
-
+ 
     render() {
         let userInfo = this.state.userInfo
         return (
@@ -77,12 +77,12 @@ class ProfileComponent extends Component {
 
     componentDidMount = async () => {
         console.log(this.props.details.username)
-        await this.fetchInfo()
+        await this.fetchInfo(this.props.userID)
         this.setState({ isLoading: false })
     }
     componentDidUpdate = async (prevProps) => {
-        if (prevProps.userID !== this.props.userID) {
-            await this.fetchInfo();
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            await this.fetchInfo(this.props.userID);
              
         }
     }
@@ -101,8 +101,11 @@ class ProfileComponent extends Component {
     // "updatedAt": "2020-02-21T18:06:19.482Z",
     // "__v": 0
 
-    fetchInfo = async () => {
-        let userProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile') 
+    fetchInfo = async (anotherUsername) => {
+        let userProfile = 
+        anotherUsername ? 
+          await GetAPI(this.props.details.username, this.props.details.userToken, 'profile',anotherUsername) 
+        :  await GetAPI(this.props.details.username, this.props.details.userToken, 'profile') 
         console.log("fetchd data -->",userProfile)
         //{ signal: this.abortController.signal })
         if (!userProfile.imageUrl)

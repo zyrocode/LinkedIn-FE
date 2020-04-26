@@ -153,7 +153,7 @@ console.log(this.props.match.params.redirect || "newsfeed")
 
           <div className="text-center">
             <a
-              href="http://app-be.azurewebsites.net/auth/facebook"
+              href="http://localhost:7000/auth/facebook"
               className="btn btn-primary">
               Login With Facebook
             </a>

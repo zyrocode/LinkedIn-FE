@@ -1,4 +1,4 @@
-// `http://app-be.azurewebsites.net/experiences/${userName}/${theID}`
+// `http://localhost:7000/experiences/${userName}/${theID}`
 const DeletePostAPI = async (userName,userToken, postID) => {
     let URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/".concat(postID) 
     try {

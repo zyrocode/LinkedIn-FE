@@ -3,10 +3,10 @@ const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID) => 
     switch(whatToUpdate){
         case 'experience':
             //http://localhost:7000/experiences/jeff/5e45ec286a042e4bc0c8dd33
-            URL = `http://app-be.azurewebsites.net/experiences/${userName}/${theID}`
+            URL = `http://localhost:7000/experiences/${userName}/${theID}`
         break
         case 'profile':
-            URL = `http://app-be.azurewebsites.net/profiles/${theID}` 
+            URL = `http://localhost:7000/profiles/${theID}` 
         break
     }
     try {

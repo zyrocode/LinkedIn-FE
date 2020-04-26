@@ -1,7 +1,7 @@
 const RefreshAPI = async (access_token) => {
   try {
     const response = await fetch(
-      "http://app-be.azurewebsites.net/users/refresh",
+      "http://localhost:7000/users/refresh",
       {
         headers: {
           Authorization: "Bearer " + access_token

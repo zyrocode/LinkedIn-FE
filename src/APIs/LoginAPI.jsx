@@ -1,6 +1,6 @@
 const LoginAPI = async (loginObject) => {
   try {
-    const resp = await fetch("http://app-be.azurewebsites.net/users/signin", {
+    const resp = await fetch("http://localhost:7000/users/signin", {
       body: JSON.stringify(loginObject),
       method: "POST",
       headers: {

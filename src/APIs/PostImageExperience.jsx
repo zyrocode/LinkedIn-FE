@@ -2,7 +2,7 @@ const PostImageExperience = async (userName, token , expID, imagePayload)=> {
 
     // /:username/:experienceID/imgUpload
 
-    let URL = `http://app-be.azurewebsites.net/experiences/${userName}/${expID}/imgUpload`
+    let URL = `http://localhost:7000/experiences/${userName}/${expID}/imgUpload`
     try {
         let response = await fetch(URL, {
             method: "POST",
