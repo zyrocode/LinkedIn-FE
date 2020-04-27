@@ -38,31 +38,31 @@ class NewsFeed extends Component {
                     :
                     <Fade >
                         <div className="feed-profile">
-                            <img className="profile-pic mt-0 mb-2" src={this.state.personalProfile.image} alt="profile" />
-                            <h4>{this.state.personalProfile.name + " " + this.state.personalProfile.surname}</h4>
-                            <h6>{this.state.personalProfile.title}</h6>
+                            <img className="profile-pic mt-0 mb-2" src={this.state.personalProfile.imageUrl} alt="profile" />
+                            <h4>{this.state.personalProfile.firstname + " " + this.state.personalProfile.surname}</h4>
+                            {this.state.personalProfile.title ? <h6>{this.state.personalProfile.title}</h6>: null}
                         </div>
                         <Container style={{ maxWidth: '700px' }}>
                             <Row>
                                 <Col className="mx-auto">
                                     <Row>
                                         <Col className="create-news-feed">
-                                            <a onClick={() => this.setState({ createOpen: !this.state.createOpen })}>
+                                            <div onClick={() => this.setState({ createOpen: !this.state.createOpen })}>
                                                 <i className="fas fa-edit"></i>
                                                 <span style={{ color: 'black', padding: '10px', fontWeight: '600', fontSize: '20px' }}>Create a new</span>
-                                            </a>
+                                            </div>
                                             <Modal toggle={() => this.setState({ createOpen: !this.state.createOpen })} isOpen={this.state.createOpen} >
                                                 <ModalHeader toggle={() => this.setState({ createOpen: !this.state.createOpen })} style={{ backgroundColor: '#0073b1', color: 'white' }}>Create Post</ModalHeader>
                                                 <ModalBody>
                                                     {this.state.personalProfile
                                                         ?
-                                                        < img className='newsfeed-pic' src={this.state.personalProfile.image} alt='profile pic' />
+                                                        < img className='newsfeed-pic' src={this.state.personalProfile.imageUrl} alt='profile pic' />
                                                         :
                                                         <img className='newsfeed-pic' src='src="https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"' alt='profile pic' />
                                                     }
                                                     {this.state.personalProfile &&
                                                         <>
-                                                            <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{this.state.personalProfile.name}{" "}{this.state.personalProfile.surname}</span>
+                                                            <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{this.state.personalProfile.firstname}{" "}{this.state.personalProfile.surname}</span>
                                                             {this.state.createPostError &&
                                                                 <Alert className="m-2" color="danger">Add a description</Alert>
                                                             }
@@ -91,13 +91,13 @@ class NewsFeed extends Component {
                                         <ModalBody>
                                             {this.state.personalProfile
                                                 ?
-                                                < img className='newsfeed-pic' src={this.state.personalProfile.image} alt='profile pic' />
+                                                < img className='newsfeed-pic' src={this.state.personalProfile.imageUrl} alt='profile pic' />
                                                 :
                                                 <img className='newsfeed-pic' src='src="https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"' alt='profile pic' />
                                             }
                                             {this.state.personalProfile &&
                                                 <>
-                                                    <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{this.state.personalProfile.name}{" "}{this.state.personalProfile.surname}</span>
+                                                    <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{this.state.personalProfile.firstname}{" "}{this.state.personalProfile.surname}</span>
                                                     <Input onChange={(val) => this.setState({
                                                         editPostText: val.target.value
                                                     })} type="textarea" value={this.state.editPostText} style={{ borderColor: 'white' }} />
@@ -139,7 +139,7 @@ class NewsFeed extends Component {
                                                     </Row>
                                                     <Row style={{ backgroundColor: '#dddddd7c', borderRadius: '5px' }}>
                                                         {post.image &&
-                                                            <img className="newsfeed-img mx-auto" src={post.image} alt='IMAGE MISSING' />}
+                                                            <img className="newsfeed-img mx-auto" src={post.image} alt='news feed' />}
                                                     </Row>
                                                     <hr />
                                                     <i className="fas fa-thumbs-up"></i>
@@ -168,7 +168,7 @@ class NewsFeed extends Component {
         posts.forEach(async post => {
             let oneUser = post.username
             let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
-            console.log(profile,"pr")
+            
             post.name = profile.name
             post.surname = profile.surname
             if (localStorage.getItem('username') === post.username)
@@ -187,6 +187,7 @@ class NewsFeed extends Component {
             return new Date(b.updatedAt) - new Date(a.updatedAt)
         })
         let personalProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
+    
         this.setState({
             personalProfile: personalProfile,
             isLoading: false,
