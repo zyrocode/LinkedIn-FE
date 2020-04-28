@@ -17,7 +17,7 @@ const mapStateToProps = state => state
 class NewsFeed extends Component {
     state = {
         posts: [],
-        numberPosts: 20,
+        numberPosts: 15,
         isLoading: true,
         createOpen: false,
         editOpen: false,
@@ -138,8 +138,9 @@ class NewsFeed extends Component {
                                                         <p style={{ paddingTop: '20px' }}>{post.text}</p>
                                                     </Row>
                                                     <Row style={{ backgroundColor: '#dddddd7c', borderRadius: '5px' }}>
+
                                                         {post.image &&
-                                                            <img className="newsfeed-img mx-auto" src={post.image} alt='news feed' />}
+                                                            <img className="newsfeed-img mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
                                                     <hr />
                                                     <i className="fas fa-thumbs-up"></i>
@@ -149,7 +150,7 @@ class NewsFeed extends Component {
                                     }
                                     <Row>
                                         <Col style={{ textAlign: 'center' }}>
-                                            <Button onClick={() => this.setState({ numberPosts: this.state.numberPosts + 20 })} color="primary">LOAD MORE</Button>
+                                           {this.state.numberPosts.length > 20 && <Button onClick={() => this.setState({ numberPosts: this.state.numberPosts + 15 })} color="primary">LOAD MORE</Button>}
                                         </Col>
                                     </Row>
                                 </Col>

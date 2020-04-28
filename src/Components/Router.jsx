@@ -256,15 +256,25 @@ class MainComponent extends Component {
 
     if (access_token || sessionToken) {
       const userJson = await RefreshTokenAPI(access_token || sessionToken);
+     
+      if(!userJson) {
+        delete localStorage["access_token"]
+        delete sessionStorage["access_token"]
+        delete localStorage["username"]
+        delete sessionStorage["username"] 
 
-      await this.props.setUserToken(
-        userJson.access_token,
-        userJson.user.username
-      );
-      // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
-      localStorage.setItem("access_token", userJson.access_token);
-      localStorage.setItem("username", userJson.user.username);
-      this.defaultIsLoading();
+      }
+      else{
+
+        await this.props.setUserToken(
+          userJson.access_token,
+          userJson.user.username
+        ) 
+        // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
+        localStorage.setItem("access_token", userJson.access_token);
+        localStorage.setItem("username", userJson.user.username);
+        this.defaultIsLoading();
+      } 
 
       //  if(access_token){
       //     const userJson = await RefreshTokenAPI (access_token)
@@ -308,7 +318,7 @@ class MainComponent extends Component {
     // }
 
     document.title = "LinkedIn";
-    let link = document.querySelector("link[rel='icon']");
+    var link = document.querySelector("link[rel='icon']");
     link =
       "https://techcrunch.com/wp-content/uploads/2014/02/linkedin_logo.png";
     // if (localStorage.getItem('username')) {
