@@ -16,6 +16,7 @@ class UpdateUser extends Component {
     email: "",
     bio: "",
     area: "",
+    title:"",
     password: "",
     selectedFile: null
   }
@@ -50,6 +51,11 @@ class UpdateUser extends Component {
                 <Label>Surname</Label>
                 <Input onChange={(val) => this.setState({ surname: val.target.value })} value={this.state.surname} type="text" id="surname" />
               </FormGroup>
+              <FormGroup>
+                <Label>Title/Headline</Label>
+                <Input onChange={(val) => this.setState({ title: val.target.value })} value={this.state.title} type="text"  id="title" />
+              </FormGroup>
+             
               <FormGroup>
                 <Label>Bio</Label>
                 <Input onChange={(val) => this.setState({ bio: val.target.value })} value={this.state.bio} type="textarea"  id="bio" />

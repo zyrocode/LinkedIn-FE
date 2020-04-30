@@ -53,8 +53,8 @@ class ProfileComponent extends Component {
                                             <img className="profile-pic" src={userInfo.image} alt="profile pic" />
                                             <Row>
                                                 <Col sm="6" l="8">
-                                                    <h3>{`${userInfo.name} ${userInfo.surname}`}</h3>
-                                                    <h6>{userInfo.title}</h6>
+                                                    <h2>{`${userInfo.name} ${userInfo.surname}`}</h2>
+                                                    <h4>{userInfo.title}</h4>
                                                     <p>{userInfo.bio}</p>
                                                     <small>{userInfo.area}</small>
                                                     <small>{userInfo.email}</small>

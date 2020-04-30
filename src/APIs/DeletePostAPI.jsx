@@ -1,6 +1,6 @@
-// `http://localhost:7000/experiences/${userName}/${theID}`
+// `http://localhost:7000/posts/${userName}/${theID}`
 const DeletePostAPI = async (userName,userToken, postID) => {
-    let URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/".concat(postID) 
+    let URL = `http://localhost:7000/posts/${userName}/${postID}`
     try {
         let response = await fetch(URL, {
             method: "DELETE",

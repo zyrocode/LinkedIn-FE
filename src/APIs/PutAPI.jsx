@@ -8,6 +8,8 @@ const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID) => 
         case 'profile':
             URL = `http://localhost:7000/profiles/${theID}` 
         break
+        default:
+            URL =  `http://localhost:7000/posts/${userName}/${theID}`  
     }
     try {
         let response = await fetch(URL, {

@@ -28,7 +28,7 @@ const GetAPI = async (userName, access_token, whatToFetch, userName2, ID) => {
             URL = "http://localhost:7000/profiles/username/".concat(userName2)
         break
         case 'post':
-                URL = "http://localhost:7000/profiles/posts/" + ID
+                URL = "http://localhost:7000/posts/" + ID
     }
 
     try {

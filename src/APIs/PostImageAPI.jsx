@@ -5,8 +5,10 @@ const PostImageAPI = async (userName, userToken, body1, whatToPost, idPost) => {
             URL = "http://localhost:7000/profiles/" + userName + "/picture"
             break;
         case 'post':
-            URL = "https://striveschool.herokuapp.com/api/posts/" + idPost
+            URL = `http://localhost:7000/posts/${userName}/${idPost}/uploadImg`
             break;
+            default:
+                URL = "http://localhost:7000/posts/"
 
     }
     try {

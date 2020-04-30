@@ -8,7 +8,8 @@ import Moment from "react-moment";
 import Loading from './Loading';
 import DeletePostAPI from '../APIs/DeletePostAPI'
 import { connect } from "react-redux"
-
+import SideBarProfile from './SideBarProfile';
+import PutAPI from "../APIs/PutAPI"
 
 
 const mapStateToProps = state => state
@@ -37,11 +38,16 @@ class NewsFeed extends Component {
                     <Loading />
                     :
                     <Fade >
-                        <div className="feed-profile">
-                            <img className="profile-pic mt-0 mb-2" src={this.state.personalProfile.imageUrl} alt="profile" />
-                            <h4>{this.state.personalProfile.firstname + " " + this.state.personalProfile.surname}</h4>
-                            {this.state.personalProfile.title ? <h6>{this.state.personalProfile.title}</h6>: null}
-                        </div>
+                        <Container fluid style={{padding:"2em 3em 2em 5em"}}>
+                            <Row>
+                                <div className="col-lg-2 col-md-3 d-none d-sm-block">
+                                
+                               
+                           <SideBarProfile  {...this.state.personalProfile}/>
+                            </div>
+                                <Col className="col-lg-7 col-md-8">
+                                
+                               
                         <Container style={{ maxWidth: '700px' }}>
                             <Row>
                                 <Col className="mx-auto">
@@ -109,13 +115,13 @@ class NewsFeed extends Component {
                                             <Button onClick={() => this.editPost()} color="primary" >Edit</Button>
                                         </ModalFooter>
                                     </Modal>
-                                    {this.state.posts.slice(0, this.state.numberPosts)
+                                    {this.state.posts.length > 0 &&  this.state.posts.slice(0, this.state.numberPosts)
                                         .map((post, index) =>
                                             <Row key={index} className="news-feed">
                                                 <Col>
                                                     <Link to={"/profile/" + post.username}>
-                                                        <Row>
-                                                            <img className="newsfeed-pic" src={post.userImage} alt="profile pic" />
+                                                        <Row className="p-4">
+                                                            <img className="newsfeed-pic" src={post.userImage} alt="newsfeed post pic" />
                                                             <Col>
                                                                 <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{post.name}{" "}{post.surname}</span>
                                                                 <Row >
@@ -132,13 +138,13 @@ class NewsFeed extends Component {
                                                                     editPostText: post.text,
                                                                     editPostId: post._id
                                                                 })} className="fa fa-pencil"></i>
-                                                            <i onClick={() => this.removePost(post._id)} class="far fa-trash-alt"></i>
+                                                            <i onClick={() => this.removePost(post._id)} className="far fa-trash-alt"></i>
                                                         </>}
                                                     <Row>
-                                                        <p style={{ paddingTop: '20px' }}>{post.text}</p>
+                                                        <p style={{ padding: '20px' }}>{post.text}</p>
                                                     </Row>
                                                     <Row style={{ backgroundColor: '#dddddd7c', borderRadius: '5px' }}>
-
+                                                        
                                                         {post.image &&
                                                             <img className="newsfeed-img mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
@@ -156,6 +162,9 @@ class NewsFeed extends Component {
                                 </Col>
                             </Row>
                         </Container>
+                        </Col>
+                            </Row>
+                        </Container>
                     </Fade>
 
                 }
@@ -165,35 +174,92 @@ class NewsFeed extends Component {
 
     componentDidMount = async () => {
         let getPosts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
-        let posts = getPosts.posts
-        posts.forEach(async post => {
-            let oneUser = post.username
-            let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
-            
-            post.name = profile.name
-            post.surname = profile.surname
-            if (localStorage.getItem('username') === post.username)
-                post._edit = "true"
-            profile.image
-                ?
-                post.userImage = profile.image
-                :
-                post.userImage = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
-            this.setState({
-                posts: [...this.state.posts, post]
+        if(getPosts){
+
+            let posts = getPosts.posts
+            posts.forEach(async post => {
+                let oneUser = post.username
+                let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
+                
+                post.name = profile.firstname
+                post.surname = profile.surname
+                if (localStorage.getItem('username') === post.username)
+                    post._edit = "true"
+                profile.imageUrl
+                    ?
+                    post.userImage = profile.imageUrl
+                    :
+                    post.userImage = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
+                // this.setState({
+                //     posts: [...this.state.posts, post]
+                    
+                // })
                 //could have been destructured as posts: [... post, ...this.state.posts]
             })
-        })
-        posts.sort((a, b) => {
-            return new Date(b.updatedAt) - new Date(a.updatedAt)
-        })
+            posts.sort((a, b) => {
+                return new Date(b.updatedAt) - new Date(a.updatedAt)
+            })
+           
+            this.setState({
+               
+                isLoading: false,
+                posts: posts
+            })
+        }
+        else{
+            this.setState({
+               
+                isLoading: false,
+                posts: []
+            })
+        }
+
         let personalProfile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
-    
         this.setState({
-            personalProfile: personalProfile,
-            isLoading: false,
-            posts: posts
+            personalProfile: personalProfile
+           
         })
+
+    }
+    editPost =async ()=>{
+        try {
+            
+            let editText = {text: this.state.editPostText}
+            
+          const editResp =   await PutAPI(this.props.details.username, this.props.details.userToken, "", editText, this.state.editPostId)
+          /**
+           * Using map && some method
+           */  
+        //   const updatedArray = this.state.posts.map((onePost)=>{
+        //       let idPresent = this.state.posts.find(post=> post._id === this.state.editPostId )
+        //       console.log(idPresent,"some")
+        //       return idPresent
+        //       ? {...onePost,text: this.state.editPostText }
+        //       : onePost
+        //   })
+            let updatedArray = [...this.state.posts]
+        let updatedPostIndex = this.state.posts.findIndex(post=> post._id === this.state.editPostId)
+        console.log(updatedArray[updatedPostIndex], "indexOf")
+        updatedArray[updatedPostIndex]["text"] = editResp.text 
+    
+        /**
+         * One line to pass in the array update 
+         *   
+        // this.setState({posts: [...this.state.posts.slice(0, updatedPostIndex -1), editResp, ...this.state.posts.slice(updatedPostIndex)]})
+         */
+        
+       
+
+          if(editResp)
+           this.setState({
+            posts: updatedArray,
+            editOpen: !this.state.editOpen
+            })
+         
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     removePost = async (id) => {
@@ -210,27 +276,30 @@ class NewsFeed extends Component {
             let postObject = {
                 text: this.state.createPostText
             }
-            let response = await PostAPI(this.props.details.username, localStorage.getItem('password'), 'post', postObject)
+            let response = await PostAPI(this.props.details.username, this.props.details.userToken, 'post', postObject)
+            console.log(response,"newPost")
             if (this.state.createPostImage) {
                 let fd = new FormData();
                 fd.append("post", this.state.createPostImage)
-                await PostImageAPI(localStorage.getItem('username'), localStorage.getItem('password'), fd, 'post', response._id)
+                await PostImageAPI(this.props.details.username, this.props.details.userToken, fd, 'post', response._id)
             }
-            let post = await GetAPI(localStorage.getItem('username'), localStorage.getItem('password'), 'post', '', response._id)
-            post.name = this.state.personalProfile.name
+            let post = await GetAPI(this.props.details.username, this.props.details.userToken, 'post', '', response._id)
+            post.firstname = this.state.personalProfile.firstname
             post.surname = this.state.personalProfile.surname
             post._edit = true
-            this.state.personalProfile.image
+            this.state.personalProfile.imageUrl
                 ?
-                post.userImage = this.state.personalProfile.image
+                post.userImage = this.state.personalProfile.imageUrl
                 :
                 post.userImage = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
-            this.state.posts.unshift(post)
+            // this.state.posts.unshift(post)
+            
             this.setState({
                 createOpen: false,
                 createPostError: false,
                 createPostImage: undefined,
-                createPostText: undefined
+                createPostText: undefined,
+                posts: [post,...this.state.posts]
             })
         } else {
             this.setState({ createPostError: true })

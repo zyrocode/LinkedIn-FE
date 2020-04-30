@@ -18,7 +18,7 @@ class NavBar extends Component {
     state = {
         image: undefined,
         allUsersFilter: [],
-        search: undefined,
+        search: "",
         isOpen: false
     }
 
@@ -37,15 +37,19 @@ class NavBar extends Component {
 
                         </NavItem>
                         <Collapse style={{ backgroundColor: 'white', borderRadius: '5px', marginTop: '5px', marginLeft: '20px', position: 'absolute', border: '1px solid #ddd'}} isOpen={this.state.isOpen}>
-                            {this.state.allUsersFilter
+                            {this.state.allUsersFilter.length > 0 ? this.state.allUsersFilter 
                                 .map((user, index) =>
-                                    <Link onClick={() => this.setState({isOpen: false, search: undefined})} key={index} to={"/profile/" + user.username}>
+                                    <Link onClick={() => this.setState({isOpen: false, search: ""})} key={index} to={"/profile/" + user.username}>
                                         <Row className="mx-auto search-item">
                                             <img className="nav-icon nav-icon-userimg" src={user.imageUrl ? user.imageUrl : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
                                             <h5 style={{ marginLeft: '10px', color: 'black' }}>{user.firstname + " " + user.surname}</h5>
                                         </Row>
                                     </Link>
                                 )
+                                :   <Row className="mx-auto search-item">
+                                
+                                <h5 style={{ marginLeft: '10px', color: 'black' }}>Sorry! No Such User</h5>
+                            </Row>
                             }
                         </Collapse>
                     </Col>
@@ -101,21 +105,24 @@ class NavBar extends Component {
     filterUsers = (e) => {
         if (e.target.value && e.target.value.length > 0) {
             this.setState({
-                isOpen: true
+                isOpen: true,
+                search: e.target.value
             })
             let search = e.target.value
             let allUsersFilter = this.state.allUsers.filter(user =>
                     user.firstname.toUpperCase().includes(search.toUpperCase()) ||
                     user.surname.toUpperCase().includes(search.toUpperCase())
                 )
+                console.log(allUsersFilter)
             allUsersFilter && allUsersFilter.length > 0
                 ?
                 this.setState({ allUsersFilter: allUsersFilter.slice(0, 4) })
                 :
-                console.log("NO USER FOUND")
+                this.setState({ allUsersFilter: [...allUsersFilter] })
         } else {
             this.setState({
-                isOpen: false
+                isOpen: false,
+                search: ""
             })
         }
     }
