@@ -4,7 +4,7 @@
 body {
   margin: 0;
   background-color: #f5f5f5 !important;
-  font-family:  -apple-system, BlinkMacSystemFont, "Nunito", "Segoe UI", "Roboto", "Oxygen",
+  font-family:  "-apple-system", BlinkMacSystemFont, "Nunito", "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -134,7 +134,7 @@ i {
   transition: all 0.2s;
 }
 
-i:hover {
+i:hover:not(.postButtons) {
   background-color: #0274b3;
   color: white !important;
   cursor: pointer;
@@ -159,6 +159,7 @@ i:hover {
 } 
 
 .profile-pic {
+  
   margin-top: -170px;
   border: 3px solid #dbe6ea;
   border-radius: 100px;
@@ -187,8 +188,11 @@ i:hover {
 }
 
 .newsfeed-img {
-  min-width: 100%;
-  max-width: 100%;
+  width: 100%;
+object-fit: cover;
+height: 300px; 
+  /* min-width: 100%;
+  max-width: 100%; */
   /* width: -moz-available;          WebKit-based browsers will ignore this. */
   /* width: -webkit-fill-available;  Mozilla-based browsers will ignore this. */
   /* width: stretch; */
@@ -319,7 +323,7 @@ a:hover {
 
 .fixedSide{
 position: sticky;
-top: 7.05em;
+top: 7.7em;
 }
 
 .feed-profile {

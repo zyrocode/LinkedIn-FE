@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
+    "antd": "^4.2.0",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
     "lodash.merge": "^4.6.2",

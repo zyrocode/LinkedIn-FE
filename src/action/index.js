@@ -4,7 +4,7 @@ export const loginWithThunk = (t, u) => {
 
     console.log(token);
 
-    dispatch({
+    dispatch({ 
       type: "SET_USERBASE64",
       payload: {
         token: t,

@@ -7,6 +7,12 @@ export default function (state={}, action) {
                  userToken: action.payload.token,
                   username: action.payload.user
             }
+            case "SET_IMG":
+            return {
+                 ...state,
+                
+                 img: action.payload.imageUrl
+            }
         default:
             return state
     }

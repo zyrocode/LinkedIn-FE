@@ -12,7 +12,8 @@ const userSession =  sessionStorage.getItem("username");
 let initialState ={
     details:{
         userToken: "",
-        username: ""
+        username: "",
+        img:""
     },
     
 }
@@ -22,7 +23,8 @@ if(storageState || sessionState){
     initialState = {
         details:{
             userToken: (storageState || sessionState),
-            username: (userStorage || userSession)
+            username: (userStorage || userSession),
+            img:""
         }
     }
 }
@@ -49,7 +51,9 @@ store.subscribe(() => {
 })
 */
 const combinedReducers = combineReducers({
-    details: reducer
+    details: reducer,
+
+
   
 })
 

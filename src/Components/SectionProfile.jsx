@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UpdateUser from './UpdateUser'
-import { Container, Col, Fade, Row } from 'reactstrap'
+import { Container, Col, Fade, Row, Spinner } from 'reactstrap'
 import Loading from './Loading'
 import GetAPI from "../APIs/GetAPI"
 import { connect } from "react-redux";
@@ -11,7 +11,15 @@ import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => state
 
-
+const mapDispatchToProps = (dispatch) => ({
+    addImgToStore: (imgurl) =>
+      dispatch({
+        type: "SET_IMG",
+        payload: {
+            imageUrl: imgurl
+        },
+      })
+  });
 
 
 class ProfileComponent extends Component {
@@ -28,6 +36,17 @@ class ProfileComponent extends Component {
         }
     }
  
+    tempTimeoutForImage =()=>{
+        this.setState({
+            imgLoading: true
+        })
+        setTimeout(() => {
+            this.setState({
+                imgLoading: false
+            })
+        }, 3000);
+    }
+
     render() {
         let userInfo = this.state.userInfo
         return (
@@ -43,16 +62,19 @@ class ProfileComponent extends Component {
                                 <Col>
                                     {this.props.details.username === this.props.match.params.username && <i className="fa fa-pencil pencil" onClick={() => this.setState({ openModal: true })}></i>}
                                     {this.state.openModal && 
-                                    <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false }) }  refresh={this.fetchInfo}/>
+                                    <UpdateUser closeModal={() => this.setState({ openModal: false, isLoading: false }) }  refresh={this.fetchInfo} loadTimer ={this.tempTimeoutForImage}/>
                                     }
                                     {this.state.isLoading
                                         ?
                                         <Loading />
                                         :
                                         <Fade className="m-3">
-                                            <img className="profile-pic" src={userInfo.image} alt="profile pic" />
+                                            <img className="profile-pic" src={userInfo.image} alt="profile pic" style={{objectFit: "cover"}} />
                                             <Row>
                                                 <Col sm="6" l="8">
+                                                    {
+                                                        this.state.imgLoading && <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
+                                                    }
                                                     <h2>{`${userInfo.name} ${userInfo.surname}`}</h2>
                                                     <h4>{userInfo.title}</h4>
                                                     <p>{userInfo.bio}</p>
@@ -108,8 +130,8 @@ class ProfileComponent extends Component {
         :  await GetAPI(this.props.details.username, this.props.details.userToken, 'profile') 
         console.log("fetchd data -->",userProfile)
         //{ signal: this.abortController.signal })
-        if (!userProfile.imageUrl)
-            userProfile.imageUrl = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
+        userProfile.imageUrl ? this.props.addImgToStore(userProfile.imageUrl)
+           : userProfile.imageUrl = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
         this.setState({
             userInfo: {
                 name: userProfile.firstname,
@@ -123,4 +145,4 @@ class ProfileComponent extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps) (ProfileComponent));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (ProfileComponent));

@@ -130,6 +130,7 @@ initialiseState =async()=>{
 
     await this.uploadImage()
     this.props.closeModal()
+    this.props.loadTimer()
 
     await this.props.refresh()
   }

@@ -10,6 +10,8 @@ import DeletePostAPI from '../APIs/DeletePostAPI'
 import { connect } from "react-redux"
 import SideBarProfile from './SideBarProfile';
 import PutAPI from "../APIs/PutAPI"
+import EditAndDeletePost from './EditAndDeletePost';
+import CommentSection from './CommentSection';
 
 
 const mapStateToProps = state => state
@@ -27,7 +29,21 @@ class NewsFeed extends Component {
         createPostImage: undefined,
         createPostError: false,
         editPostText: undefined,
-        editPostId: undefined
+        editPostId: undefined,
+    }
+
+    openForEdit = (text, id)=>{
+        this.setState({
+            editOpen: true,
+            editPostText: text,
+            editPostId: id
+        })
+    }
+
+    toggle =()=>{
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        })
     }
 
     render() {
@@ -112,25 +128,39 @@ class NewsFeed extends Component {
                                             }
                                         </ModalBody>
                                         <ModalFooter>
-                                            <Button onClick={() => this.editPost()} color="primary" >Edit</Button>
+                                            <Button onClick={() => this.editPost()} color="primary" >Update</Button>
                                         </ModalFooter>
                                     </Modal>
                                     {this.state.posts.length > 0 &&  this.state.posts.slice(0, this.state.numberPosts)
                                         .map((post, index) =>
                                             <Row key={index} className="news-feed">
                                                 <Col>
-                                                    <Link to={"/profile/" + post.username}>
-                                                        <Row className="p-4">
-                                                            <img className="newsfeed-pic" src={post.userImage} alt="newsfeed post pic" />
+                                                    
+                                                        <Row style={{padding: "1.5em 1.5em 0.3em 1.5em"}}>
+                                                        <Link to={"/profile/" + post.username}> <img className="newsfeed-pic" src={post.userImage} alt="newsfeed post pic" style={{objectFit: "cover"}} />  </Link>
                                                             <Col>
-                                                                <span style={{ color: 'black', padding: '10px', fontWeight: '600' }}>{post.name}{" "}{post.surname}</span>
+                                                            <Link to={"/profile/" + post.username}> <span style={{ color: 'black', paddingLeft: '10px', fontWeight: '700' }}>{post.firstname}{" "}{post.surname}</span> <br/>
+                                                            {post.userInfo.title || post.title
+                                                            ? <span style={{ color: 'black', paddingLeft: '10px', fontWeight: '400' }}>{post.userInfo.title || post.title}</span>
+                                                            : null}
+                                                             </Link>
                                                                 <Row >
-                                                                    <Moment className="time-date" date={post.updatedAt} format="HH:mm DD/MM" />
+                                                                    <Moment fromNow className="time-date">{post.updatedAt}</Moment>
+                                                                    {/* <Moment className="time-date" date={post.updatedAt} format="HH:mm DD/MM" /> */}
                                                                 </Row>
                                                             </Col>
+                                                            <Col xs="2">
+                                                            {
+                                                        post._edit && <EditAndDeletePost {...post} openForEdit={this.openForEdit} removePost ={this.removePost} {...this.state} toggle={this.toggle} />
+                                                    }
+
+                                                            </Col>
                                                         </Row>
-                                                    </Link>
-                                                    {post._edit &&
+                                                   
+                                                  
+
+                                                    
+                                                    {/* {post._edit &&
                                                         <>
                                                             <i onClick={() =>
                                                                 this.setState({
@@ -139,18 +169,28 @@ class NewsFeed extends Component {
                                                                     editPostId: post._id
                                                                 })} className="fa fa-pencil"></i>
                                                             <i onClick={() => this.removePost(post._id)} className="far fa-trash-alt"></i>
-                                                        </>}
+                                                        </>} */}
                                                     <Row>
-                                                        <p style={{ padding: '20px' }}>{post.text}</p>
+                                                        <p style={{ padding: "3px 3px 3px 18px"}}>{post.text}</p>
                                                     </Row>
+                                                    {post.image ? <hr className="m-1"/> : null}
                                                     <Row style={{ backgroundColor: '#dddddd7c', borderRadius: '5px' }}>
                                                         
                                                         {post.image &&
-                                                            <img className="newsfeed-img mx-auto " src={post.image} alt='news feed' />}    
+                                                            <img className="newsfeed-img img-fluid mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
-                                                    <hr />
-                                                    <i className="fas fa-thumbs-up"></i>
-                                                    <i className="fas fa-comment"></i>
+                                                    <hr className="m-1"/>
+                                                    
+                                                    <span className="text-black-50"> <i className="fas fa-thumbs-up postButtons"></i> like  </span>
+                                                    &nbsp;&nbsp;
+                                                    <span className="text-black-50"><i className="fas fa-comment postButtons"></i> comment </span>
+                                                   
+                                                    
+                                                    
+                                                     {   <CommentSection {...this.state.personalProfile} post={post}/>}
+                                                    
+                                                
+
                                                 </Col>
                                             </Row>)
                                     }
@@ -177,17 +217,17 @@ class NewsFeed extends Component {
         if(getPosts){
 
             let posts = getPosts.posts
-            posts.forEach(async post => {
-                let oneUser = post.username
-                let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
+            posts.forEach( post => {
+                // let oneUser = post.username
+                // let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
                 
-                post.name = profile.firstname
-                post.surname = profile.surname
+                post.firstname = post.userInfo.firstname
+                post.surname = post.userInfo.surname
                 if (localStorage.getItem('username') === post.username)
                     post._edit = "true"
-                profile.imageUrl
+                    post.userInfo.imageUrl
                     ?
-                    post.userImage = profile.imageUrl
+                    post.userImage = post.userInfo.imageUrl
                     :
                     post.userImage = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
                 // this.setState({
@@ -286,6 +326,7 @@ class NewsFeed extends Component {
             let post = await GetAPI(this.props.details.username, this.props.details.userToken, 'post', '', response._id)
             post.firstname = this.state.personalProfile.firstname
             post.surname = this.state.personalProfile.surname
+            post.title = this.state.personalProfile.title
             post._edit = true
             this.state.personalProfile.imageUrl
                 ?
