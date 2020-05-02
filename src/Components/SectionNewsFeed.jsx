@@ -30,6 +30,7 @@ class NewsFeed extends Component {
         createPostError: false,
         editPostText: undefined,
         editPostId: undefined,
+        
     }
 
     openForEdit = (text, id)=>{
@@ -132,8 +133,8 @@ class NewsFeed extends Component {
                                         </ModalFooter>
                                     </Modal>
                                     {this.state.posts.length > 0 &&  this.state.posts.slice(0, this.state.numberPosts)
-                                        .map((post, index) =>
-                                            <Row key={index} className="news-feed">
+                                        .map((post) =>
+                                            <Row key={post._id} className="news-feed">
                                                 <Col>
                                                     
                                                         <Row style={{padding: "1.5em 1.5em 0.3em 1.5em"}}>
@@ -150,8 +151,8 @@ class NewsFeed extends Component {
                                                                 </Row>
                                                             </Col>
                                                             <Col xs="2">
-                                                            {
-                                                        post._edit && <EditAndDeletePost {...post} openForEdit={this.openForEdit} removePost ={this.removePost} {...this.state} toggle={this.toggle} />
+                                                            { post.username ===  this.props.details.username &&
+                                                         <EditAndDeletePost {...post} openForEdit={this.openForEdit} removePost ={this.removePost} {...this.state} toggle={this.toggle} />
                                                     }
 
                                                             </Col>
@@ -214,9 +215,16 @@ class NewsFeed extends Component {
 
     componentDidMount = async () => {
         let getPosts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
+        let { posts } = getPosts
+        //     console.log( posts ,"old")
+        //    let z = posts.map( ({ username })=> username)
+        // //    z[0] = "hello"
+        // z =[ {h:1},...z]
+        // let u = z[0]
+        // let { h } = u
+        //      console.log(z,h,"new")
         if(getPosts){
-
-            let posts = getPosts.posts
+            // let posts = getPosts.posts
             posts.forEach( post => {
                 // let oneUser = post.username
                 // let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile', oneUser)
