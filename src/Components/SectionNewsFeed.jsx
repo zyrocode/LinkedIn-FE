@@ -10,8 +10,9 @@ import DeletePostAPI from '../APIs/DeletePostAPI'
 import { connect } from "react-redux"
 import SideBarProfile from './SideBarProfile';
 import PutAPI from "../APIs/PutAPI"
-import EditAndDeletePost from './EditAndDeletePost';
 import CommentSection from './CommentSection';
+import EditAndDeleteEllipsis from './EditAndDeleteEllipsis';
+import RatingsAvatar from './RatingsAvatar';
 
 
 const mapStateToProps = state => state
@@ -55,7 +56,7 @@ class NewsFeed extends Component {
                     <Loading />
                     :
                     <Fade >
-                        <Container fluid style={{padding:"2em 3em 2em 5em"}}>
+                        <Container fluid style={{padding:"2em 3em 2em 5em"}} className="containerSm">
                             <Row>
                                 <div className="col-lg-2 col-md-3 d-none d-sm-block">
                                 
@@ -152,7 +153,7 @@ class NewsFeed extends Component {
                                                             </Col>
                                                             <Col xs="2">
                                                             { post.username ===  this.props.details.username &&
-                                                         <EditAndDeletePost {...post} openForEdit={this.openForEdit} removePost ={this.removePost} {...this.state} toggle={this.toggle} />
+                                                         <EditAndDeleteEllipsis {...post} openForEdit={this.openForEdit} removePost ={this.removePost} {...this.state} toggle={this.toggle} />
                                                     }
 
                                                             </Col>
@@ -180,11 +181,15 @@ class NewsFeed extends Component {
                                                         {post.image &&
                                                             <img className="newsfeed-img img-fluid mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
+                                                   
                                                     <hr className="m-1"/>
+                                                    <RatingsAvatar />
+                                                    <br/>
                                                     
                                                     <span className="text-black-50"> <i className="fas fa-thumbs-up postButtons"></i> like  </span>
-                                                    &nbsp;&nbsp;
-                                                    <span className="text-black-50"><i className="fas fa-comment postButtons"></i> comment </span>
+                                                    {/* &nbsp;&nbsp;
+                                                    <span className="text-black-50"><i className="fas fa-comment postButtons"></i> comment </span> */}
+                                                   
                                                    
                                                     
                                                     
@@ -287,7 +292,7 @@ class NewsFeed extends Component {
         //   })
             let updatedArray = [...this.state.posts]
         let updatedPostIndex = this.state.posts.findIndex(post=> post._id === this.state.editPostId)
-        console.log(updatedArray[updatedPostIndex], "indexOf")
+        // console.log(updatedArray[updatedPostIndex], "indexOf")
         updatedArray[updatedPostIndex]["text"] = editResp.text 
     
         /**

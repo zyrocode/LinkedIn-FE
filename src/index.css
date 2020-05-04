@@ -86,6 +86,9 @@ code {
   .nav-item {
     font-size: smaller;
   }
+  .containerSm{
+    padding: 1em !important;
+  }
 }
 
 .nav-right-side {

@@ -1,6 +1,9 @@
-const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID) => {
+const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID, commentID) => {
     let URL = undefined
     switch(whatToUpdate){
+        case "comment":
+            URL = `http://localhost:7000/comments/${userName}/${theID}/${commentID}`
+            break
         case 'experience':
             //http://localhost:7000/experiences/jeff/5e45ec286a042e4bc0c8dd33
             URL = `http://localhost:7000/experiences/${userName}/${theID}`

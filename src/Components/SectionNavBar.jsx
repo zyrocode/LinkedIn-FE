@@ -89,15 +89,21 @@ class NavBar extends Component {
     }
  
     componentDidMount = async () => {
-        let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
-        // console.log(profile)
-        let allUsers = await GetAPI(this.props.details.username, this.props.details.userToken)
-        this.setState({
-            image: profile.imageUrl,
-            allUsers: allUsers.profileList
-        })
-
-        // console.log(this.state.allUsers)
+        try {
+            
+            let profile = await GetAPI(this.props.details.username, this.props.details.userToken, 'profile')
+            // console.log(profile)
+            let allUsers = await GetAPI(this.props.details.username, this.props.details.userToken)
+            this.setState({
+                image: profile.imageUrl,
+                allUsers: allUsers.profileList
+            })
+    
+            // console.log(this.state.allUsers)
+            
+        } catch (error) {
+            throw new Error (error)
+        }
     }
 
     componentDidUpdate = (prevProps)=>{
