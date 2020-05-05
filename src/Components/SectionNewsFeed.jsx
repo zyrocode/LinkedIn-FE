@@ -14,6 +14,7 @@ import CommentSection from './CommentSection';
 import EditAndDeleteEllipsis from './EditAndDeleteEllipsis';
 import RatingsAvatar from './RatingsAvatar';
 import RatingsComponent from './RatingsComponent';
+import SideListUsers from './SideListUsers';
 
 
 const mapStateToProps = state => state
@@ -63,8 +64,9 @@ class NewsFeed extends Component {
                                 
                                
                            <SideBarProfile  {...this.state.personalProfile}/>
-                            </div>
-                                <Col className="col-lg-7 col-md-8">
+                                </div>
+
+                    <Col className="col-lg-7 col-md-8">
                                 
                                
                         <Container style={{ maxWidth: '700px' }}>
@@ -203,6 +205,11 @@ class NewsFeed extends Component {
                             </Row>
                         </Container>
                         </Col>
+
+                            <Col className="sideList" style={{marginTop: "-6em"}}> 
+                            <SideListUsers />
+                            </Col>
+
                             </Row>
                         </Container>
                     </Fade>

@@ -322,7 +322,24 @@ a:hover {
   .fixedSide{
     display: none;
     }
+
+    .sideList{
+      display: none;
+    }
  }
+
+ @media (min-width: 267px) and (max-width: 789px) {
+  
+    .sideList{
+      display: none !important;
+    }
+ }
+
+ .sideList{
+  position: sticky;
+top: 6.2em;
+
+}
 
 .fixedSide{
 position: sticky;
