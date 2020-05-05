@@ -1,8 +1,11 @@
 const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, imageData, postID) => {
     let URL = undefined
     switch (whatToCreate) {
-      // `http://localhost:7000/experiences/${userName}/${expID}/imgUpload`:username/:postId
-      //http://localhost:7000/comments/ds/5eab1ba16668756d2b8d6de0
+      // `http://localhost:7000/likes/5eab1ba16668756d2b8d6de0/ds`
+
+      case "like":
+          URL= `http://localhost:7000/likes/${postID}/${userName}`;
+          break
 
       case "comment":
         URL = `http://localhost:7000/comments/${userName}/${postID}`;
