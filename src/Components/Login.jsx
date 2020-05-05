@@ -68,9 +68,11 @@ class Login extends Component {
         this.props.setUserToken(respJson.access_token,respJson.user.username );
         localStorage.setItem("access_token", respJson.access_token);
         localStorage.setItem("username", respJson.user.username);
+        localStorage.setItem("userId",respJson.user._id )
       } else {
         sessionStorage.setItem("access_token", respJson.access_token);
         sessionStorage.setItem("username", respJson.user.username);
+        sessionStorage.setItem("userId", respJson.user._id);
         this.props.setUserToken(respJson.access_token,respJson.user.username);
       }
       // <Redirect to={{pathname:"/login" }}/>

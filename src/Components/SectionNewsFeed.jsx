@@ -13,6 +13,7 @@ import PutAPI from "../APIs/PutAPI"
 import CommentSection from './CommentSection';
 import EditAndDeleteEllipsis from './EditAndDeleteEllipsis';
 import RatingsAvatar from './RatingsAvatar';
+import RatingsComponent from './RatingsComponent';
 
 
 const mapStateToProps = state => state
@@ -182,14 +183,7 @@ class NewsFeed extends Component {
                                                             <img className="newsfeed-img img-fluid mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
                                                    
-                                                    <hr className="m-1"/>
-                                                    <RatingsAvatar />
-                                                    <br/>
-                                                    
-                                                    <span className="text-black-50"> <i className="fas fa-thumbs-up postButtons"></i> like  </span>
-                                                    {/* &nbsp;&nbsp;
-                                                    <span className="text-black-50"><i className="fas fa-comment postButtons"></i> comment </span> */}
-                                                   
+                                                    <RatingsComponent  postId={post._id} userId={localStorage.getItem("userId")}/>
                                                    
                                                     
                                                     

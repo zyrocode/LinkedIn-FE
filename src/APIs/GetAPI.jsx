@@ -1,10 +1,13 @@
 
-const GetAPI = async (userName, access_token, whatToFetch, userName2, ID) => {
+const GetAPI = async (userName, access_token, whatToFetch, userName2, ID, reqUserID) => {
     let URL = undefined
 
     switch (whatToFetch) {
         default:
             URL = "http://localhost:7000/profiles/"
+            break
+        case 'likes':
+            URL = `http://localhost:7000/likes/${ID}/?userId=${reqUserID}`
             break
         case 'experience':
             //http://localhost:7000/experiences/ds/experience/5e5496f570602b00440ce503
@@ -47,6 +50,9 @@ const GetAPI = async (userName, access_token, whatToFetch, userName2, ID) => {
         })
         if (response.ok) {
             return await response.json()
+        }
+        else{
+            throw new Error (response)
         }
     } catch (error) {
         console.log(error);

@@ -260,6 +260,8 @@ class MainComponent extends Component {
       if(!userJson) {
         delete localStorage["access_token"]
         delete sessionStorage["access_token"]
+        delete sessionStorage["userId"]
+        delete localStorage["userId"]
         delete localStorage["username"]
         delete sessionStorage["username"] 
 
@@ -273,6 +275,7 @@ class MainComponent extends Component {
         // await  this.props.setUserToken(access_token||sessionToken, localUser || sessionUser)
         localStorage.setItem("access_token", userJson.access_token);
         localStorage.setItem("username", userJson.user.username);
+        localStorage.setItem("userId",userJson.user._id )
         this.defaultIsLoading();
       } 
 
@@ -294,6 +297,8 @@ class MainComponent extends Component {
       await this.props.setUserToken(null, null);
       delete localStorage["access_token"];
       delete sessionStorage["access_token"];
+      delete sessionStorage["userId"];
+
     }
 
     // if (access_token) {
