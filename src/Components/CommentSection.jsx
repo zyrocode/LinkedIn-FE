@@ -41,7 +41,7 @@ const CommentSection = ({ post, imageUrl, title, details }) => {
         "",
         post._id
       );
-       const sortedComments = comments.sort((a,b)=> new Date (b.updatedAt) - new Date (a.updatedAt))
+       const sortedComments = comments.sort((a,b)=> new Date (a.updatedAt) - new Date (b.updatedAt))
       setCommentList(sortedComments);
     };
     fetchComments();

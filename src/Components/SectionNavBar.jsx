@@ -41,7 +41,7 @@ class NavBar extends Component {
                                 .map((user, index) =>
                                     <Link onClick={() => this.setState({isOpen: false, search: ""})} key={index} to={"/profile/" + user.username}>
                                         <Row className="mx-auto search-item">
-                                            <img className="nav-icon nav-icon-userimg" src={user.imageUrl ? user.imageUrl : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
+                                            <img className="nav-icon nav-icon-userimg" src={user.imageUrl ? user.imageUrl || this.props.details.img : this.props.details.img||'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img" />
                                             <h5 style={{ marginLeft: '10px', color: 'black' }}>{user.firstname + " " + user.surname}</h5>
                                         </Row>
                                     </Link>

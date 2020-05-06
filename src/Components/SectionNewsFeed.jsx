@@ -221,7 +221,7 @@ class NewsFeed extends Component {
 
     componentDidMount = async () => {
         let getPosts = await GetAPI(this.props.details.username, this.props.details.userToken, 'posts')
-        let { posts } = getPosts
+       
         //     console.log( posts ,"old")
         //    let z = posts.map( ({ username })=> username)
         // //    z[0] = "hello"
@@ -230,6 +230,7 @@ class NewsFeed extends Component {
         // let { h } = u
         //      console.log(z,h,"new")
         if(getPosts){
+            let { posts } = getPosts
             // let posts = getPosts.posts
             posts.forEach( post => {
                 // let oneUser = post.username

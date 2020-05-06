@@ -323,12 +323,18 @@ a:hover {
     display: none;
     }
 
-    .sideList{
-      display: none;
-    }
+  
  }
+ @media (min-width: 784px) and (max-width: 994px) {
+  
+  .sideList{
+    display: none !important;
+  }
+}
 
- @media (min-width: 267px) and (max-width: 789px) {
+ /* 784 -994 */
+
+ @media (min-width: 267px) and (max-width: 994px) {
   
     .sideList{
       display: none !important;
