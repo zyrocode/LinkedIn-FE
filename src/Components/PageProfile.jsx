@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Fade } from 'reactstrap'
 import SectionProfile from './SectionProfile'
 import ExperienceComponent from './SectionExperience'
 

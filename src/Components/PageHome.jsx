@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Fade } from "reactstrap";
 import NewsFeed from "./SectionNewsFeed";
-import { Route } from "react-router-dom";
+
 
 class PageHome extends Component {
   state = {

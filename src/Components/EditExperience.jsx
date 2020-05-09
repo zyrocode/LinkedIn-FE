@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input, ModalFooter, Container
+  Input,  Container
 } from "reactstrap";
 import PutAPI from "../APIs/PutAPI";
 import GetAPI from "../APIs/GetAPI";

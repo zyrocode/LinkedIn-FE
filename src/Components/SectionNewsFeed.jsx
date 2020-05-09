@@ -12,7 +12,6 @@ import SideBarProfile from './SideBarProfile';
 import PutAPI from "../APIs/PutAPI"
 import CommentSection from './CommentSection';
 import EditAndDeleteEllipsis from './EditAndDeleteEllipsis';
-import RatingsAvatar from './RatingsAvatar';
 import RatingsComponent from './RatingsComponent';
 import SideListUsers from './SideListUsers';
 
