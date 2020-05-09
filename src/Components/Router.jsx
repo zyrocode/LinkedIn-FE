@@ -9,7 +9,6 @@ import {
 import PageHome from "./PageHome";
 import { Alert, Form, Input, Container, Row, Fade } from "reactstrap";
 import PageProfile from "./PageProfile";
-import GetAPI from "../APIs/GetAPI";
 import PageLoading from "./PageLoading";
 import NavBar from "./SectionNavBar";
 import SignUp from "./SignUp";

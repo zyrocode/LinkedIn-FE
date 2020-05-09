@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, Button, Form, FormGroup, Label, Input } 
 import PutAPI from "../APIs/PutAPI"
 import GetAPI from "../APIs/GetAPI"
 import PostImageAPI from '../APIs/PostImageAPI';
-import {connect}  from "react-redux"
+import { connect }  from "react-redux"
 
 
 const mapStateToProps = state => state
