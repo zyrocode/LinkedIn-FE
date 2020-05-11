@@ -300,26 +300,7 @@ class MainComponent extends Component {
 
     }
 
-    // if (access_token) {
-    //   const response = await RefreshTokenAPI (access_token)
-    //   if (response) {
-    //     const userJson = await response;
-    //    await  this.props.setUserToken(userJson.access_token, userJson.user.username);
-    //     this.setState({ userToken: userJson.access_token });
-    //     localStorage.setItem("access_token", userJson.access_token);
-    //     localStorage.setItem("username", userJson.user.username);
-
-    //     this.defaultIsLoading();
-
-    //     console.log("token was ok, refreshed");
-    //   } else {
-    //     delete localStorage["access_token"];
-    //     delete localStorage["username"];
-    //     console.log("token was expired, removed");
-    //   }
-    // } else {
-    //   this.props.setUserToken();
-    // }
+   
 
     document.title = "LinkedIn";
     var link = document.querySelector("link[rel='icon']");
