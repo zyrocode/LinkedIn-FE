@@ -2,6 +2,10 @@ const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, ima
     let URL = undefined
     switch (whatToCreate) {
       // `http://localhost:7000/likes/5eab1ba16668756d2b8d6de0/ds`
+      
+      case "register":
+        URL = `http://localhost:7000/users/register`
+        break
 
       case "like":
           URL= `http://localhost:7000/likes/${postID}/${userName}`;

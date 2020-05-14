@@ -11,7 +11,7 @@ const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
     <>
       <div className="avatar-group">
         {allLikes
-          ? allLikes.length < 5 &&
+          ? allLikes.length <= 7 &&
             allLikes.map(({ likedBy: { _id, imageUrl, username } }) => (
                 <div key={_id} className="avatar">
                 <Link to={"/profile/" + username}><img
@@ -24,19 +24,44 @@ const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
           : null}
 
         {allLikes
-          ? allLikes.length > 4 &&
-            allLikes.slice(0, 4).map(({ likedby: { _id, imageUrl, username } }) => (
+          ? allLikes.length > 10 &&
+            allLikes.slice(0, 5)
+
+
+            .map(one => (
               <>
-                <div key={_id} className="avatar">
-                <Link to={"/profile/" + username}> <img
-                    src={imageUrl}
+                <div key={one.likedBy._id} className="avatar">
+                <Link to={"/profile/" + one.likedBy.username}> <img
+                    src={one.likedBy.imageUrl}
                     alt="avatar"
                     className="avatar-img rounded-circle border border-white"
                   /></Link>
                 </div>
-                <span className="text-black-50"> + {numberOfLikes - 4}</span>{" "}
+                <span className="text-black-50"> + {numberOfLikes - 5}</span>{" "}
+
+
+
               </>
             ))
+
+            
+            // .map(({ likedby: { _id, imageUrl, username } }) => (
+            //   <>
+            //     <div key={_id} className="avatar">
+            //     <Link to={"/profile/" + username}> <img
+            //         src={imageUrl}
+            //         alt="avatar"
+            //         className="avatar-img rounded-circle border border-white"
+            //       /></Link>
+            //     </div>
+            //     <span className="text-black-50"> + {numberOfLikes - 5}</span>{" "}
+
+
+
+            //   </>
+            // ))
+
+
           : null}
       </div>
 

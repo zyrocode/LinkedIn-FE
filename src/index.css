@@ -382,3 +382,37 @@ input[type="file"] {
   cursor: default;
   background-color: white;
 }
+
+.form-register{
+  background: #dee2e6;
+  padding: 3.5%;
+  margin: 5%;
+  border-radius: 1%;
+}
+.agreement{
+  font-size: 77%;
+  padding: 0 7%;
+}
+
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0 11%;
+}
+.separator::before, .separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #00000045;
+}
+.separator::before {
+  margin-right: 1.25em;
+}
+.separator::after {
+  margin-left: 1.25em;
+}
+
+.spanbutton:hover{
+  color: white;
+}
