@@ -107,7 +107,7 @@ class NavBar extends Component {
     }
 
     componentDidUpdate = (prevProps)=>{
-        if(prevProps.details.img !== this.props.details.img){
+        if(prevProps.details.img !== this.props.details.img && prevProps.details.username !== this.props.details.username ){
             this.setState({
                 image: this.props.details.img
                

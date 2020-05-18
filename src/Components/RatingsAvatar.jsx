@@ -74,7 +74,7 @@ const RatingsAvatar = ({ numberOfLikes, allLikes, plusNumberReactions }) => {
 
 
            {/* <span className="text-black-50"> + {numberOfLikes > 5 ? numberOfLikes - 5 : null}</span>  */}
-           &nbsp;
+           &nbsp;&nbsp;
            <span className=" text-black-50">{plusNumberReactions > 0 ? `+ ${plusNumberReactions}` : null}</span>
       </div>
       
