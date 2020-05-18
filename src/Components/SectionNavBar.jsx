@@ -72,7 +72,7 @@ class NavBar extends Component {
                             <span className="nav-icon nav-icon-bell"></span>
                         </NavItem>
                         <NavItem>
-                            <Link to={'/profile/' + localStorage.getItem('username')}>
+                            <Link to={'/profile/' + this.props.details.username}>
                                 <img className="nav-icon nav-icon-userimg" src={this.state.image ? this.state.image : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img"  style={{objectFit: "cover"}}/>
                             </Link>
                         </NavItem>

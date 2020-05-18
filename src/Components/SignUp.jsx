@@ -15,6 +15,7 @@ class SignUp extends Component {
       area:"",
       title:"",
       username:"",
+      isSignedUp: false
         
     }
     render() { 
@@ -22,20 +23,29 @@ class SignUp extends Component {
           <Fade>
             <Container fluid style={{minHeight: "100vh", background:"#016197"}}>
               <div className=" mx-auto  ">
-              <img className="mx-auto" style={{ display: 'block' }} width="17%" src="https://seeklogo.net/wp-content/uploads/2017/01/linkedin-logo-512x512.png" alt="logo" />
+             <Link to="/login"> <img className="mx-auto" style={{ display: 'block' }} width="17%" src="https://seeklogo.net/wp-content/uploads/2017/01/linkedin-logo-512x512.png" alt="logo" /></Link>
                     <Row>
                       
                       <Col>
                        <Container className=" mx-auto" style={{maxWidth:" 45%"}}>
+
+                        {
+                          this.state.isSignedUp ? <> <h6 className="text-center text-white ">Go to your email and confirm your account</h6> 
+                          <p className="text-center"><small>Already on LinkedIn? </small>
+                          <Link to="/login" className="font-weight-bolder">Sign In</Link>
+                          </p> </>: <>
+                       
+
+
                           <h4 className="text-center text-white font-weight-lighter">Make the most of your professional life!</h4>
                           {this.state.wrongPass && <Alert color="danger">The Email/password is incorrect!</Alert>}
                           <div className="form-register">
-                            <Form onSubmit={this.getCredentials}>
+                            <Form onSubmit={this.signUpInfos}>
                             <Row form>
         <Col md={6} className="pr-3">
           <FormGroup>
           <Label for="text" className="ml-3">Firstname </Label>
-          <Input className="login-input p-1 mt-0 ml-3"  type="text"  required  value={this.state.email} onChange={e => this.setState({email : e.currentTarget.value})}/>
+          <Input className="login-input p-1 mt-0 ml-3"  type="text"  required  value={this.state.firstname} onChange={e => this.setState({firstname : e.currentTarget.value})}/>
           </FormGroup>
         </Col>
         <Col md={6} className="pr-3">
@@ -68,7 +78,7 @@ class SignUp extends Component {
 
                             <FormGroup>
                               <Label for="Email" className="ml-3">Email</Label>
-                              <Input className="login-input p-1 mt-0 "  type="text" placeholder="Email" required value={this.state.email} onChange={e => this.setState({email : e.currentTarget.value})}/>
+                              <Input className="login-input p-1 mt-0 "  type="email" placeholder="Email" required value={this.state.email} onChange={e => this.setState({email : e.currentTarget.value})}/>
                               </FormGroup>
 
                               <FormGroup>
@@ -86,11 +96,14 @@ class SignUp extends Component {
                             </div>
 
                            
-                            </Form>
+                            </Form> 
+
+                         
                             <p className="text-center"><small>Already on LinkedIn? </small>
                           <Link to="/login" className="font-weight-bolder">Sign In</Link>
                           </p>
                           </div>
+                          </>}
                           
                        </Container>
                       </Col>
@@ -105,20 +118,26 @@ class SignUp extends Component {
     }
 
 
-    componentDidMount=async()=>{
+    signUpInfos = async(e) => {
+
+      e.preventDefault()
 
       const { email,password,firstname,surname,area, title, username } = this.state
-
       let objectToCreate = {
-       
         email,password,firstname,surname,area, title, username
+      }
 
-      } // we are destructuring since they have the same label; eg,. username: username
+     // we are destructuring since they have the same label; eg,. username: username
 
-      await PostAPI (" ", " ", "register", objectToCreate )
+     const resp = await PostAPI (" ", " ", "register", objectToCreate)
+      console.log("resp,", resp)
+     if(resp)
+     this.setState({
+      isSignedUp: true
 
+     })
 
-    }
+    };
 }
 
 export default SignUp;

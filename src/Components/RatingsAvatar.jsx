@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 
 // { imageUrl, _id, firstname, surname, username } { allLike, numberOfLikes }
 
-const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
+const RatingsAvatar = ({ numberOfLikes, allLikes, plusNumberReactions }) => {
 
 
-  return (
+  return ( 
     <>
       <div className="avatar-group">
+
+
         {allLikes
-          ? allLikes.length <= 7 &&
+          ? allLikes.length <= 5 &&
             allLikes.map(({ likedBy: { _id, imageUrl, username } }) => (
                 <div key={_id} className="avatar">
                 <Link to={"/profile/" + username}><img
@@ -23,8 +25,10 @@ const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
             ))
           : null}
 
+
+
         {allLikes
-          ? allLikes.length > 10 &&
+          ? allLikes.length > 5 &&
             allLikes.slice(0, 5)
 
 
@@ -37,13 +41,15 @@ const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
                     className="avatar-img rounded-circle border border-white"
                   /></Link>
                 </div>
-                <span className="text-black-50"> + {numberOfLikes - 5}</span>{" "}
+                
 
 
 
               </>
-            ))
-
+            )
+          
+            )
+         
             
             // .map(({ likedby: { _id, imageUrl, username } }) => (
             //   <>
@@ -63,7 +69,18 @@ const RatingsAvatar = ({ numberOfLikes, allLikes }) => {
 
 
           : null}
+
+
+
+
+           {/* <span className="text-black-50"> + {numberOfLikes > 5 ? numberOfLikes - 5 : null}</span>  */}
+           &nbsp;
+           <span className=" text-black-50">{plusNumberReactions > 0 ? `+ ${plusNumberReactions}` : null}</span>
       </div>
+      
+
+
+ 
 
       {/* <div className="avatar-group">
 <div className="avatar">

@@ -184,7 +184,7 @@ class NewsFeed extends Component {
                                                             <img className="newsfeed-img img-fluid mx-auto " src={post.image} alt='news feed' />}    
                                                     </Row>
                                                    
-                                                    <RatingsComponent  postId={post._id} userId={localStorage.getItem("userId")}/>
+                                                    <RatingsComponent  postId={post._id} userId={localStorage.getItem("userId") || sessionStorage.getItem("userId")}/>
                                                    
                                                     
                                                     

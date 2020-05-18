@@ -16,7 +16,9 @@ state = {
     numberOfLikes: 0,
     isLoading: true,
     postLikeImg: false,
-    checkIsLiked: true
+    checkIsLiked: true,
+    plusNumberReactions: 0
+
 }
 
 
@@ -33,7 +35,8 @@ fetchAllLikes = async()=>{
                 allLikes: [],
                 likedByUser: false,
                 numberOfLikes: this.state.numberOfLikes,
-                isLoading:this.state.isLoading
+                isLoading:this.state.isLoading,
+                plusNumberReactions: this.state.plusNumberReactions
     
             })
         }
@@ -42,12 +45,15 @@ fetchAllLikes = async()=>{
 
             const {reactionsCount, isLikedByUser, postInfo: { reactions } } = resp
             
+
             this.setState({
                 allLikes: reactions,
                  likedByUser: isLikedByUser,
                 numberOfLikes:reactionsCount,
                 isLoading:false,
-                checkIsLiked: isLikedByUser
+                checkIsLiked: isLikedByUser,
+                plusNumberReactions:  reactionsCount > 5 ? reactionsCount - 5 : 0
+                
     
             })
        
@@ -60,7 +66,8 @@ fetchAllLikes = async()=>{
             allLikes: [],
              likedByUser: false,
             numberOfLikes: this.state.numberOfLikes,
-            isLoading:this.state.isLoading
+            isLoading:this.state.isLoading,
+            plusNumberReactions: this.state.plusNumberReactions
 
         })
     }
@@ -114,10 +121,10 @@ fetchAllLikes = async()=>{
         {/* &nbsp;&nbsp;
         <span className="text-black-50"><i className="fa fa-thumbs-o-up postButtons" style={{color:"red"}}></i> like </span> */} 
         
-        &nbsp;  &nbsp; <span></span>
+        &nbsp;  &nbsp; <span></span> 
         
 
-        {this.state.postLikeImg && this.state.allLikes.length > 0 ?  <RatingsAvatar    allLikes = { [ ...this.state.allLikes]} {...this.state.numberOfLikes} /> : null} 
+        {this.state.postLikeImg && this.state.allLikes.length > 0 ?  <RatingsAvatar    allLikes = { [ ...this.state.allLikes]} {...this.state.numberOfLikes} plusNumberReactions = {this.state.plusNumberReactions} /> : null} 
 
         
       

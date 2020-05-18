@@ -32,9 +32,9 @@ const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, ima
             },
             body: JSON.stringify(objectToCreate)
         })
-        if (response.ok) {
+        if (response) 
             return await response.json()
-        }
+        
     } catch (error) {
         console.log(error);
     }

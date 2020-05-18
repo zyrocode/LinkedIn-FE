@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { withRouter, Link } from "react-router-dom"
 import Loading from "./PageLoading"
+import { Container, Col, Row, Fade } from "reactstrap"
 
 
 
@@ -55,17 +56,55 @@ class CallbackComponent extends React.Component{
 
     render () {
         return (
+            <Fade>
         
+           { this.state.infoVerified  && 
+           
+            
+
+            <>
+            <Container fluid style={{minHeight: "100vh", background:"#016197"}}>
+              <div className=" mx-auto  ">
+             <Link to="/login"> <img className="mx-auto" style={{ display: 'block' }} width="17%" src="https://seeklogo.net/wp-content/uploads/2017/01/linkedin-logo-512x512.png" alt="logo" /></Link>
+                    <Row>
+                      
+                      <Col>
+                       <Container className=" mx-auto" style={{maxWidth:" 45%"}}>
+
+                        
+                           <h6 className="text-center text-white ">Email Verified...go to <Link to ="/login">Login Page</Link> and sign in</h6> <br/>
+                          <p className="text-center"><small>Already on LinkedIn? </small>
+                          <Link to="/login" className="font-weight-bolder">Sign In</Link>
+                          </p> 
+                          
+                       </Container>
+                      </Col>
+                   
+                    </Row>
+                   
+                
+                </div>
+            </Container>
+
+            </>}
+            
+
+
+
+
+
+
+
+
+
+
+
         
-            this.state.infoVerified ? 
-            <div><h1>Email Verified...go to <Link to ="/login">Home Page</Link> and sign in</h1> </div>
-        
-        
-            : (this.state.isLoading && <Loading />)
+           { this.state.isLoading && <Loading /> }
     
 
 
-        )
+            </Fade> )
     }
 
 }
