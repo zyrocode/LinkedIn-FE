@@ -333,6 +333,19 @@ a:hover {
  
 }
 
+
+.signUpContainer{
+  max-width: 48% !important;
+}
+
+@media(max-width:769px){
+  .signUpContainer{
+    max-width: 92% !important;
+  }
+
+}
+
+
 @media (min-width: 571px) and (max-width: 768px) {
   .fixedSide{
     display: none;

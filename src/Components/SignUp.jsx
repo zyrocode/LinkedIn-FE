@@ -27,7 +27,7 @@ class SignUp extends Component {
                     <Row>
                       
                       <Col>
-                       <Container className=" mx-auto" style={{maxWidth:" 45%"}}>
+                       <Container className=" mx-auto signUpContainer" >
 
                         {
                           this.state.isSignedUp ? <> <h6 className="text-center text-white ">Go to your email and confirm your account</h6> 
