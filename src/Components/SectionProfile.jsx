@@ -5,8 +5,8 @@ import Loading from './Loading'
 import GetAPI from "../APIs/GetAPI"
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
-
-
+import unknowUserImg from "../images/user_unknown.png"
+import bg from "../images/bg.jpg"
 
 
 const mapStateToProps = state => state
@@ -55,7 +55,7 @@ class ProfileComponent extends Component {
                     <Fade>
                         <Container className="profile">
                             <Row className="profile-header">
-                                <img height="150px" style={{ borderTopRightRadius: '5px', borderTopLeftRadius: '5px' }} width="100%" src="https://cdn.hipwallpaper.com/i/62/8/uDtR6w.jpg" alt="" className="src" />
+                                <img height="150px" style={{ borderTopRightRadius: '5px', borderTopLeftRadius: '5px' }} width="100%" src={bg} alt="" className="src" />
                             </Row>
                             {/* start of a secondRow */}
                             <Row className="profile-body">
@@ -131,7 +131,7 @@ class ProfileComponent extends Component {
         console.log("fetchd data -->",userProfile)
         //{ signal: this.abortController.signal })
         userProfile.imageUrl ? this.props.addImgToStore(userProfile.imageUrl)
-           : userProfile.imageUrl = "https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png"
+           : userProfile.imageUrl = unknowUserImg
         this.setState({
             userInfo: {
                 name: userProfile.firstname,

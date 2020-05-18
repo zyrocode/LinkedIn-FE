@@ -36,11 +36,26 @@ code {
   color: rgba(58, 58, 58, 0.712);
   padding-left: 23px;
 }
-
+/* 
 .nav-icon-group::after {
   font-family: 'Font Awesome 5 Free';
   content: "\f0c0";
+} */
+
+
+.nav-icon-github::before {
+  font-family: 'Font Awesome 5 Free';
+  content: "\f126";
 }
+
+
+/* .nav-item:nth-child(2)::after {
+
+  content: "Github";
+} */
+
+
+
 
 .nav-icon-case::after {
   font-family: 'Font Awesome 5 Free';

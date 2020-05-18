@@ -59,10 +59,8 @@ class NavBar extends Component {
                                 <span className="nav-icon nav-icon-home"></span>
                             </Link>
                         </NavItem>
-                        <NavItem>
-                            <span className="nav-icon nav-icon-group"></span>
-                        </NavItem>
-                        <NavItem>
+                       
+                        {/* <NavItem>
                             <span className="nav-icon nav-icon-case"></span>
                         </NavItem>
                         <NavItem>
@@ -70,16 +68,19 @@ class NavBar extends Component {
                         </NavItem>
                         <NavItem>
                             <span className="nav-icon nav-icon-bell"></span>
-                        </NavItem>
+                        </NavItem> */}
                         <NavItem>
                             <Link to={'/profile/' + this.props.details.username}>
                                 <img className="nav-icon nav-icon-userimg" src={this.state.image ? this.state.image : 'https://www.shareicon.net/data/512x512/2015/10/02/649910_user_512x512.png'} alt="profile-img"  style={{objectFit: "cover"}}/>
                             </Link>
                         </NavItem>
                     </div>
-                    <NavItem>
+                    {/* <NavItem>
                         <span className="nav-icon nav-icon-grid"></span>
-                    </NavItem>
+                    </NavItem> */}
+                     <NavItem>
+                            <a href="https://github.com/jeffascript/linkedin_mockup_Auth" target="_blank" rel="noopener noreferrer"><span className="nav-icon nav-icon-github"></span></a>
+                        </NavItem>
                     <NavItem onClick={() => this.props.logout()}>
                         <span className="nav-icon nav-icon-book"></span>
                     </NavItem>

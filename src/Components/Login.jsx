@@ -132,7 +132,7 @@ console.log(this.props.match.params.redirect || "newsfeed")
 
             <Container>
               <label className="pull-left checkbox-inline">
-                <input check
+                <input check="true"
                   type="checkbox"
                   value={this.state.saveCredentials}
                   onClick={e =>

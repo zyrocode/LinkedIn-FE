@@ -3,16 +3,23 @@ import { connect } from "react-redux"
 import { withRouter, Link } from "react-router-dom"
 import Loading from "./PageLoading"
 import { Container, Col, Row, Fade } from "reactstrap"
-
+import { loginWithThunk } from "../action"
 
 
 const mapStateToProps = state => state
+
 const mapDispatchToProps = dispatch => ({
-    setUserToken: base64 => dispatch({
-      type:"SET_USERBASE64",
-      payload: base64
-    }) 
-  })
+    setUserAndToken : (token, username)=> dispatch (loginWithThunk(token, username))
+})
+
+
+// const mapDispatchToProps = dispatch => ({
+//     setUserToken: base64 => dispatch({
+//       type:"SET_USERBASE64",
+//       payload: base64
+//     }) 
+//   })
+
   
 
 class CallbackComponent extends React.Component{
@@ -24,11 +31,19 @@ class CallbackComponent extends React.Component{
 
 
     componentDidMount = () => {
-        const search = document.location.search;
-        if (search && search.includes("access_token")){
-            const accessToken = search.split("=")[1];
-            this.props.setUserToken(accessToken)
-            localStorage.setItem("access_token", accessToken)
+        let search = new URLSearchParams(this.props.location.search)
+        const access_token = search.get("access_token")
+        const userName = search.get("username")
+        // const search = document.location.search;
+        // if (search && search.includes("access_token"))
+       
+        if( access_token && userName ){
+            console.log(access_token, userName)
+            // const accessToken = search.split("=")[1];
+            // this.props.setUserToken(accessToken)
+            this.props.setUserAndToken(access_token,userName)
+            localStorage.setItem("access_token", access_token)
+            localStorage.setItem("username", userName)
             this.props.history.push("/newsfeed")
 
             this.setState({
@@ -46,7 +61,7 @@ class CallbackComponent extends React.Component{
         }
 
         else{
-            if (search && search.includes("confirm")){
+            if (search && search.get("confirm")){
                 this.setState({
                     infoVerified:true
                 })
@@ -55,7 +70,10 @@ class CallbackComponent extends React.Component{
     }
 
     render () {
-        return (
+        return (<>
+
+            { this.state.isLoading && <Loading /> }
+
             <Fade>
         
            { this.state.infoVerified  && 
@@ -100,11 +118,12 @@ class CallbackComponent extends React.Component{
 
 
         
-           { this.state.isLoading && <Loading /> }
+          
     
 
 
-            </Fade> )
+            </Fade> 
+            </>)
     }
 
 }
