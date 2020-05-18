@@ -4,39 +4,39 @@ const GetAPI = async (userName, access_token, whatToFetch, userName2, ID, reqUse
 
     switch (whatToFetch) {
         default:
-            URL = "http://localhost:7000/profiles/"
+            URL = "https://be-linked-in.herokuapp.com/profiles/"
             break
         case 'likes':
-            URL = `http://localhost:7000/likes/${ID}/?userId=${reqUserID}`
+            URL = `https://be-linked-in.herokuapp.com/likes/${ID}/?userId=${reqUserID}`
             break
         case 'experience':
-            //http://localhost:7000/experiences/ds/experience/5e5496f570602b00440ce503
-            URL = `http://localhost:7000/experiences/${userName}/experience/${ID}` 
+            //https://be-linked-in.herokuapp.com/experiences/ds/experience/5e5496f570602b00440ce503
+            URL = `https://be-linked-in.herokuapp.com/experiences/${userName}/experience/${ID}` 
             break
         case 'experiences':
             !userName2
             ?
-            URL = `http://localhost:7000/profiles/${userName}/experiences` 
+            URL = `https://be-linked-in.herokuapp.com/profiles/${userName}/experiences` 
             :
-            URL = `http://localhost:7000/profiles/${userName2}/experiences`
+            URL = `https://be-linked-in.herokuapp.com/profiles/${userName2}/experiences`
             break
         case 'posts':
-            URL = "http://localhost:7000/posts/"
+            URL = "https://be-linked-in.herokuapp.com/posts/"
             break
         case 'profile':
             !userName2
             ?
-            URL = `http://localhost:7000/profiles/username/${userName}`
+            URL = `https://be-linked-in.herokuapp.com/profiles/username/${userName}`
             :
-            URL = "http://localhost:7000/profiles/username/".concat(userName2)
+            URL = "https://be-linked-in.herokuapp.com/profiles/username/".concat(userName2)
             break
         case 'post':
-                URL = "http://localhost:7000/posts/" + ID
+                URL = "https://be-linked-in.herokuapp.com/posts/" + ID
              break
         case 'comments':
-                URL = `http://localhost:7000/comments/${ID}`
+                URL = `https://be-linked-in.herokuapp.com/comments/${ID}`
             break 
-                // http://localhost:7000/comments/5eab1ba16668756d2b8d6de0/
+                // https://be-linked-in.herokuapp.com/comments/5eab1ba16668756d2b8d6de0/
     }
 
     try {

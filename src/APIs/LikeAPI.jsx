@@ -1,6 +1,6 @@
 export const Like = async (postId,username,userToken  )=>{
     try {
-        let resp = await fetch(`http://localhost:7000/likes/${postId}/${username}`, { method: "POST",
+        let resp = await fetch(`https://be-linked-in.herokuapp.com/likes/${postId}/${username}`, { method: "POST",
         headers: {
           "Authorization": "Bearer " + userToken,
           "Content-Type": "application/json"
@@ -19,7 +19,7 @@ export const Like = async (postId,username,userToken  )=>{
 
 export const unLike = async (postId,username,userToken  )=>{
     try {
-        let resp = await fetch(`http://localhost:7000/likes/${postId}/${username}`, { method: "DELETE",
+        let resp = await fetch(`https://be-linked-in.herokuapp.com/likes/${postId}/${username}`, { method: "DELETE",
         headers: {
           "Authorization": "Bearer " + userToken,
           "Content-Type": "application/json"

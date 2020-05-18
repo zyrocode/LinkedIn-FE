@@ -1,24 +1,24 @@
 const PostAPI = async (userName, access_token, whatToCreate, objectToCreate, imageData, postID) => {
     let URL = undefined
     switch (whatToCreate) {
-      // `http://localhost:7000/likes/5eab1ba16668756d2b8d6de0/ds`
+      // `https://be-linked-in.herokuapp.com/likes/5eab1ba16668756d2b8d6de0/ds`
       
       case "register":
-        URL = `http://localhost:7000/users/register`
+        URL = `https://be-linked-in.herokuapp.com/users/register`
         break
 
       case "like":
-          URL= `http://localhost:7000/likes/${postID}/${userName}`;
+          URL= `https://be-linked-in.herokuapp.com/likes/${postID}/${userName}`;
           break
 
       case "comment":
-        URL = `http://localhost:7000/comments/${userName}/${postID}`;
+        URL = `https://be-linked-in.herokuapp.com/comments/${userName}/${postID}`;
         break;
       case "experience":
-        URL = "http://localhost:7000/profiles/experience/".concat(userName);
+        URL = "https://be-linked-in.herokuapp.com/profiles/experience/".concat(userName);
         break;
       case "post":
-        URL = "http://localhost:7000/posts/".concat(userName);
+        URL = "https://be-linked-in.herokuapp.com/posts/".concat(userName);
         break;
       default:
         URL = "https://strive-school-testing-apis.herokuapp.com/api/posts/";

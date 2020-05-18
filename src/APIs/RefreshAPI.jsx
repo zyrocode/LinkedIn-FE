@@ -1,7 +1,7 @@
 const RefreshAPI = async (access_token) => {
   try {
     const response = await fetch(
-      "http://localhost:7000/users/refresh",
+      "https://be-linked-in.herokuapp.com/users/refresh",
       {
         headers: {
           Authorization: "Bearer " + access_token
