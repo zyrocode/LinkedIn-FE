@@ -154,10 +154,10 @@ console.log(this.props.match.params.redirect || "newsfeed")
           </p>
 
           <div className="text-center">
-            <a
+            <a 
               href="http://localhost:7000/auth/facebook"
-              className="btn btn-primary">
-              Login With Facebook
+              className="btn btn-primary text-white">
+             <span className="fa spanbutton"> &#xf09a;</span> &nbsp; <span className=" spanbutton">Login With Facebook</span>
             </a>
           </div>
         </Container>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Form, Input, Container, Row, Fade, Col, FormGroup, Label } from 'reactstrap'
  import { BrowserRouter as Router, Route, Switch, Link }  from 'react-router-dom';
-import { FacebookFilled } from '@ant-design/icons';
+// import { FacebookFilled } from '@ant-design/icons';
 import PostAPI from "../APIs/PostAPI"
 
 
@@ -19,6 +19,7 @@ class SignUp extends Component {
     }
     render() { 
         return (
+          <Fade>
             <Container fluid style={{minHeight: "100vh", background:"#016197"}}>
               <div className=" mx-auto  ">
               <img className="mx-auto" style={{ display: 'block' }} width="17%" src="https://seeklogo.net/wp-content/uploads/2017/01/linkedin-logo-512x512.png" alt="logo" />
@@ -34,45 +35,45 @@ class SignUp extends Component {
         <Col md={6} className="pr-3">
           <FormGroup>
           <Label for="text" className="ml-3">Firstname </Label>
-          <Input className="login-input p-1 mt-0 ml-3"  type="text" />
+          <Input className="login-input p-1 mt-0 ml-3"  type="text"  required  value={this.state.email} onChange={e => this.setState({email : e.currentTarget.value})}/>
           </FormGroup>
         </Col>
         <Col md={6} className="pr-3">
           <FormGroup>
           <Label for="text" className="ml-3">Surname</Label>
-           <Input className="login-input p-1 mt-0 ml-0"  type="text"  />
+           <Input className="login-input p-1 mt-0 ml-0"  type="text" required  value={this.state.surname} onChange={e => this.setState({surname : e.currentTarget.value})}/>
           </FormGroup>
         </Col>
       </Row>
       <FormGroup>
                               <Label for="title" className="ml-3">Current Position</Label>
-                              <Input className="login-input p-1 mt-0 "  type="text" placeholder="Ex. Software Engineer" />
+                              <Input className="login-input p-1 mt-0 "  type="text" placeholder="Ex. Software Engineer"  value={this.state.title} onChange={e => this.setState({title : e.currentTarget.value})}/>
                               </FormGroup>
 
 
       <Row form>
         <Col md={6} className="pr-3">
           <FormGroup>
-          <Label for="text" className="ml-3">Firstname </Label>
-          <Input className="login-input p-1 mt-0 ml-3"  type="text" />
+          <Label for="text" className="ml-3">Username </Label>
+          <Input className="login-input p-1 mt-0 ml-3"  type="text" required value={this.state.username} onChange={e => this.setState({username : e.currentTarget.value})}/>
           </FormGroup>
         </Col>
         <Col md={6} className="pr-3">
           <FormGroup>
-          <Label for="text" className="ml-3">Surname</Label>
-           <Input className="login-input p-1 mt-0 ml-0"  type="text" />
+          <Label for="area" className="ml-3">City</Label>
+           <Input className="login-input p-1 mt-0 ml-0"  type="city"  value={this.state.area} onChange={e => this.setState({area : e.currentTarget.value})}/>
           </FormGroup>
         </Col>
       </Row>
 
                             <FormGroup>
                               <Label for="Email" className="ml-3">Email</Label>
-                              <Input className="login-input p-1 mt-0 "  type="text" placeholder="Email" />
+                              <Input className="login-input p-1 mt-0 "  type="text" placeholder="Email" required value={this.state.email} onChange={e => this.setState({email : e.currentTarget.value})}/>
                               </FormGroup>
 
                               <FormGroup>
                               <Label for="password" className="ml-3">Password (6 or more characters)</Label>
-                              <Input className="login-input p-1 mt-0 "  type="password" />
+                              <Input className="login-input p-1 mt-0 "  type="password" required value={this.state.password} onChange={e => this.setState({password : e.currentTarget.value})}/>
                               </FormGroup>
                               <h6 className="text-center mx-auto agreement" >By clicking Agree &amp; Join, you agree to this LinkedIn Mockup User Agreement. Your information remains confidential and would not be shared with a third party.</h6>
                               <Input className="btn btn-primary font-weight-bold" type="submit" value="Agree &amp; Join" />
@@ -99,25 +100,20 @@ class SignUp extends Component {
                 
                 </div>
             </Container>
+            </Fade>
         );
     }
 
 
     componentDidMount=async()=>{
 
-      const { email,password,firstname,surname,city } = this.state
+      const { email,password,firstname,surname,area, title, username } = this.state
 
       let objectToCreate = {
-        email:"",
-        password:"",
-        firstname:"",
-        surname:"",
-        area:"",
-        title:"",
-        username:"",
        
+        email,password,firstname,surname,area, title, username
 
-      }
+      } // we are destructuring since they have the same label; eg,. username: username
 
       await PostAPI (" ", " ", "register", objectToCreate )
 
