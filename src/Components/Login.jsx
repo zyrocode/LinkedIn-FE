@@ -155,7 +155,7 @@ console.log(this.props.match.params.redirect || "newsfeed")
 
           <div className="text-center">
             <a 
-              href="https://be-linked-in.herokuapp.com/auth/facebook"
+              href="https://be-lnk.herokuapp.com/auth/facebook"
               className="btn btn-primary text-white">
              <span className="fa spanbutton"> &#xf09a;</span> &nbsp; <span className=" spanbutton">Login With Facebook</span>
             </a>

@@ -1,15 +1,15 @@
-// `https://be-linked-in.herokuapp.com/posts/${userName}/${theID}`
+// `https://be-lnk.herokuapp.com/posts/${userName}/${theID}`
 const DeletePostAPI = async (userName,userToken, postID, whatToFetch, commentID) => {
 
     let URL = undefined;
 
     switch (whatToFetch) {
         case "comment":
-            URL = `https://be-linked-in.herokuapp.com/comments/${userName}/${postID}/${commentID}`
+            URL = `https://be-lnk.herokuapp.com/comments/${userName}/${postID}/${commentID}`
             break;
     
         default:
-             URL = `https://be-linked-in.herokuapp.com/posts/${userName}/${postID}`
+             URL = `https://be-lnk.herokuapp.com/posts/${userName}/${postID}`
            
     }
 

@@ -2,13 +2,13 @@ const PostImageAPI = async (userName, userToken, body1, whatToPost, idPost) => {
     let URL
     switch (whatToPost) {
         case 'profile':
-            URL = "https://be-linked-in.herokuapp.com/profiles/" + userName + "/picture"
+            URL = "https://be-lnk.herokuapp.com/profiles/" + userName + "/picture"
             break;
         case 'post':
-            URL = `https://be-linked-in.herokuapp.com/posts/${userName}/${idPost}/uploadImg`
+            URL = `https://be-lnk.herokuapp.com/posts/${userName}/${idPost}/uploadImg`
             break;
             default:
-                URL = "https://be-linked-in.herokuapp.com/posts/"
+                URL = "https://be-lnk.herokuapp.com/posts/"
 
     }
     try {

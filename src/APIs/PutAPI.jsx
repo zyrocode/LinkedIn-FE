@@ -2,17 +2,17 @@ const PutAPI = async (userName,access_token, whatToUpdate, theUpdate, theID, com
     let URL = undefined
     switch(whatToUpdate){
         case "comment":
-            URL = `https://be-linked-in.herokuapp.com/comments/${userName}/${theID}/${commentID}`
+            URL = `https://be-lnk.herokuapp.com/comments/${userName}/${theID}/${commentID}`
             break
         case 'experience':
-            //https://be-linked-in.herokuapp.com/experiences/jeff/5e45ec286a042e4bc0c8dd33
-            URL = `https://be-linked-in.herokuapp.com/experiences/${userName}/${theID}`
+            //https://be-lnk.herokuapp.com/experiences/jeff/5e45ec286a042e4bc0c8dd33
+            URL = `https://be-lnk.herokuapp.com/experiences/${userName}/${theID}`
         break
         case 'profile':
-            URL = `https://be-linked-in.herokuapp.com/profiles/${theID}` 
+            URL = `https://be-lnk.herokuapp.com/profiles/${theID}` 
         break
         default:
-            URL =  `https://be-linked-in.herokuapp.com/posts/${userName}/${theID}`  
+            URL =  `https://be-lnk.herokuapp.com/posts/${userName}/${theID}`  
     }
     try {
         let response = await fetch(URL, {

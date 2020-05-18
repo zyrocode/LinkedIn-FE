@@ -1,6 +1,6 @@
 
 const DeleteEachExperienceByID = async (theID,userName,access_token) => {
-    let URL = `https://be-linked-in.herokuapp.com/experiences/${userName}/${theID}`
+    let URL = `https://be-lnk.herokuapp.com/experiences/${userName}/${theID}`
     try {
         let response = await fetch(URL, {
             method: "DELETE",

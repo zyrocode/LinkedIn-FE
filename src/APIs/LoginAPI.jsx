@@ -1,6 +1,6 @@
 const LoginAPI = async (loginObject) => {
   try {
-    const resp = await fetch("https://be-linked-in.herokuapp.com/users/signin", {
+    const resp = await fetch("https://be-lnk.herokuapp.com/users/signin", {
       body: JSON.stringify(loginObject),
       method: "POST",
       headers: {

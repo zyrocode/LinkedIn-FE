@@ -84,7 +84,7 @@ const RatingsAvatar = ({ numberOfLikes, allLikes, plusNumberReactions }) => {
 
       {/* <div className="avatar-group">
 <div className="avatar">
-		<img src="https://be-linked-in.herokuapp.com/images/ds18:57:50.643Z.png" alt="..." className="avatar-img rounded-circle border border-white"/>
+		<img src="https://be-lnk.herokuapp.com/images/ds18:57:50.643Z.png" alt="..." className="avatar-img rounded-circle border border-white"/>
         </div>
 
          <div className="avatar">

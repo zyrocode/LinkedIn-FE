@@ -1,5 +1,5 @@
 
-// `https://be-linked-in.herokuapp.com/experiences/${userName}/${theID}`
+// `https://be-lnk.herokuapp.com/experiences/${userName}/${theID}`
 const FetchByEachNewsFeedExperience = async (id) => { 
    
     let URL = "https://strive-school-testing-apis.herokuapp.com/api/profile/" + (id) + "/experiences/"
