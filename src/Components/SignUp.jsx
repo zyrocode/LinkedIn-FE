@@ -30,10 +30,10 @@ class SignUp extends Component {
                        <Container className=" mx-auto signUpContainer" >
 
                         {
-                          this.state.isSignedUp ? <> <h6 className="text-center text-white ">Go to your email and confirm your account</h6> 
+                          this.state.isSignedUp ?( <> <h6 className="text-center text-white ">Go to your email and confirm your account</h6> 
                           <p className="text-center"><small>Already on LinkedIn? </small>
                           <Link to="/login" className="font-weight-bolder">Sign In</Link>
-                          </p> </>: <>
+                          </p> </>): <>
                        
 
 
